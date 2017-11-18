@@ -6,7 +6,7 @@ using System.Net;
 
 namespace TwitterLib
 {
-    public class Twitter
+    public partial class Twitter
     {
         const string acceptString = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~";
         /// <summary>
