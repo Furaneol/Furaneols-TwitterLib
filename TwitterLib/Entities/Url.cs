@@ -19,7 +19,7 @@ namespace TwitterLib.Entities
         [DataMember(Name = "display_url")]
         public string DisplayUrl { get; internal set; }
         /// <summary>
-        /// ツイート登校時に入力されたURLをプロトコル付きで取得します。
+        /// ツイート投稿時に入力されたURLをプロトコル付きで取得します。
         /// </summary>
         [DataMember(Name = "expanded_url")]
         public string ExpandedUrl { get; internal set; }
