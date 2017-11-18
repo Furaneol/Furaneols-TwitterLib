@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CursorNavigator.cs" />
-    <Compile Include="Coordinates.cs" />
+    <Compile Include="Coordinate.cs" />
     <Compile Include="Entities\Entities.cs" />
     <Compile Include="Entities\HashTag.cs" />
     <Compile Include="Entities\Media.cs" />
