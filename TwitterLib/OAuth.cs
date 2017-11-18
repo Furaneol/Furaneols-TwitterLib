@@ -28,17 +28,6 @@ namespace TwitterLib
         static readonly string headerFormat;
         #endregion
 
-        static OAuth()
-        {
-            headerFormat = "OAuth " + paramName_consumerKey + "=\"{0}\", "
-                + paramName_nonce + "=\"{1}\", "
-                + paramName_signature + "=\"{2}\", "
-                + paramName_signatureMethod + "=\"" + paramValue_signatureMethod + "\", "
-                + paramName_timestamp + "=\"{3}\", "
-                + paramName_token + "=\"{4}\", "
-                + paramName_version + "=\"" + paramValue_version + "\"";
-        }
-
         private static string CreateNonce()
         {
             byte[] nonceBuffer = new byte[32];
@@ -118,7 +107,7 @@ namespace TwitterLib
             #endregion
             string signature = CreateSignature(httpMethod, url, consumerSecret, accessTokenSecret, signatureArguments, urlEncode);
             nonce = urlEncode(nonce);
-            string authorizationValue = string.Format(headerFormat, consumerKey, nonce, signature, timestamp, accessToken);
+            string authorizationValue = string.Format("OAuth oauth_consumer_key=\"{0}\", oauth_nonce=\"{1}\", oauth_signature=\"{2}\", oauth_signature_method=\"HMAC-SHA1\", oauth_timestamp=\"{3}\", oauth_token=\"{4}\", oauth_version=\"1.0\"", consumerKey, nonce, signature, timestamp, accessToken);
             #region GET Query
             if (httpMethod == "GET" && bodyArgs != null && bodyArgs.Keys.Count > 0)
             {
@@ -135,7 +124,7 @@ namespace TwitterLib
             #endregion
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = httpMethod;
-            request.Headers.Add(headerName, authorizationValue);
+            request.Headers.Add("Authorization", authorizationValue);
             request.Accept = "*/*";
             request.ContentType = "application/x-www-form-urlencoded";
             #region POST Body
