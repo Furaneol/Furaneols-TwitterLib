@@ -67,9 +67,14 @@ namespace TwitterLib
         [DataMember(Name ="user")]
         public User User { get; internal set; }
         /// <summary>
-        /// 投稿した位置の情報を取得します。
+        /// 投稿時点の詳細な位置情報を取得します。
         /// </summary>
         [DataMember(Name = "coordinates")]
         public Coordinate Coordinate { get; internal set; }
+        /// <summary>
+        /// 投稿時点の位置情報を取得します。
+        /// </summary>
+        [DataMember(Name = "place")]
+        public Place Place { get; internal set; }
     }
 }
