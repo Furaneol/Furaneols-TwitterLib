@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using System.Globalization;
+using TwitterLib.Entities;
 
 namespace TwitterLib
 {
@@ -76,5 +77,75 @@ namespace TwitterLib
         /// </summary>
         [DataMember(Name = "place")]
         public Place Place { get; internal set; }
+        /// <summary>
+        /// ツイートが埋め込まれているかどうかを示す値を取得します。
+        /// </summary>
+        [DataMember(Name = "is_quote_status")]
+        public bool IsQuoteStatus { get; internal set; }
+        /// <summary>
+        /// 埋め込みツイートを取得します。
+        /// </summary>
+        [DataMember(IsRequired = false, Name = "quoted_status")]
+        public Tweet QuotedStatus { get; internal set; }
+        /// <summary>
+        /// リツイート元のツイートを取得します。
+        /// </summary>
+        [DataMember(IsRequired = false, Name = "retweeted_status")]
+        public Tweet RetweetedStatus { get; internal set; }
+        /// <summary>
+        /// 他のユーザーに埋め込みリツイートされた回数を取得します。
+        /// </summary>
+        [DataMember(IsRequired = false, Name = "quote_count")]
+        public int QuoteCount { get; internal set; }
+        /// <summary>
+        /// このツイートへの返信件数を取得します。
+        /// </summary>
+        [DataMember(IsRequired = false, Name = "reply_count")]
+        public int ReplyCount { get; internal set; }
+        /// <summary>
+        /// リツイートされた回数を取得します。
+        /// </summary>
+        [DataMember(Name = "retweet_count")]
+        public int RetweetCount { get; internal set; }
+        /// <summary>
+        /// いいねされた回数を取得します。
+        /// </summary>
+        [DataMember(Name ="favorite_count")]
+        public int FavoriteCount { get; internal set; }
+        /// <summary>
+        /// ツイートに埋め込まれているコンテンツの情報を取得します。
+        /// </summary>
+        [DataMember(Name ="entities")]
+        public Entity Entities { get; internal set; }
+        /// <summary>
+        /// 現在のユーザーがこのツイートをいいねしているかどうかを取得します。
+        /// </summary>
+        [DataMember(Name = "favorited")]
+        public bool Favorited { get; internal set; }
+        /// <summary>
+        /// 現在のユーザーががこのツイートをリツイートしているかどうかを取得します。
+        /// </summary>
+        [DataMember(Name = "retweeted")]
+        public bool Retweeted { get; internal set; }
+        /// <summary>
+        /// 注意して扱うべきコンテンツが含まれているかどうかを示す値を取得します。
+        /// </summary>
+        [DataMember(IsRequired = false, Name = "possibly_sensitive")]
+        public bool? PossiblySensitive { get; internal set; }
+        /// <summary>
+        /// 使用している言語をBCP 47コードの文字列として取得します。
+        /// </summary>
+        [DataMember(Name = "lang")]
+        public string Language { get; internal set; }
+        /// <summary>
+        /// ツイートがDMCAの苦情により保留されているかどうかを示す値を取得します。
+        /// </summary>
+        [DataMember(IsRequired = false, Name = "withheld_copyright")]
+        public bool WithheldCopyright { get; internal set; }
+        /// <summary>
+        /// このツイートの表示を保留している国の一覧を取得します。(XX:すべての国,XY:DMCAによる保留)
+        /// </summary>
+        [DataMember(IsRequired = false, Name = "withheld_in_countries")]
+        public string[] WithheldCountry { get; internal set; }
     }
 }

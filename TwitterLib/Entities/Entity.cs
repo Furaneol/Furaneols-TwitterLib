@@ -11,7 +11,7 @@ namespace TwitterLib.Entities
     /// ツイートに含まれるコンテンツの情報を格納するオブジェクトです。
     /// </summary>
     [DataContract]
-    public class Entities
+    public class Entity
     {
         /// <summary>
         /// ツイートに含まれているハッシュタグの一覧を取得します。
