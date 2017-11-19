@@ -73,6 +73,11 @@ namespace TwitterLib.Entities
         /// </summary>
         [DataMember(Name = "url")]
         public string Url { get; internal set; }
+        /// <summary>
+        /// メディアの説明文を取得します。
+        /// </summary>
+        [DataMember(IsRequired =false,Name = "ext_alt_text")]
+        public string AltText { get; internal set; }
     }
     /// <summary>
     /// メディアサイズの一覧を格納するオブジェクトです。
