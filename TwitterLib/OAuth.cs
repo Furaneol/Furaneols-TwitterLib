@@ -157,5 +157,16 @@ namespace TwitterLib
             #endregion
             return request;
         }
+        /// <summary>
+        /// OAuth2署名付きリクエストを生成します。
+        /// </summary>
+        /// <param name="httpMethod"></param>
+        /// <param name="url"></param>
+        /// <param name="bearerToken"></param>
+        /// <returns></returns>
+        internal static HttpWebRequest CreateOAuth2Request(string httpMethod, string url, string bearerToken)
+        {
+
+        }
     }
 }
