@@ -168,12 +168,15 @@ namespace TwitterLib
         {
             httpMethod = httpMethod.ToUpper();
             StringBuilder query = new StringBuilder();
-            foreach(string key in args.Keys)
+            if (args != null && args.Count > 0)
             {
-                if (query.Length > 0) query.Append('&');
-                query.AppendFormat("{0}={1}", key, args[key]);
+                foreach (string key in args.Keys)
+                {
+                    if (query.Length > 0) query.Append('&');
+                    query.AppendFormat("{0}={1}", key, args[key]);
+                }
             }
-            if (httpMethod == "GET")
+            if (httpMethod == "GET" && query.Length > 0)
             {
                 query.Insert(0, '?');
                 query.Insert(0, url);
@@ -183,7 +186,7 @@ namespace TwitterLib
             byte[] buffer = Encoding.UTF8.GetBytes(bearerToken);
             string authValue = Convert.ToBase64String(buffer);
             request.Headers.Add("Authorization", "Bearer " + authValue);
-            if (httpMethod == "POST")
+            if (httpMethod == "POST" && query.Length > 0)
             {
                 using (StreamWriter writer = new StreamWriter(request.GetRequestStream()))
                 {
