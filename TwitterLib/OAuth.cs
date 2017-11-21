@@ -69,9 +69,9 @@ namespace TwitterLib
             return urlEncode(Convert.ToBase64String(hash));
         }
         /// <summary>
-        /// OAuth認証用のHttpWebRequestを生成します。
+        /// OAuth署名付きのリクエストを生成します。
         /// </summary>
-        /// <param name="httpMethod">HTTPリクエストメソッド(GET/POST)</param>
+        /// <param name="httpMethod">HTTPメソッド(GET/POST)</param>
         /// <param name="url">リクエストURL</param>
         /// <param name="consumerKey">API提供元から提供されたConsumer Key</param>
         /// <param name="consumerSecret">API提供元から提供されたConsumer Secret</param>
@@ -160,9 +160,9 @@ namespace TwitterLib
         /// <summary>
         /// OAuth2署名付きリクエストを生成します。
         /// </summary>
-        /// <param name="httpMethod"></param>
-        /// <param name="url"></param>
-        /// <param name="bearerToken"></param>
+        /// <param name="httpMethod">HTTPメソッド(GET/POST)</param>
+        /// <param name="url">リクエストURL</param>
+        /// <param name="bearerToken">提供されたBearer Token</param>
         /// <returns></returns>
         internal static HttpWebRequest CreateOAuth2Request(string httpMethod, string url, string bearerToken)
         {
