@@ -14,7 +14,7 @@ namespace TwitterLib
         [DataMember(Name = "token_type")]
         public string Type { get; private set; }
         /// <summary>
-        /// 
+        /// トークン文字列を取得します。
         /// </summary>
         [DataMember(Name = "access_token")]
         public string BearerToken { get; private set; }

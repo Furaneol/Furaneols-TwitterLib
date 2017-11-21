@@ -58,5 +58,7 @@ namespace TwitterLib
         /// OAuth2認証用のBearer Tokenを取得または設定します。
         /// </summary>
         public string BearerToken { get; set; }
+
+
     }
 }

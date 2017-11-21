@@ -164,9 +164,33 @@ namespace TwitterLib
         /// <param name="url">リクエストURL</param>
         /// <param name="bearerToken">提供されたBearer Token</param>
         /// <returns></returns>
-        internal static HttpWebRequest CreateOAuth2Request(string httpMethod, string url, string bearerToken, SortedDictionary<string, string> args, StringEncodeHandler urlEncode)
+        internal static HttpWebRequest CreateBearerRequest(string httpMethod, string url, string bearerToken, SortedDictionary<string, string> args, StringEncodeHandler urlEncode)
         {
-
+            httpMethod = httpMethod.ToUpper();
+            StringBuilder query = new StringBuilder();
+            foreach(string key in args.Keys)
+            {
+                if (query.Length > 0) query.Append('&');
+                query.AppendFormat("{0}={1}", key, args[key]);
+            }
+            if (httpMethod == "GET")
+            {
+                query.Insert(0, '?');
+                query.Insert(0, url);
+                url = query.ToString();
+            }
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            byte[] buffer = Encoding.UTF8.GetBytes(bearerToken);
+            string authValue = Convert.ToBase64String(buffer);
+            request.Headers.Add("Authorization", "Bearer " + authValue);
+            if (httpMethod == "POST")
+            {
+                using (StreamWriter writer = new StreamWriter(request.GetRequestStream()))
+                {
+                    writer.Write(query.ToString());
+                }
+            }
+            return request;
         }
     }
 }
