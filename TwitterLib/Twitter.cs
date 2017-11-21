@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.Serialization.Json;
 using System.Net;
+using System.IO;
 
 namespace TwitterLib
 {
@@ -59,6 +60,65 @@ namespace TwitterLib
         /// </summary>
         public string BearerToken { get; set; }
 
-
+        private string CreateOAuth2Credential()
+        {
+            string baseString = UrlEncode(ConsumerKey) + ":" + UrlEncode(ConsumerSecret);
+            byte[] buffer = Encoding.UTF8.GetBytes(baseString);
+            return Convert.ToBase64String(buffer);
+        }
+        /// <summary>
+        /// 設定されたConsumer KeyおよびConsumer Secretを使用してBearer Tokenを取得します。
+        /// </summary>
+        public void GetBearerToken()
+        {
+            #region リクエスト生成
+            HttpWebRequest req = WebRequest.CreateHttp("https://api.twitter.com/oauth2/token");
+            req.Method = "POST";
+            req.ContentType = "application/x-www-form-urlencoded;charset=UTF-8";
+            req.Headers.Add("Authorization", "Basic " + CreateOAuth2Credential());
+            using (StreamWriter writer = new StreamWriter(req.GetRequestStream()))
+            {
+                writer.Write("grant_type=client_credentials");
+            }
+            #endregion
+            #region レスポンス解析
+            try
+            {
+                DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(BearerResponce));
+                using (HttpWebResponse res = (HttpWebResponse)req.GetResponse())
+                {
+                    BearerResponce bearer = (BearerResponce)serializer.ReadObject(res.GetResponseStream());
+                    BearerToken = bearer.BearerToken;
+                }
+            }
+            catch (WebException wex)
+            {
+                throw new TwitterException(wex);
+            }
+            #endregion
+        }
+        /// <summary>
+        /// 使用していたBearer Tokenを無効化します。
+        /// </summary>
+        public void InvalidateBearerToken()
+        {
+            HttpWebRequest req = WebRequest.CreateHttp("https://api.twitter.com/oauth2/invalidate_token");
+            req.Method = "POST";
+            req.ContentType = "application/x-www-form-urlencoded";
+            req.Headers.Add("Authorization", "Basic " + CreateOAuth2Credential());
+            using (StreamWriter writer = new StreamWriter(req.GetRequestStream()))
+            {
+                writer.Write("access_token=" + BearerToken);
+            }
+            try
+            {
+                req.GetResponse();
+                BearerToken = null;
+            }
+            catch (WebException wex)
+            {
+                throw new TwitterException(wex);
+            }
+        }
     }
 }

@@ -55,6 +55,7 @@
     <Compile Include="IdContainer.cs" />
     <Compile Include="Place.cs" />
     <Compile Include="Tweet.cs" />
+    <Compile Include="TwitterException.cs" />
     <Compile Include="User.cs" />
     <Compile Include="OAuth.cs" />
     <Compile Include="Twitter.cs" />
