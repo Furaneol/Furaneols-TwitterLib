@@ -38,6 +38,25 @@ namespace TwitterLib
             }
             return builder.ToString();
         }
-
+        /// <summary>
+        /// OAuth認証用のConsumer Keyを取得または設定します。
+        /// </summary>
+        public string ConsumerKey { get; set; }
+        /// <summary>
+        /// OAuth認証用のConsumer Secretを取得または設定します。
+        /// </summary>
+        public string ConsumerSecret { get; set; }
+        /// <summary>
+        /// OAuth認証用のAccess Tokenを取得または設定します。
+        /// </summary>
+        public string AccessToken { get; set; }
+        /// <summary>
+        /// OAuth認証用のAccess Token Secretを取得または設定します。
+        /// </summary>
+        public string AccessTokenSecret { get; set; }
+        /// <summary>
+        /// OAuth2認証用のBearer Tokenを取得または設定します。
+        /// </summary>
+        public string BearerToken { get; set; }
     }
 }
