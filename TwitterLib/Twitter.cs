@@ -120,5 +120,13 @@ namespace TwitterLib
                 throw new TwitterException(wex);
             }
         }
+        /// <summary>
+        /// ユーザーコンテキストが必要なAPIの利用準備が出来ているかどうかを取得します。
+        /// </summary>
+        private bool AvailableUserContextOnlyAPI => !string.IsNullOrWhiteSpace(ConsumerKey) && !string.IsNullOrWhiteSpace(ConsumerSecret) && !string.IsNullOrWhiteSpace(AccessToken) && !string.IsNullOrWhiteSpace(AccessTokenSecret);
+        /// <summary>
+        /// Application-only Authorizationリクエストの利用準備が出来ているかどうかを取得します。
+        /// </summary>
+        private bool AvailableBearerTokenRequest => !string.IsNullOrWhiteSpace(BearerToken);
     }
 }
