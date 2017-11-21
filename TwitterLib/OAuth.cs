@@ -164,7 +164,7 @@ namespace TwitterLib
         /// <param name="url">リクエストURL</param>
         /// <param name="bearerToken">提供されたBearer Token</param>
         /// <returns></returns>
-        internal static HttpWebRequest CreateOAuth2Request(string httpMethod, string url, string bearerToken)
+        internal static HttpWebRequest CreateOAuth2Request(string httpMethod, string url, string bearerToken, SortedDictionary<string, string> args, StringEncodeHandler urlEncode)
         {
 
         }
