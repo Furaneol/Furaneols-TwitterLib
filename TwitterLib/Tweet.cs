@@ -16,7 +16,7 @@ namespace TwitterLib
         internal string CreatedAt_raw
         {
             get { return CreatedAt.ToString(); }
-            set { CreatedAt = DateTime.ParseExact(value.Insert(23, ":"), "ddd MMM dd hh:mm:ss zzz yyyy", CultureInfo.GetCultureInfo("en-us")); }
+            set { CreatedAt = DateTime.ParseExact(value.Insert(23, ":"), "ddd MMM dd HH:mm:ss zzz yyyy", CultureInfo.GetCultureInfo("en-us")); }
         }
         /// <summary>
         /// ツイートの投稿時刻を取得します。
