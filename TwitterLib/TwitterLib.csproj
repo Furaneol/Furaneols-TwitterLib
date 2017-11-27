@@ -54,6 +54,7 @@
     <Compile Include="Entities\Url.cs" />
     <Compile Include="HomeTimeline.cs" />
     <Compile Include="IdContainer.cs" />
+    <Compile Include="MentionTimeline.cs" />
     <Compile Include="Place.cs" />
     <Compile Include="Tweet.cs" />
     <Compile Include="TwitterAuthenticationMode.cs" />
