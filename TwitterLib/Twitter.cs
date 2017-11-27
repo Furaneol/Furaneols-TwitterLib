@@ -39,6 +39,11 @@ namespace TwitterLib
             }
             return builder.ToString();
         }
+
+        public Twitter()
+        {
+            AuthenticationMode = TwitterAuthenticationMode.None;
+        }
         /// <summary>
         /// OAuth認証用のConsumer Keyを取得または設定します。
         /// </summary>
@@ -59,6 +64,10 @@ namespace TwitterLib
         /// OAuth2認証用のBearer Tokenを取得または設定します。
         /// </summary>
         public string BearerToken { get; set; }
+        /// <summary>
+        /// 認証モードを取得または設定します。
+        /// </summary>
+        public TwitterAuthenticationMode AuthenticationMode { get; set; }
 
         private string CreateOAuth2Credential()
         {
@@ -69,6 +78,7 @@ namespace TwitterLib
         /// <summary>
         /// 設定されたConsumer KeyおよびConsumer Secretを使用してBearer Tokenを取得します。
         /// </summary>
+        /// <exception cref="TwitterException"></exception>
         public void GetBearerToken()
         {
             #region リクエスト生成
@@ -100,6 +110,7 @@ namespace TwitterLib
         /// <summary>
         /// 使用していたBearer Tokenを無効化します。
         /// </summary>
+        /// <exception cref="TwitterException"></exception>
         public void InvalidateBearerToken()
         {
             HttpWebRequest req = WebRequest.CreateHttp("https://api.twitter.com/oauth2/invalidate_token");
@@ -121,12 +132,50 @@ namespace TwitterLib
             }
         }
         /// <summary>
-        /// ユーザーコンテキストが必要なAPIの利用準備が出来ているかどうかを取得します。
+        /// ユーザー認証が必要なAPIの利用準備が出来ているかどうかを取得します。
         /// </summary>
-        private bool AvailableUserContextOnlyAPI => !string.IsNullOrWhiteSpace(ConsumerKey) && !string.IsNullOrWhiteSpace(ConsumerSecret) && !string.IsNullOrWhiteSpace(AccessToken) && !string.IsNullOrWhiteSpace(AccessTokenSecret);
+        private bool AvailableUserAuthenticationOnlyAPI => !string.IsNullOrWhiteSpace(ConsumerKey) && !string.IsNullOrWhiteSpace(ConsumerSecret) && !string.IsNullOrWhiteSpace(AccessToken) && !string.IsNullOrWhiteSpace(AccessTokenSecret);
         /// <summary>
         /// Application-only Authorizationリクエストの利用準備が出来ているかどうかを取得します。
         /// </summary>
-        private bool AvailableBearerTokenRequest => !string.IsNullOrWhiteSpace(BearerToken);
+        private bool AvailableApplicationAuthenticationTokenRequest => !string.IsNullOrWhiteSpace(BearerToken);
+        /// <summary>
+        /// 応答ストリームを取得します。
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="url"></param>
+        /// <param name="args"></param>
+        /// <param name="postResponceAction"></param>
+        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="TwitterException"></exception>
+        /// <returns></returns>
+        private void GetOAuthResponce(string method, string url, SortedDictionary<string, string> args, Action<Stream> postResponceAction)
+        {
+            HttpWebRequest req;
+            if (AuthenticationMode.HasFlag(TwitterAuthenticationMode.UserAuthentication) && AvailableUserAuthenticationOnlyAPI)
+            {
+                req = OAuth.CreateOAuthRequest(method, url, ConsumerKey, ConsumerSecret, AccessToken, AccessTokenSecret, args, UrlEncode);
+            }
+            else if (AuthenticationMode.HasFlag(TwitterAuthenticationMode.ApplicationOnlyAuthentication) && AvailableApplicationAuthenticationTokenRequest)
+            {
+                req = OAuth.CreateBearerRequest(method, url, BearerToken, args, UrlEncode);
+            }
+            else
+            {
+                throw new InvalidOperationException("認証情報が設定されていないか、AuthenticationModeプロパティの値が不適切です。");
+            }
+            try
+            {
+                using (HttpWebResponse res = (HttpWebResponse)req.GetResponse())
+                using (Stream stream = res.GetResponseStream())
+                {
+                    postResponceAction(stream);
+                }
+            }
+            catch (WebException wex)
+            {
+                throw new TwitterException(wex);
+            }
+        }
     }
 }
