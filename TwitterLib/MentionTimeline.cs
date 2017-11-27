@@ -8,9 +8,9 @@ namespace TwitterLib
         /// <summary>
         /// 現在のユーザー宛のツイート一覧を取得します。
         /// </summary>
-        /// <param name="count"></param>
-        /// <param name="sinceId"></param>
-        /// <param name="maxId"></param>
+        /// <param name="count">取得する件数</param>
+        /// <param name="sinceId">最も古いツイートID</param>
+        /// <param name="maxId">最も新しいツイートID</param>
         /// <param name="trimUser"></param>
         /// <param name="includeEntities"></param>
         /// <returns></returns>
@@ -28,7 +28,7 @@ namespace TwitterLib
             if (includeEntities.HasValue)
                 args["include_entities"] = includeEntities.ToString().ToLower();
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Tweet[]));
-            
+            return (Tweet[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/statuses/mentions_timeline.json", args, serializer);
         }
     }
 }
