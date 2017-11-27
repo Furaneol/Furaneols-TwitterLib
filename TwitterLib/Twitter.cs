@@ -149,7 +149,7 @@ namespace TwitterLib
         /// <exception cref="InvalidOperationException"></exception>
         /// <exception cref="TwitterException"></exception>
         /// <returns></returns>
-        private void GetOAuthResponce(string method, string url, SortedDictionary<string, string> args, Action<Stream> postResponceAction)
+        private object GetOAuthResponce(string method, string url, SortedDictionary<string, string> args, DataContractJsonSerializer serializer)
         {
             HttpWebRequest req;
             if (AuthenticationMode.HasFlag(TwitterAuthenticationMode.UserAuthentication) && AvailableUserAuthenticationOnlyAPI)
@@ -169,7 +169,7 @@ namespace TwitterLib
                 using (HttpWebResponse res = (HttpWebResponse)req.GetResponse())
                 using (Stream stream = res.GetResponseStream())
                 {
-                    postResponceAction(stream);
+                    return serializer.ReadObject(stream);
                 }
             }
             catch (WebException wex)
