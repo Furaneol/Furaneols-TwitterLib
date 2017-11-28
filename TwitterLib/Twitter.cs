@@ -4,6 +4,8 @@ using System.Text;
 using System.Runtime.Serialization.Json;
 using System.Net;
 using System.IO;
+using System.Globalization;
+using System.Drawing;
 
 namespace TwitterLib
 {
@@ -39,6 +41,26 @@ namespace TwitterLib
             }
             return builder.ToString();
         }
+        /// <summary>
+        /// Twitterオリジナル形式の日付文字列を解析します。
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        internal static DateTime ParseDateTime(string value)
+        {
+            return DateTime.ParseExact(value.Insert(23, ":"), "ddd MMM dd HH:mm:ss zzz yyyy", CultureInfo.GetCultureInfo("en-us"));
+        }
+        /// <summary>
+        /// 6文字の16進数文字列から色情報を読み込みます。
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        internal static Color ParseColor(string value)
+        {
+            int c = Convert.ToInt32("ff" + value, 16);
+            return Color.FromArgb(c);
+        }
+
 
         public Twitter()
         {

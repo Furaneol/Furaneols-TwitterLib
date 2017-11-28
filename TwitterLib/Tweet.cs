@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using System.Globalization;
 using TwitterLib.Entities;
 
 namespace TwitterLib
@@ -16,7 +15,7 @@ namespace TwitterLib
         internal string CreatedAt_raw
         {
             get { return CreatedAt.ToString(); }
-            set { CreatedAt = DateTime.ParseExact(value.Insert(23, ":"), "ddd MMM dd HH:mm:ss zzz yyyy", CultureInfo.GetCultureInfo("en-us")); }
+            set { CreatedAt = Twitter.ParseDateTime(value); }
         }
         /// <summary>
         /// ツイートの投稿時刻を取得します。
