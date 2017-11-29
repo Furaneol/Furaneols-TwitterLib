@@ -163,8 +163,66 @@ namespace TwitterLib
             set { ProfileLinkColor = Twitter.ParseColor(value); }
         }
         /// <summary>
-        /// リンクの色を取得します。
+        /// プロフィール上のリンクの色を取得します。
         /// </summary>
         public Color ProfileLinkColor { get; private set; }
+
+        [DataMember(Name = "profile_sidebar_border_color")]
+        private string profileSidebarBorderColor
+        {
+            get { return ProfileSidebarBorderColor.R.ToString("x2") + ProfileSidebarBorderColor.G.ToString("x2") + ProfileSidebarBorderColor.B.ToString("x2"); }
+            set { ProfileSidebarBorderColor = Twitter.ParseColor(value); }
+        }
+        /// <summary>
+        /// プロフィールのサイドバーにおける境界線の色を取得します。
+        /// </summary>
+        public Color ProfileSidebarBorderColor { get; private set; }
+
+        [DataMember(Name = "profile_sidebar_fill_color")]
+        private string profileSidebarFillColor
+        {
+            get { return string.Format("{0:x2}{1:x2}{2:x2}", ProfileSidebarFillColor.R, ProfileSidebarFillColor.G, ProfileSidebarFillColor.B); }
+            set { ProfileSidebarFillColor = Twitter.ParseColor(value); }
+        }
+        /// <summary>
+        /// プロフィールのサイドバーにおける塗りつぶし色を取得します。
+        /// </summary>
+        public Color ProfileSidebarFillColor { get; private set; }
+
+        [DataMember(Name ="profile_text_color")]
+        private string profileTextColor
+        {
+            get { return string.Format("{0:x2}{1:x2}{2:x2}", ProfileTextColor.R, ProfileTextColor.G, ProfileTextColor.B); }
+            set { ProfileTextColor = Twitter.ParseColor(value); }
+        }
+        /// <summary>
+        /// プロフィールのテキスト色を取得します。
+        /// </summary>
+        public Color ProfileTextColor { get; private set; }
+        /// <summary>
+        /// プロフィールで背景画像を使用しているかどうかを示す値を取得します。
+        /// </summary>
+        [DataMember(Name = "profile_use_background_image")]
+        public bool ProfileUseBackgroundImage { get; private set; }
+        /// <summary>
+        /// プロフィールが未変更であるかどうかを示す値を取得します。
+        /// </summary>
+        [DataMember(Name = "default_profile")]
+        public bool IsDefaultProfile { get; private set; }
+        /// <summary>
+        /// 初期アイコンを使用しているかどうかを示す値を取得します。
+        /// </summary>
+        [DataMember(Name = "default_profile_image")]
+        public bool IsDefaultProfileImage { get; private set; }
+        /// <summary>
+        /// 表示が保留されている国の一覧を取得します。
+        /// </summary>
+        [DataMember(IsRequired = false, Name = "withheld_in_countries")]
+        public string WithheldInCountries { get; private set; }
+        /// <summary>
+        /// 表示保留の範囲を示す文字列を取得します。
+        /// </summary>
+        [DataMember(IsRequired =false,Name = "withheld_scope")]
+        public string WithheldScope { get; private set; }
     }
 }
