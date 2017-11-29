@@ -222,7 +222,7 @@ namespace TwitterLib
         /// <summary>
         /// 表示保留の範囲を示す文字列を取得します。
         /// </summary>
-        [DataMember(IsRequired =false,Name = "withheld_scope")]
+        [DataMember(IsRequired = false, Name = "withheld_scope")]
         public string WithheldScope { get; private set; }
     }
 }
