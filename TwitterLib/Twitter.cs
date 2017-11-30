@@ -66,6 +66,7 @@ namespace TwitterLib
         {
             AuthenticationMode = TwitterAuthenticationMode.None;
         }
+        #region 認証情報
         /// <summary>
         /// OAuth認証用のConsumer Keyを取得または設定します。
         /// </summary>
@@ -90,7 +91,8 @@ namespace TwitterLib
         /// 認証モードを取得または設定します。
         /// </summary>
         public TwitterAuthenticationMode AuthenticationMode { get; set; }
-
+        #endregion
+        #region OAuth2
         private string CreateOAuth2Credential()
         {
             string baseString = UrlEncode(ConsumerKey) + ":" + UrlEncode(ConsumerSecret);
@@ -153,6 +155,8 @@ namespace TwitterLib
                 throw new TwitterException(wex);
             }
         }
+        #endregion
+        #region チェック用
         /// <summary>
         /// ユーザー認証が必要なAPIの利用準備が出来ているかどうかを取得します。
         /// </summary>
@@ -161,6 +165,7 @@ namespace TwitterLib
         /// Application-only Authorizationリクエストの利用準備が出来ているかどうかを取得します。
         /// </summary>
         private bool AvailableApplicationAuthenticationTokenRequest => !string.IsNullOrWhiteSpace(BearerToken);
+        #endregion
         /// <summary>
         /// 応答ストリームを取得します。
         /// </summary>
