@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.Serialization.Json;
+using System;
 
 namespace TwitterLib
 {
@@ -37,9 +37,28 @@ namespace TwitterLib
                 args["exclude_replies"] = excludeReplies.ToString().ToLower();
             if (includeRetweets.HasValue)
                 args["include_rts"] = includeRetweets.ToString().ToLower();
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Tweet[]));
-            return (Tweet[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/statuses/user_timeline.json", args, serializer);
+            return (Tweet[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/statuses/user_timeline.json", args, typeof(Tweet[]));
         }
 
+    }
+
+    public partial class User
+    {
+        /// <summary>
+        /// 投稿されたツイートの一覧を取得します。このメソッドはTwitter.GetUserTimelineメソッドのエイリアスです。
+        /// </summary>
+        /// <param name="count"></param>
+        /// <param name="sinceId"></param>
+        /// <param name="maxId"></param>
+        /// <param name="trimUser"></param>
+        /// <param name="excludeReplies"></param>
+        /// <param name="includeRetweets"></param>
+        /// <returns></returns>
+        public Tweet[] GetTimeline(int? count = null, ulong? sinceId = null, ulong? maxId = null, bool? trimUser = null, bool? excludeReplies = null, bool? includeRetweets = null)
+        {
+            if (Parent == null)
+                throw new InvalidOperationException("Parentプロパティがnullであるため、User.GetTimelineメソッドは使用できません。");
+            return Parent.GetUserTimeline(this.UserID, count, sinceId, maxId, trimUser, excludeReplies, includeRetweets);
+        }
     }
 }
