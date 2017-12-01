@@ -8,7 +8,7 @@ namespace TwitterLib
     /// ユーザー情報を格納するオブジェクトです。
     /// </summary>
     [DataContract]
-    public class User : ApiResponce
+    public partial class User : ApiResponce
     {
         /// <summary>
         /// IDを取得します。
