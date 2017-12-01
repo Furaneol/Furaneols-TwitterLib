@@ -12,6 +12,8 @@ namespace TwitterLib
         /// IDの一覧を取得します。
         /// </summary>
         [DataMember(Name = "ids")]
-        public ulong IDList { get; internal set; }
+        public ulong[] IDList { get; internal set; }
+
+        public override Twitter Parent { get; internal set; }
     }
 }

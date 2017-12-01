@@ -6,7 +6,7 @@ namespace TwitterLib
     /// カーソルナビゲーション情報部分を定義するクラスです。
     /// </summary>
     [DataContract]
-    public class CursorNavigator:ApiResponce
+    public abstract class CursorNavigator : ApiResponce
     {
         /// <summary>
         /// 前のページIDを取得または設定します。
@@ -18,7 +18,5 @@ namespace TwitterLib
         /// </summary>
         [DataMember(Name = "next_cursor")]
         public ulong NextCursor { get; internal set; }
-
-        public override Twitter Parent { get; internal set; }
     }
 }

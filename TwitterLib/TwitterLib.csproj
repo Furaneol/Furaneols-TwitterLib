@@ -52,6 +52,7 @@
     <Compile Include="Entities\Mention.cs" />
     <Compile Include="Entities\Symbol.cs" />
     <Compile Include="Entities\Url.cs" />
+    <Compile Include="FollowsAndFollowers.cs" />
     <Compile Include="HomeTimeline.cs" />
     <Compile Include="IdContainer.cs" />
     <Compile Include="ApiResponce.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="OAuth.cs" />
     <Compile Include="Twitter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserContainer.cs" />
     <Compile Include="UserTimeline.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
