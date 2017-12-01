@@ -176,8 +176,18 @@ namespace TwitterLib
         /// <exception cref="InvalidOperationException"></exception>
         /// <exception cref="TwitterException"></exception>
         /// <returns></returns>
-        internal object GetOAuthResponce(string method, string url, SortedDictionary<string, string> args, DataContractJsonSerializer serializer)
+        internal object GetOAuthResponce(string method, string url, SortedDictionary<string, string> args, Type type)
         {
+            #region 型検証
+            if (type.BaseType != typeof(ApiResponce))
+            {
+                Type c = type;
+                while (c != typeof(ApiResponce) && c != typeof(object))
+                    c = c.BaseType;
+                if (c == typeof(object))
+                    throw new ArgumentException("typeパラメーターはApiResponceの派生型を指定する必要があります。", "type");
+            }
+            #endregion
             HttpWebRequest req;
             if (AuthenticationMode.HasFlag(TwitterAuthenticationMode.UserAuthentication) && AvailableUserAuthenticationOnlyAPI)
             {
@@ -191,12 +201,29 @@ namespace TwitterLib
             {
                 throw new InvalidOperationException("認証情報が設定されていないか、AuthenticationModeプロパティの値が不適切です。");
             }
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(type);
             try
             {
+                object raw;
                 using (HttpWebResponse res = (HttpWebResponse)req.GetResponse())
                 using (Stream stream = res.GetResponseStream())
                 {
-                    return serializer.ReadObject(stream);
+                    raw = serializer.ReadObject(stream);
+                }
+                if (type.IsArray)
+                {
+                    ApiResponce[] array = (ApiResponce[])raw;
+                    foreach(ApiResponce item in array)
+                    {
+                        item.Parent = this;
+                    }
+                    return array;
+                }
+                else
+                {
+                    ApiResponce result = (ApiResponce)raw;
+                    result.Parent = this;
+                    return result;
                 }
             }
             catch (WebException wex)
