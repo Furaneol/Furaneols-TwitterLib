@@ -14,7 +14,7 @@ namespace TwitterLib
         /// <param name="trimUser"></param>
         /// <param name="includeEntities"></param>
         /// <returns></returns>
-        public Tweet[] GetMentionTimeline(int? count = null, ulong? sinceId = null, ulong? maxId = null, bool? trimUser = null, bool? includeEntities)
+        public Tweet[] GetMentionTimeline(int? count = null, ulong? sinceId = null, ulong? maxId = null, bool? trimUser = null, bool? includeEntities = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>();
             if (count.HasValue)
