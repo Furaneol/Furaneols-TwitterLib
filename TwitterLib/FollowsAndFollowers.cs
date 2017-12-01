@@ -107,4 +107,47 @@ namespace TwitterLib
             } while (cursor != 0);
         }
     }
+
+    public partial class Twitter
+    {
+        /// <summary>
+        /// 指定されたIDを持つユーザーのフォロワーのID一覧を取得します。
+        /// </summary>
+        /// <param name="id">対象のユーザーID</param>
+        /// <param name="cursor">読み込み始めるページ(null:先頭のページ)</param>
+        /// <param name="count">1ページあたりのID数</param>
+        /// <returns></returns>
+        public IEnumerator<ulong> GetFollowerIdList(ulong id, ulong? cursor = null, int? count = null)
+        {
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = id.ToString() };
+            return getFollowerIdList(args, cursor, count);
+        }
+        /// <summary>
+        /// 指定されたスクリーン名を持つユーザーのフォロワーのID一覧を取得します。
+        /// </summary>
+        /// <param name="screenName">対象のスクリーン名</param>
+        /// <param name="cursor">読み込み始めるページ(null:先頭のページ)</param>
+        /// <param name="count">1ページあたりのID数</param>
+        /// <returns></returns>
+        public IEnumerator<ulong> GetFollowerIdList(string screenName, ulong? cursor = null, int? count = null)
+        {
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["screen_name"] = screenName };
+            return getFollowerIdList(args, cursor, count);
+        }
+
+        private IEnumerator<ulong> getFollowerIdList(SortedDictionary<string, string> args, ulong? cursor, int? count)
+        {
+            if (count.HasValue)
+                args["count"] = count.ToString();
+            do
+            {
+                if (cursor.HasValue)
+                    args["cursor"] = cursor.ToString();
+                IdContainer container = (IdContainer)GetOAuthResponce("GET", "https://api.twitter.com/1.1/followers/ids.json", args, typeof(IdContainer));
+                foreach (ulong id in container.IDList)
+                    yield return id;
+            } while (cursor != 0);
+        }
+
+    }
 }
