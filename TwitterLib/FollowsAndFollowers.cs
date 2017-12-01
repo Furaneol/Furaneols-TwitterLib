@@ -16,7 +16,7 @@ namespace TwitterLib
         /// <param name="cursor">読み込み開始ページの番号(null=最初のページ)</param>
         /// <param name="count">1ページあたりのID数</param>
         /// <returns></returns>
-        public IEnumerator<ulong> GetFollowerIdList(ulong? cursor = null, int? count = null)
+        public IEnumerable<ulong> GetFollowerIdList(ulong? cursor = null, int? count = null)
         {
             return Parent.GetFollowerIdList(UserID, cursor, count);
         }
@@ -28,7 +28,7 @@ namespace TwitterLib
         /// <param name="skipStatus">ステータス情報を省略するかどうか</param>
         /// <param name="includeUserEntities"></param>
         /// <returns></returns>
-        public IEnumerator<User> GetFollowerList(ulong? cursor = null, int? count = null, bool? skipStatus = null, bool? includeUserEntities = null)
+        public IEnumerable<User> GetFollowerList(ulong? cursor = null, int? count = null, bool? skipStatus = null, bool? includeUserEntities = null)
         {
             return Parent.GetFollowerList(UserID, cursor, count, skipStatus, includeUserEntities);
         }
@@ -38,8 +38,9 @@ namespace TwitterLib
         /// <param name="cursor">読み込み開始ページの番号(null=最初のページ)</param>
         /// <param name="count">1ページあたりのID数</param>
         /// <returns></returns>
-        public IEnumerator<ulong> GetFollowIdList(ulong? cursor = null, int? count = null)
+        public IEnumerable<ulong> GetFollowIdList(ulong? cursor = null, int? count = null)
         {
+            
         }
         /// <summary>
         /// 現在のユーザーがフォローしている人の一覧を取得します。
@@ -49,8 +50,9 @@ namespace TwitterLib
         /// <param name="skipStatus"></param>
         /// <param name="includeUserEntities"></param>
         /// <returns></returns>
-        public IEnumerator<User> GetFollowList(ulong? cursor = null, int? count = null, bool? skipStatus = null, bool? includeUserEntities = null)
+        public IEnumerable<User> GetFollowList(ulong? cursor = null, int? count = null, bool? skipStatus = null, bool? includeUserEntities = null)
         {
+
         }
     }
 
@@ -64,7 +66,7 @@ namespace TwitterLib
         /// <param name="cursor">読み込み始めるページ(null:先頭のページ)</param>
         /// <param name="count">1ページあたりのID数</param>
         /// <returns></returns>
-        public IEnumerator<ulong> GetFollowerIdList(ulong id, ulong? cursor = null, int? count = null)
+        public IEnumerable<ulong> GetFollowerIdList(ulong id, ulong? cursor = null, int? count = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = id.ToString() };
             return getFollowerIdList(args, cursor, count);
@@ -76,13 +78,13 @@ namespace TwitterLib
         /// <param name="cursor">読み込み始めるページ(null:先頭のページ)</param>
         /// <param name="count">1ページあたりのID数</param>
         /// <returns></returns>
-        public IEnumerator<ulong> GetFollowerIdList(string screenName, ulong? cursor = null, int? count = null)
+        public IEnumerable<ulong> GetFollowerIdList(string screenName, ulong? cursor = null, int? count = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["screen_name"] = screenName };
             return getFollowerIdList(args, cursor, count);
         }
 
-        private IEnumerator<ulong> getFollowerIdList(SortedDictionary<string, string> args, ulong? cursor, int? count)
+        private IEnumerable<ulong> getFollowerIdList(SortedDictionary<string, string> args, ulong? cursor, int? count)
         {
             if (count.HasValue)
                 args["count"] = count.ToString();
@@ -107,7 +109,7 @@ namespace TwitterLib
         /// <param name="skipStatus"></param>
         /// <param name="includeUserEntities"></param>
         /// <returns></returns>
-        public IEnumerator<User> GetFollowerList(ulong id, ulong? cursor = null, int? count = null, bool? skipStatus = null, bool? includeUserEntities = null)
+        public IEnumerable<User> GetFollowerList(ulong id, ulong? cursor = null, int? count = null, bool? skipStatus = null, bool? includeUserEntities = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = id.ToString() };
             return getFollowerList(args, cursor, count, skipStatus, includeUserEntities);
@@ -121,13 +123,13 @@ namespace TwitterLib
         /// <param name="skipStatus"></param>
         /// <param name="includeUserEntities"></param>
         /// <returns></returns>
-        public IEnumerator<User> GetFollowerList(string screenName, ulong? cursor = null, int? count = null, bool? skipStatus = null, bool? includeUserEntities = null)
+        public IEnumerable<User> GetFollowerList(string screenName, ulong? cursor = null, int? count = null, bool? skipStatus = null, bool? includeUserEntities = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["screen_name"] = screenName };
             return getFollowerList(args, cursor, count, skipStatus, includeUserEntities);
         }
 
-        private IEnumerator<User> getFollowerList(SortedDictionary<string, string> args, ulong? cursor, int? count, bool? skipStatus, bool? includeUserEntities)
+        private IEnumerable<User> getFollowerList(SortedDictionary<string, string> args, ulong? cursor, int? count, bool? skipStatus, bool? includeUserEntities)
         {
             if (count.HasValue)
                 args["count"] = count.ToString();
