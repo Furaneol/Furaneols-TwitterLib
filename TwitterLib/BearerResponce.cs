@@ -6,7 +6,7 @@ namespace TwitterLib
     /// oauth2/tokenの応答情報を格納するオブジェクトです。
     /// </summary>
     [DataContract]
-    internal class BearerResponce
+    internal class BearerResponce:ApiResponce
     {
         /// <summary>
         /// トークンの種類を取得します。
@@ -18,5 +18,7 @@ namespace TwitterLib
         /// </summary>
         [DataMember(Name = "access_token")]
         public string BearerToken { get; private set; }
+
+        public override Twitter Parent { get; internal set; }
     }
 }

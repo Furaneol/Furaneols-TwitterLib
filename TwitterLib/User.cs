@@ -8,7 +8,7 @@ namespace TwitterLib
     /// ユーザー情報を格納するオブジェクトです。
     /// </summary>
     [DataContract]
-    public class User
+    public class User : ApiResponce
     {
         /// <summary>
         /// IDを取得します。
@@ -38,7 +38,7 @@ namespace TwitterLib
         /// <summary>
         /// ホームページとして設定された文字列を取得します。
         /// </summary>
-        [DataMember(Name="url")]
+        [DataMember(Name = "url")]
         public string Url { get; private set; }
         /// <summary>
         /// プロフィール文を取得します。
@@ -139,7 +139,7 @@ namespace TwitterLib
         /// <summary>
         /// プロフィールの背景画像をタイル状に敷き詰めて表示するかどうかを示す値を取得します。
         /// </summary>
-        [DataMember(Name ="profile_background_tile")]
+        [DataMember(Name = "profile_background_tile")]
         public bool ProfileBackgroundTile { get; private set; }
         /// <summary>
         /// プロフィールのヘッダー画像が格納されているURLを取得します。
@@ -158,7 +158,8 @@ namespace TwitterLib
         public string IconImageUrlHttps { get; private set; }
 
         [DataMember(Name = "profile_link_color")]
-        private string profileLinkColor {
+        private string profileLinkColor
+        {
             get { return ProfileLinkColor.R.ToString("x2") + ProfileLinkColor.G.ToString("x2") + ProfileLinkColor.B.ToString("x2"); }
             set { ProfileLinkColor = Twitter.ParseColor(value); }
         }
@@ -189,7 +190,7 @@ namespace TwitterLib
         /// </summary>
         public Color ProfileSidebarFillColor { get; private set; }
 
-        [DataMember(Name ="profile_text_color")]
+        [DataMember(Name = "profile_text_color")]
         private string profileTextColor
         {
             get { return string.Format("{0:x2}{1:x2}{2:x2}", ProfileTextColor.R, ProfileTextColor.G, ProfileTextColor.B); }
@@ -224,5 +225,7 @@ namespace TwitterLib
         /// </summary>
         [DataMember(IsRequired = false, Name = "withheld_scope")]
         public string WithheldScope { get; private set; }
+
+        public override Twitter Parent { get; internal set; }
     }
 }

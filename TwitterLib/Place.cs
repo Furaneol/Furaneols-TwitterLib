@@ -11,7 +11,7 @@ namespace TwitterLib
     /// 場所の情報を格納するオブジェクトです。
     /// </summary>
     [DataContract]
-    public class Place
+    public class Place : ApiResponce
     {
         /// <summary>
         /// 識別文字列を取得します。
@@ -54,12 +54,13 @@ namespace TwitterLib
         [DataMember(Name = "bounding_box")]
         public BoundingBox BoundingBox { get; internal set; }
 
+        public override Twitter Parent { get; internal set; }
     }
     /// <summary>
     /// エリアの端を示す座標情報を格納するオブジェクトです。
     /// </summary>
     [DataContract]
-    public class BoundingBox
+    public class BoundingBox : ApiResponce
     {
         /// <summary>
         /// ボックスを囲む位置情報の配列を取得します。
@@ -71,5 +72,7 @@ namespace TwitterLib
         /// </summary>
         [DataMember(Name = "type")]
         public string Type { get; internal set; }
+
+        public override Twitter Parent { get; internal set; }
     }
 }

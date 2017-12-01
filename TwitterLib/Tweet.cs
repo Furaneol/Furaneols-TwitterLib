@@ -8,9 +8,9 @@ namespace TwitterLib
     /// ツイートオブジェクトのデシリアライズ用中間クラスです。
     /// </summary>
     [DataContract]
-    public class Tweet
+    public class Tweet : ApiResponce
     {
-        
+
         [DataMember(Name = "created_at")]
         internal string CreatedAt_raw
         {
@@ -29,7 +29,7 @@ namespace TwitterLib
         /// <summary>
         /// ツイートの識別番号を文字列として取得します。
         /// </summary>
-        [DataMember(Name ="id_str")]
+        [DataMember(Name = "id_str")]
         public string StringID { get; internal set; }
         /// <summary>
         /// ツイートを投稿したアプリケーションの情報を示す文字列を取得します。
@@ -49,12 +49,12 @@ namespace TwitterLib
         /// <summary>
         /// 返信先のツイートIDを文字列として取得します。このツイートが返信でない場合はnullを返します。
         /// </summary>
-        [DataMember(Name ="in_reply_to_status_id_str")]
+        [DataMember(Name = "in_reply_to_status_id_str")]
         public string InReplyToStatusStringID { get; internal set; }
         /// <summary>
         /// 返信先のユーザーIDを取得します。このツイートが返信でない場合はnullを返します。
         /// </summary>
-        [DataMember(Name ="in_reply_to_user_id")]
+        [DataMember(Name = "in_reply_to_user_id")]
         public ulong? InReplyToUserID { get; internal set; }
         /// <summary>
         /// 返信先のユーザーIDを文字列として取得します。このツイートが返信でない場合はnullを返します。
@@ -64,7 +64,7 @@ namespace TwitterLib
         /// <summary>
         /// 投稿したユーザーの情報を取得します。
         /// </summary>
-        [DataMember(Name ="user")]
+        [DataMember(Name = "user")]
         public User User { get; internal set; }
         /// <summary>
         /// 投稿時点の詳細な位置情報を取得します。
@@ -109,12 +109,12 @@ namespace TwitterLib
         /// <summary>
         /// いいねされた回数を取得します。
         /// </summary>
-        [DataMember(Name ="favorite_count")]
+        [DataMember(Name = "favorite_count")]
         public int FavoriteCount { get; internal set; }
         /// <summary>
         /// ツイートに埋め込まれているコンテンツの情報を取得します。
         /// </summary>
-        [DataMember(Name ="entities")]
+        [DataMember(Name = "entities")]
         public Entity Entities { get; internal set; }
         /// <summary>
         /// 現在のユーザーがこのツイートをいいねしているかどうかを取得します。
@@ -146,5 +146,7 @@ namespace TwitterLib
         /// </summary>
         [DataMember(IsRequired = false, Name = "withheld_in_countries")]
         public string[] WithheldCountry { get; internal set; }
+
+        public override Twitter Parent { get; internal set; }
     }
 }
