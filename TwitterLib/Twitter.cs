@@ -173,6 +173,7 @@ namespace TwitterLib
         /// <param name="url"></param>
         /// <param name="args"></param>
         /// <param name="postResponceAction"></param>
+        /// <exception cref="ArgumentException"></exception>
         /// <exception cref="InvalidOperationException"></exception>
         /// <exception cref="TwitterException"></exception>
         /// <returns></returns>
