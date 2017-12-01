@@ -36,8 +36,7 @@ namespace TwitterLib
                 args["exclude_replies"] = excludeReplies.ToString().ToLower();
             if (includeEntities.HasValue)
                 args["include_entities"] = includeEntities.ToString().ToLower();
-            DataContractJsonSerializer js = new DataContractJsonSerializer(typeof(Tweet[]));
-            return (Tweet[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/statuses/home_timeline.json", args, js);
+            return (Tweet[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/statuses/home_timeline.json", args, typeof(Tweet[]));
         }
     }
 }

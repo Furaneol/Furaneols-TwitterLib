@@ -10,7 +10,6 @@ namespace TwitterLib
     [DataContract]
     public class Tweet : ApiResponce
     {
-
         [DataMember(Name = "created_at")]
         internal string CreatedAt_raw
         {
@@ -147,6 +146,16 @@ namespace TwitterLib
         [DataMember(IsRequired = false, Name = "withheld_in_countries")]
         public string[] WithheldCountry { get; internal set; }
 
-        public override Twitter Parent { get; internal set; }
+        Twitter parent;
+        public override Twitter Parent
+        {
+            get { return parent; }
+            internal set
+            {
+                parent = value;
+                if (User != null)
+                    User.Parent = value;
+            }
+        }
     }
 }

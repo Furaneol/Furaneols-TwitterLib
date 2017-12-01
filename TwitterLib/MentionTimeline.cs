@@ -27,8 +27,7 @@ namespace TwitterLib
                 args["trim_user"] = trimUser.ToString().ToLower();
             if (includeEntities.HasValue)
                 args["include_entities"] = includeEntities.ToString().ToLower();
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Tweet[]));
-            return (Tweet[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/statuses/mentions_timeline.json", args, serializer);
+            return (Tweet[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/statuses/mentions_timeline.json", args, typeof(Tweet[]));
         }
     }
 }
