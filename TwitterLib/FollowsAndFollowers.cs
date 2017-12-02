@@ -338,7 +338,7 @@ namespace TwitterLib
         /// IDを指定してユーザー情報を取得します。
         /// </summary>
         /// <param name="ids">1以上100以下の長さを持つIDの配列</param>
-        /// <param name="includeEntities">エンティティを含めるかどうか</param>
+        /// <param name="includeEntities">エンティティ情報を含めるかどうか</param>
         /// <returns></returns>
         public User[] GetUsers(ulong[] ids, bool? includeEntities = null)
         {
@@ -367,6 +367,32 @@ namespace TwitterLib
             if (includeEntities.HasValue)
                 args["include_entities"] = includeEntities.ToString().ToLower();
             return (User[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/users/search.json", args, typeof(User[]));
+        }
+        /// <summary>
+        /// 指定されたIDを持つユーザーの情報を取得します。
+        /// </summary>
+        /// <param name="id">取得するユーザーのID</param>
+        /// <param name="includeEntities">エンティティ情報を含めるかどうか</param>
+        /// <returns></returns>
+        public User GetUser(ulong id, bool? includeEntities = null)
+        {
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = id.ToString() };
+            if (includeEntities.HasValue)
+                args["include_entities"] = includeEntities.ToString().ToLower();
+            return (User)GetOAuthResponce("GET", "https://api.twitter.com/1.1/users/show.json", args, typeof(User));
+        }
+        /// <summary>
+        /// 指定されたスクリーン名を持つユーザーの情報を取得します。
+        /// </summary>
+        /// <param name="screenName">取得するユーザーのスクリーン名</param>
+        /// <param name="includeEntities">エンティティ情報を含めるかどうか</param>
+        /// <returns></returns>
+        public User GetUser(string screenName, bool? includeEntities = null)
+        {
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["screen_name"] = screenName };
+            if (includeEntities.HasValue)
+                args["include_entities"] = includeEntities.ToString().ToLower();
+            return (User)GetOAuthResponce("GET", "https://api.twitter.com/1.1/users/show.json", args, typeof(User));
         }
         #endregion
     }
