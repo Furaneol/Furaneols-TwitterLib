@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using System.Drawing;
+using TwitterLib.Entities;
 
 namespace TwitterLib
 {
@@ -225,6 +226,16 @@ namespace TwitterLib
         /// </summary>
         [DataMember(IsRequired = false, Name = "withheld_scope")]
         public string WithheldScope { get; private set; }
+        /// <summary>
+        /// 最後に投稿したツイートを取得します。このフィールドはリクエスト時の指定によって取得されない事があります。
+        /// </summary>
+        [DataMember(IsRequired =false,Name ="status")]
+        public Tweet Status { get; private set; }
+        /// <summary>
+        /// プロフィールに含まれるメタ情報を取得します。このフィールドはリクエスト時の指定によって取得されない事があります。
+        /// </summary>
+        [DataMember(IsRequired =false,Name ="entities")]
+        public Entity Entities { get; private set; }
 
         public override Twitter Parent { get; internal set; }
     }
