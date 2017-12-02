@@ -16,13 +16,7 @@ namespace TwitterLib
         /// <param name="excludeReplies"></param>
         /// <param name="includeRetweets"></param>
         /// <returns></returns>
-        public Tweet[] GetUserTimeline(ulong userId,
-            int? count = null,
-            ulong? sinceId = null,
-            ulong? maxId = null,
-            bool? trimUser = null,
-            bool? excludeReplies = null,
-            bool? includeRetweets = null)
+        public Tweet[] GetUserTimeline(ulong userId, int? count = null, ulong? sinceId = null, ulong? maxId = null, bool? trimUser = null, bool? excludeReplies = null, bool? includeRetweets = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = userId.ToString() };
             if (count.HasValue)
