@@ -44,10 +44,10 @@ namespace TwitterLib
         /// <summary>
         /// 現在のユーザーがフォローしている人の一覧を取得します。
         /// </summary>
-        /// <param name="cursor"></param>
         /// <param name="count"></param>
         /// <param name="skipStatus"></param>
         /// <param name="includeUserEntities"></param>
+        /// <param name="cursor"></param>
         /// <returns></returns>
         public IEnumerable<User> GetFollowList(int? count = null, bool? skipStatus = null, bool? includeUserEntities = null, ulong? cursor = null)
         {
@@ -238,6 +238,65 @@ namespace TwitterLib
                     yield return user;
 
             } while (cursor != 0);
+        }
+        #endregion
+
+        #region Friendship
+        /// <summary>
+        /// 認証ユーザーが保留している、フォローを希望しているユーザーの一覧を取得します。
+        /// </summary>
+        /// <param name="cursor"></param>
+        /// <returns></returns>
+        public IEnumerable<ulong> GetIncomingFriendship(ulong? cursor = null)
+        {
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>();
+            do
+            {
+                if (cursor.HasValue)
+                    args["cursor"] = cursor.ToString();
+                IdContainer container = (IdContainer)GetOAuthResponce("GET", "https://api.twitter.com/1.1/friendships/incoming.json", args, typeof(IdContainer));
+                cursor = container.NextCursor;
+                foreach (ulong id in container.IDList)
+                    yield return id;
+            } while (cursor != 0);
+        }
+        /// <summary>
+        /// 認証ユーザーが保留されている、フォローをリクエストしているユーザーの一覧を取得します。
+        /// </summary>
+        /// <param name="cursor"></param>
+        /// <returns></returns>
+        public IEnumerable<ulong> GetOutgoingFriendship(ulong? cursor = null)
+        {
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>();
+            do
+            {
+                if (cursor.HasValue)
+                    args["cursor"] = cursor.ToString();
+                IdContainer container = (IdContainer)GetOAuthResponce("GET", "https://api.twitter.com/1.1/friendships/outgoing.json", args, typeof(IdContainer));
+                cursor = container.NextCursor;
+                foreach (ulong id in container.IDList)
+                    yield return id;
+            } while (cursor != 0);
+        }
+        /// <summary>
+        /// 1つ以上のスクリーン名を指定して関係性を取得します。
+        /// </summary>
+        /// <param name="screenNames"></param>
+        /// <returns></returns>
+        public UserFriendship[] GetFriendships(params string[] screenNames)
+        {
+            if (screenNames.Length > 100)
+                throw new ArgumentException("100個以上のスクリーン名を指定することはできません。");
+        }
+        /// <summary>
+        /// 1つ以上のIDを指定して関係性を取得します。
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        public UserFriendship[] GetFriendships(params ulong[] ids)
+        {
+            if (ids.Length > 100)
+                throw new ArgumentException("100個以上のIDを指定することはできません。");
         }
         #endregion
     }

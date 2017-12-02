@@ -53,6 +53,7 @@
     <Compile Include="Entities\Symbol.cs" />
     <Compile Include="Entities\Url.cs" />
     <Compile Include="FollowsAndFollowers.cs" />
+    <Compile Include="UserFriendship.cs" />
     <Compile Include="HomeTimeline.cs" />
     <Compile Include="IdContainer.cs" />
     <Compile Include="ApiResponce.cs" />
