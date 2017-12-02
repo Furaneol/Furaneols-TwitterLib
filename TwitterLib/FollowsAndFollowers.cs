@@ -12,13 +12,12 @@ namespace TwitterLib
         /// <summary>
         /// 現在のユーザーをフォローしている人(フォロワー)のユーザーID一覧を取得します。
         /// </summary>
-        /// <see cref="https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-followers-ids"/>
         /// <param name="cursor">読み込み開始ページの番号(null=最初のページ)</param>
         /// <param name="count">1ページあたりのID数</param>
         /// <returns></returns>
-        public IEnumerable<ulong> GetFollowerIdList(ulong? cursor = null, int? count = null)
+        public IEnumerable<ulong> GetFollowerIdList(int? count = null, ulong? cursor = null)
         {
-            return Parent.GetFollowerIdList(UserID, cursor, count);
+            return Parent.GetFollowerIdList(UserID, count, cursor);
         }
         /// <summary>
         /// 現在のユーザーをフォローしている人(フォロワー)の一覧を取得します。
@@ -28,9 +27,9 @@ namespace TwitterLib
         /// <param name="skipStatus">ステータス情報を省略するかどうか</param>
         /// <param name="includeUserEntities"></param>
         /// <returns></returns>
-        public IEnumerable<User> GetFollowerList(ulong? cursor = null, int? count = null, bool? skipStatus = null, bool? includeUserEntities = null)
+        public IEnumerable<User> GetFollowerList(int? count = null, bool? skipStatus = null, bool? includeUserEntities = null, ulong? cursor = null)
         {
-            return Parent.GetFollowerList(UserID, cursor, count, skipStatus, includeUserEntities);
+            return Parent.GetFollowerList(UserID, count, skipStatus, includeUserEntities, cursor);
         }
         /// <summary>
         /// 現在のユーザーがフォローしている人のID一覧を取得します。
@@ -40,7 +39,7 @@ namespace TwitterLib
         /// <returns></returns>
         public IEnumerable<ulong> GetFollowIdList(int? count = null, ulong? cursor = null)
         {
-
+            return Parent.GetFollowIdList(UserID, count, cursor);
         }
         /// <summary>
         /// 現在のユーザーがフォローしている人の一覧を取得します。
@@ -52,7 +51,7 @@ namespace TwitterLib
         /// <returns></returns>
         public IEnumerable<User> GetFollowList(int? count = null, bool? skipStatus = null, bool? includeUserEntities = null, ulong? cursor = null)
         {
-
+            return Parent.GetFollowList(UserID, count, skipStatus, includeUserEntities, cursor);
         }
     }
 
@@ -66,10 +65,10 @@ namespace TwitterLib
         /// <param name="cursor">読み込み始めるページ(null:先頭のページ)</param>
         /// <param name="count">1ページあたりのID数</param>
         /// <returns></returns>
-        public IEnumerable<ulong> GetFollowerIdList(ulong id, ulong? cursor = null, int? count = null)
+        public IEnumerable<ulong> GetFollowerIdList(ulong id, int? count = null, ulong? cursor = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = id.ToString() };
-            return getFollowerIdList(args, cursor, count);
+            return getFollowerIdList(args, count, cursor);
         }
         /// <summary>
         /// 指定されたスクリーン名を持つユーザーのフォロワーのID一覧を取得します。
@@ -78,13 +77,13 @@ namespace TwitterLib
         /// <param name="cursor">読み込み始めるページ(null:先頭のページ)</param>
         /// <param name="count">1ページあたりのID数</param>
         /// <returns></returns>
-        public IEnumerable<ulong> GetFollowerIdList(string screenName, ulong? cursor = null, int? count = null)
+        public IEnumerable<ulong> GetFollowerIdList(string screenName, int? count = null, ulong? cursor = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["screen_name"] = screenName };
-            return getFollowerIdList(args, cursor, count);
+            return getFollowerIdList(args, count, cursor);
         }
 
-        private IEnumerable<ulong> getFollowerIdList(SortedDictionary<string, string> args, ulong? cursor, int? count)
+        private IEnumerable<ulong> getFollowerIdList(SortedDictionary<string, string> args, int? count, ulong? cursor)
         {
             if (count.HasValue)
                 args["count"] = count.ToString();
@@ -109,10 +108,10 @@ namespace TwitterLib
         /// <param name="skipStatus"></param>
         /// <param name="includeUserEntities"></param>
         /// <returns></returns>
-        public IEnumerable<User> GetFollowerList(ulong id, ulong? cursor = null, int? count = null, bool? skipStatus = null, bool? includeUserEntities = null)
+        public IEnumerable<User> GetFollowerList(ulong id, int? count = null, bool? skipStatus = null, bool? includeUserEntities = null, ulong? cursor = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = id.ToString() };
-            return getFollowerList(args, cursor, count, skipStatus, includeUserEntities);
+            return getFollowerList(args, count, skipStatus, includeUserEntities, cursor);
         }
         /// <summary>
         /// 指定されたスクリーン名を持つユーザーのフォロワー一覧を取得します。
@@ -123,13 +122,13 @@ namespace TwitterLib
         /// <param name="skipStatus"></param>
         /// <param name="includeUserEntities"></param>
         /// <returns></returns>
-        public IEnumerable<User> GetFollowerList(string screenName, ulong? cursor = null, int? count = null, bool? skipStatus = null, bool? includeUserEntities = null)
+        public IEnumerable<User> GetFollowerList(string screenName, int? count = null, bool? skipStatus = null, bool? includeUserEntities = null, ulong? cursor = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["screen_name"] = screenName };
-            return getFollowerList(args, cursor, count, skipStatus, includeUserEntities);
+            return getFollowerList(args, count, skipStatus, includeUserEntities, cursor);
         }
 
-        private IEnumerable<User> getFollowerList(SortedDictionary<string, string> args, ulong? cursor, int? count, bool? skipStatus, bool? includeUserEntities)
+        private IEnumerable<User> getFollowerList(SortedDictionary<string, string> args, int? count, bool? skipStatus, bool? includeUserEntities, ulong? cursor)
         {
             if (count.HasValue)
                 args["count"] = count.ToString();
@@ -150,19 +149,96 @@ namespace TwitterLib
         #endregion
 
         #region GetFollowIdList
+        /// <summary>
+        /// 指定されたIDを持つユーザーがフォローしているアカウントのID一覧を取得します。
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="count"></param>
+        /// <param name="cursor"></param>
+        /// <returns></returns>
         public IEnumerable<ulong> GetFollowIdList(ulong id, int? count = null, ulong? cursor = null)
         {
-
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = id.ToString() };
+            return getFollowIdList(args, count, cursor);
         }
-
+        /// <summary>
+        /// 指定されたスクリーン名を持つユーザーがフォローしているアカウントのID一覧を取得します。
+        /// </summary>
+        /// <param name="screenName"></param>
+        /// <param name="count"></param>
+        /// <param name="cursor"></param>
+        /// <returns></returns>
         public IEnumerable<ulong> GetFollowIdList(string screenName, int? count = null, ulong? cursor = null)
         {
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["screen_name"] = screenName };
+            return getFollowIdList(args, count, cursor);
+        }
 
+        private IEnumerable<ulong> getFollowIdList(SortedDictionary<string, string> args, int? count, ulong? cursor)
+        {
+            if (count.HasValue)
+                args["count"] = count.ToString();
+            do
+            {
+                if (cursor.HasValue)
+                    args["cursor"] = cursor.ToString();
+                IdContainer container = (IdContainer)GetOAuthResponce("GET", "https://api.twitter.com/1.1/friends/ids.json", args, typeof(IdContainer));
+                cursor = container.NextCursor;
+                foreach (ulong id in container.IDList)
+                    yield return id;
+            } while (cursor != 0);
         }
         #endregion
 
         #region GetFollowList
+        /// <summary>
+        /// 指定されたIDを持つユーザーがフォローしているアカウントの一覧を取得します。
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="count"></param>
+        /// <param name="skipStatus"></param>
+        /// <param name="includeUserEntities"></param>
+        /// <param name="cursor"></param>
+        /// <returns></returns>
+        public IEnumerable<User> GetFollowList(ulong id, int? count = null, bool? skipStatus = null, bool? includeUserEntities = null, ulong? cursor = null)
+        {
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = id.ToString() };
+            return getFollowList(args, count, skipStatus, includeUserEntities, cursor);
+        }
+        /// <summary>
+        /// 指定されたスクリーン名を持つユーザーがフォローしているアカウントの一覧を取得します。
+        /// </summary>
+        /// <param name="screenName"></param>
+        /// <param name="count"></param>
+        /// <param name="skipStatus"></param>
+        /// <param name="includeUserEntities"></param>
+        /// <param name="cursor"></param>
+        /// <returns></returns>
+        public IEnumerable<User> GetFollowList(string screenName, int? count = null, bool? skipStatus = null, bool? includeUserEntities = null, ulong? cursor = null)
+        {
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["screen_name"] = screenName };
+            return getFollowList(args, count, skipStatus, includeUserEntities, cursor);
+        }
 
+        private IEnumerable<User> getFollowList(SortedDictionary<string, string> args, int? count, bool? skipStatus, bool? includeUserEntities, ulong? cursor)
+        {
+            if (count.HasValue)
+                args["count"] = count.ToString();
+            if (skipStatus.HasValue)
+                args["skip_status"] = skipStatus.ToString().ToLower();
+            if (includeUserEntities.HasValue)
+                args["include_user_entities"] = includeUserEntities.ToString().ToLower();
+            do
+            {
+                if (cursor.HasValue)
+                    args["cursor"] = cursor.ToString();
+                UserContainer container = (UserContainer)GetOAuthResponce("GET", "https://api.twitter.com/1.1/friends/list.json", args, typeof(UserContainer));
+                cursor = container.NextCursor;
+                foreach (User user in container.Users)
+                    yield return user;
+
+            } while (cursor != 0);
+        }
         #endregion
     }
 }
