@@ -38,9 +38,9 @@ namespace TwitterLib
         /// <param name="cursor">読み込み開始ページの番号(null=最初のページ)</param>
         /// <param name="count">1ページあたりのID数</param>
         /// <returns></returns>
-        public IEnumerable<ulong> GetFollowIdList(ulong? cursor = null, int? count = null)
+        public IEnumerable<ulong> GetFollowIdList(int? count = null, ulong? cursor = null)
         {
-            
+
         }
         /// <summary>
         /// 現在のユーザーがフォローしている人の一覧を取得します。
@@ -50,7 +50,7 @@ namespace TwitterLib
         /// <param name="skipStatus"></param>
         /// <param name="includeUserEntities"></param>
         /// <returns></returns>
-        public IEnumerable<User> GetFollowList(ulong? cursor = null, int? count = null, bool? skipStatus = null, bool? includeUserEntities = null)
+        public IEnumerable<User> GetFollowList(int? count = null, bool? skipStatus = null, bool? includeUserEntities = null, ulong? cursor = null)
         {
 
         }
@@ -147,6 +147,22 @@ namespace TwitterLib
                     yield return user;
             } while (cursor != 0);
         }
+        #endregion
+
+        #region GetFollowIdList
+        public IEnumerable<ulong> GetFollowIdList(ulong id, int? count = null, ulong? cursor = null)
+        {
+
+        }
+
+        public IEnumerable<ulong> GetFollowIdList(string screenName, int? count = null, ulong? cursor = null)
+        {
+
+        }
+        #endregion
+
+        #region GetFollowList
+
         #endregion
     }
 }
