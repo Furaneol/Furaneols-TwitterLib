@@ -306,6 +306,15 @@ namespace TwitterLib
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = string.Join(",", ids) };
             return (UserFriendship[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/friendships/lookup.json", args, typeof(UserFriendship[]));
         }
+        /// <summary>
+        /// 現在のユーザーがリツイートの表示を止めているユーザーのID一覧を取得します。
+        /// </summary>
+        /// <returns></returns>
+        public ulong[] GetNoRetweetUsers()
+        {
+            return (ulong[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/friendships/no_retweets/ids.json", new SortedDictionary<string, string>(), typeof(ulong[]));
+        }
         #endregion
+
     }
 }
