@@ -113,7 +113,7 @@ namespace TwitterLib
         /// <summary>
         /// ツイートに埋め込まれているコンテンツの情報を取得します。
         /// </summary>
-        [DataMember(Name = "entities")]
+        [DataMember(IsRequired = false, Name = "entities")]
         public Entity Entities { get; internal set; }
         /// <summary>
         /// 現在のユーザーがこのツイートをいいねしているかどうかを取得します。
