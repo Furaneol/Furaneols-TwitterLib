@@ -99,7 +99,7 @@ namespace TwitterLib
         /// 他のユーザーに埋め込みリツイートされた回数を取得します。
         /// </summary>
         [DataMember(IsRequired = false, Name = "quote_count")]
-        public int QuoteCount { get; private set; }
+        public int? QuoteCount { get; private set; }
         /// <summary>
         /// このツイートへの返信件数を取得します。
         /// </summary>
