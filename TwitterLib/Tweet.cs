@@ -114,7 +114,7 @@ namespace TwitterLib
         /// いいねされた回数を取得します。
         /// </summary>
         [DataMember(Name = "favorite_count")]
-        public int FavoriteCount { get; private set; }
+        public int? FavoriteCount { get; private set; }
         /// <summary>
         /// ツイートに埋め込まれているコンテンツの情報を取得します。
         /// </summary>
