@@ -279,7 +279,7 @@ namespace TwitterLib
             } while (cursor != 0);
         }
         /// <summary>
-        /// 1つ以上のスクリーン名を指定して関係性を取得します。
+        /// 1つ以上のスクリーン名を指定して現在のユーザーとの関係性を取得します。
         /// </summary>
         /// <param name="screenNames">1個以上100個以下のスクリーン名</param>
         /// <returns></returns>
@@ -293,7 +293,7 @@ namespace TwitterLib
             return (UserFriendship[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/friendships/lookup.json", args, typeof(UserFriendship[]));
         }
         /// <summary>
-        /// 1つ以上のIDを指定して関係性を取得します。
+        /// 1つ以上のIDを指定して現在のユーザーとの関係性を取得します。
         /// </summary>
         /// <param name="ids">1個以上100個以下のID</param>
         /// <returns></returns>
@@ -316,5 +316,41 @@ namespace TwitterLib
         }
         #endregion
 
+        #region User
+        /// <summary>
+        /// スクリーン名を指定してユーザー情報を取得します。
+        /// </summary>
+        /// <param name="screenNames">1以上100以下の長さを持つスクリーン名の配列</param>
+        /// <param name="includeEntities">エンティティを含めるかどうか</param>
+        /// <returns></returns>
+        public User[] GetUsers(string[] screenNames, bool? includeEntities = null)
+        {
+            if (screenNames.Length == 0)
+                return new User[] { };
+            if (screenNames.Length > 100)
+                throw new ArgumentException("100個以上のスクリーン名を指定することはできません。");
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["screen_name"] = string.Join(",", screenNames) };
+            if (includeEntities.HasValue)
+                args["include_entities"] = includeEntities.ToString().ToLower();
+            return (User[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/users/lookup.json", args, typeof(User[]));
+        }
+        /// <summary>
+        /// IDを指定してユーザー情報を取得します。
+        /// </summary>
+        /// <param name="ids">1以上100以下の長さを持つIDの配列</param>
+        /// <param name="includeEntities">エンティティを含めるかどうか</param>
+        /// <returns></returns>
+        public User[] GetUsers(ulong[] ids, bool? includeEntities = null)
+        {
+            if (ids.Length == 0)
+                return new User[] { };
+            if (ids.Length > 100)
+                throw new ArgumentException("100個以上のIDを指定することはできません。");
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = string.Join(",", ids) };
+            return (User[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/users/lookup.json", args, typeof(User[]));
+        }
+
+        public 
+        #endregion
     }
 }
