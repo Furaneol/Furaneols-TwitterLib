@@ -95,7 +95,7 @@ namespace TwitterLib
         /// 協定世界時との時差を秒単位で取得します。
         /// </summary>
         [DataMember(Name = "utc_offset")]
-        public int UtcOffset { get; private set; }
+        public int? UtcOffset { get; private set; }
         /// <summary>
         /// タイムゾーンの名前を取得します。
         /// </summary>
@@ -234,7 +234,7 @@ namespace TwitterLib
         /// <summary>
         /// プロフィールに含まれるメタ情報を取得します。このフィールドはリクエスト時の指定によって取得されない事があります。
         /// </summary>
-        [DataMember(IsRequired =false,Name ="entities")]
+        [DataMember(IsRequired = false, Name = "entities")]
         public Entity Entities { get; private set; }
 
         public override Twitter Parent { get; internal set; }
