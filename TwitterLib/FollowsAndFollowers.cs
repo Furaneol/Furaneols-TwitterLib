@@ -281,12 +281,16 @@ namespace TwitterLib
         /// <summary>
         /// 1つ以上のスクリーン名を指定して関係性を取得します。
         /// </summary>
-        /// <param name="screenNames"></param>
+        /// <param name="screenNames">1個以上100個以下のスクリーン名</param>
         /// <returns></returns>
         public UserFriendship[] GetFriendships(params string[] screenNames)
         {
+            if (screenNames.Length == 0)
+                return new UserFriendship[] { };
             if (screenNames.Length > 100)
                 throw new ArgumentException("100個以上のスクリーン名を指定することはできません。");
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["screen_name"] = string.Join(",", screenNames) };
+            return (UserFriendship[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/friendships/lookup.json", args, typeof(UserFriendship[]));
         }
         /// <summary>
         /// 1つ以上のIDを指定して関係性を取得します。
@@ -295,8 +299,12 @@ namespace TwitterLib
         /// <returns></returns>
         public UserFriendship[] GetFriendships(params ulong[] ids)
         {
+            if (ids.Length == 0)
+                return new UserFriendship[] { };
             if (ids.Length > 100)
                 throw new ArgumentException("100個以上のIDを指定することはできません。");
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = string.Join(",", ids) };
+            return (UserFriendship[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/friendships/lookup.json", args, typeof(UserFriendship[]));
         }
         #endregion
     }
