@@ -349,8 +349,25 @@ namespace TwitterLib
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = string.Join(",", ids) };
             return (User[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/users/lookup.json", args, typeof(User[]));
         }
-
-        public 
+        /// <summary>
+        /// ユーザー検索を実行します。
+        /// </summary>
+        /// <param name="query">検索クエリ</param>
+        /// <param name="count">1ページの件数</param>
+        /// <param name="page">ページ番号</param>
+        /// <param name="includeEntities">エンティティを含むかどうか</param>
+        /// <returns></returns>
+        public User[] SearchUser(string query, int? count = null, int? page = null, bool? includeEntities = null)
+        {
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["q"] = query };
+            if (count.HasValue)
+                args["count"] = count.ToString();
+            if (page.HasValue)
+                args["page"] = page.ToString();
+            if (includeEntities.HasValue)
+                args["include_entities"] = includeEntities.ToString().ToLower();
+            return (User[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/users/search.json", args, typeof(User[]));
+        }
         #endregion
     }
 }
