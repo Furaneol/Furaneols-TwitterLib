@@ -295,7 +295,7 @@ namespace TwitterLib
         /// <summary>
         /// 1つ以上のIDを指定して関係性を取得します。
         /// </summary>
-        /// <param name="ids"></param>
+        /// <param name="ids">1個以上100個以下のID</param>
         /// <returns></returns>
         public UserFriendship[] GetFriendships(params ulong[] ids)
         {
