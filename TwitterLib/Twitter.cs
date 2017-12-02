@@ -183,6 +183,8 @@ namespace TwitterLib
             if (type.BaseType != typeof(ApiResponce))
             {
                 Type c = type;
+                if (c.IsArray)
+                    c = c.GetElementType();
                 while (c != typeof(ApiResponce) && c != typeof(object))
                     c = c.BaseType;
                 if (c == typeof(object))
