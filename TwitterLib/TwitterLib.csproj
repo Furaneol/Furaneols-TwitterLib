@@ -59,6 +59,7 @@
     <Compile Include="IdContainer.cs" />
     <Compile Include="MentionTimeline.cs" />
     <Compile Include="Place.cs" />
+    <Compile Include="Streaming.cs" />
     <Compile Include="Tweet.cs" />
     <Compile Include="TwitterAuthenticationMode.cs" />
     <Compile Include="TwitterException.cs" />
