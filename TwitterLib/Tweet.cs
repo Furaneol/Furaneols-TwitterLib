@@ -8,7 +8,7 @@ namespace TwitterLib
     /// ツイートオブジェクトのデシリアライズ用中間クラスです。
     /// </summary>
     [DataContract]
-    public class Tweet : ApiResponce
+    public class Tweet : StreamingMessage
     {
         [DataMember(Name = "created_at")]
         internal string CreatedAt_raw
@@ -162,5 +162,7 @@ namespace TwitterLib
                     User.Parent = value;
             }
         }
+
+        public override StreamingMessageType MessageType => StreamingMessageType.TweetContent;
     }
 }
