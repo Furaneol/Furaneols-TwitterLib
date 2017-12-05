@@ -268,7 +268,7 @@ namespace TwitterLib
         public string ResponceContent { get; }
     }
     /// <summary>
-    /// 
+    /// イベント情報オブジェクトです。
     /// </summary>
     public class EventInfo : StreamingMessage
     {
