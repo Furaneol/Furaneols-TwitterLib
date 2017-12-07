@@ -296,8 +296,11 @@ namespace TwitterLib
         [DataMember(Name = "source")]
         public User SourceUser { get; private set; }
     }
+    /// <summary>
+    /// ツイートを対象としたイベントの情報オブジェクトです。
+    /// </summary>
     [DataContract]
-    public class TweetEventInfo : EventInfo
+    public sealed class TweetEventInfo : EventInfo
     {
         /// <summary>
         /// 対象のツイートを取得します。
