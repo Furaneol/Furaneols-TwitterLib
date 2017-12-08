@@ -55,6 +55,7 @@
     <Compile Include="Entities\Url.cs" />
     <Compile Include="FollowsAndFollowers.cs" />
     <Compile Include="Streaming.cs" />
+    <Compile Include="TwitterList.cs" />
     <Compile Include="UserFriendship.cs" />
     <Compile Include="HomeTimeline.cs" />
     <Compile Include="IdContainer.cs" />
