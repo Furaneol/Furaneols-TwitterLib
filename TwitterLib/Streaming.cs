@@ -102,8 +102,8 @@ namespace TwitterLib
             public ulong UserID { get; private set; }
         }
         #endregion
-
-        private StatusNode status;
+        [DataMember(Name = "status")]
+        private StatusNode status { get; set; }
         /// <summary>
         /// 削除されたツイートのIDを取得します。
         /// </summary>
