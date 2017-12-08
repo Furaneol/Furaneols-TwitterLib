@@ -9,28 +9,28 @@ namespace TwitterLib
     [DataContract]
     internal class StreamingContract
     {
-        [DataMember(Name ="delete")]
+        [DataMember(IsRequired = false, Name = "delete")]
         public TweetDeleteInfo Delete { get; private set; }
 
-        [DataMember(Name ="scrub_geo")]
+        [DataMember(IsRequired = false, Name = "scrub_geo")]
         public ScrubGeoInfo ScrubGeo { get; private set; }
 
-        [DataMember(Name ="limit")]
+        [DataMember(IsRequired = false, Name = "limit")]
         public SpeedLimitInfo Limit { get; private set; }
 
-        [DataMember(Name ="status_withheld")]
+        [DataMember(IsRequired = false, Name = "status_withheld")]
         public StatusWithheldInfo StatusWithheld { get; private set; }
 
-        [DataMember(Name ="user_withheld")]
+        [DataMember(IsRequired = false, Name = "user_withheld")]
         public UserWithheldInfo UserWithheld { get; private set; }
 
-        [DataMember(Name ="disconnect")]
+        [DataMember(IsRequired = false, Name = "disconnect")]
         public DisconnectionInfo disconnection { get; private set; }
 
-        [DataMember(Name ="warning")]
+        [DataMember(IsRequired = false, Name = "warning")]
         public WarningInfo warning { get; private set; }
 
-        [DataMember(Name = "events")]
+        [DataMember(IsRequired = false, Name = "events")]
         public string EventName { get; private set; }
     }
 }
