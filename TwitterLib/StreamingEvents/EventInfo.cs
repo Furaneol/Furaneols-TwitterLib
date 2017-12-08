@@ -44,4 +44,16 @@ namespace TwitterLib.StreamingEvents
         [DataMember(Name = "target_object")]
         public Tweet TargetedTweet { get; private set; }
     }
+    /// <summary>
+    /// リストを対象としたイベント情報のオブジェクトです。
+    /// </summary>
+    [DataContract]
+    public sealed class ListEventInfo : EventInfo
+    {
+        /// <summary>
+        /// 対象となったリストの情報を取得します。
+        /// </summary>
+        [DataMember(Name ="target_object")]
+        public TwitterList TargetList { get; private set; }
+    }
 }
