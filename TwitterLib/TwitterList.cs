@@ -54,6 +54,7 @@ namespace TwitterLib
         /// </summary>
         [DataMember(Name = "full_name")]
         public string FullName { get; private set; }
+
         [DataMember(Name = "created_at")]
         private string createdAt { get { return CreatedAt.ToString(); } set { CreatedAt = Twitter.ParseDateTime(value); } }
         /// <summary>
