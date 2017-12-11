@@ -1,36 +1,91 @@
-﻿using System.Runtime.Serialization;
-using TwitterLib.StreamingEvents;
+﻿using System;
+using System.Net;
+using System.IO;
+using System.Collections.Generic;
 
 namespace TwitterLib
 {
-    /// <summary>
-    /// ストリーミングメッセージの内容を判別する為の汎用デシリアライザです。
-    /// </summary>
-    [DataContract]
-    internal class StreamingContract
+    public partial class Twitter
     {
-        [DataMember(IsRequired = false, Name = "delete")]
-        public TweetDeleteInfo Delete { get; private set; }
+        List<StreamingControl> streamings;
+        StreamingApiEventHandler streamingCallback;
+        /// <summary>
+        /// ストリーミングデータを受信した際に発生するイベントです。
+        /// </summary>
+        public event StreamingApiEventHandler ReceivedStreamingData
+        {
+            add { streamingCallback += value; }
+            remove { streamingCallback -= value; }
+        }
 
-        [DataMember(IsRequired = false, Name = "scrub_geo")]
-        public ScrubGeoInfo ScrubGeo { get; private set; }
+        public void StartUserStream()
+        {
 
-        [DataMember(IsRequired = false, Name = "limit")]
-        public SpeedLimitInfo Limit { get; private set; }
+        }
+    }
+    /// <summary>
+    /// Streaming APIにおけるデータの開始、受信および終了を制御するオブジェクトです。
+    /// </summary>
+    internal class StreamingControl
+    {
+        bool used, disposed;
+        HttpWebRequest request;
+        Action<string> readLine;
+        /// <summary>
+        /// 制御オブジェクトを作成します。
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="req"></param>
+        public StreamingControl(Twitter parent, HttpWebRequest req)
+        {
+            request = req;
+            used = false;
+            disposed = false;
+        }
+        /// <summary>
+        /// 制御オブジェクトのデストラクタです。
+        /// </summary>
+        ~StreamingControl()
+        {
+            request.Abort();
+        }
+        /// <summary>
+        /// ストリーミング通信を開始します。
+        /// </summary>
+        public void Start()
+        {
+            if (used)
+                throw new InvalidOperationException("Startメソッドを二度使用する事はできません。");
+            request.BeginGetResponse(ProcessResponce, null);
+            used = true;
+        }
+        /// <summary>
+        /// 1行分のデータを受信した時に発生するイベントです。
+        /// </summary>
+        public event Action<string> ReadLine
+        {
+            add { readLine += value; }
+            remove { readLine -= value; }
+        }
 
-        [DataMember(IsRequired = false, Name = "status_withheld")]
-        public StatusWithheldInfo StatusWithheld { get; private set; }
-
-        [DataMember(IsRequired = false, Name = "user_withheld")]
-        public UserWithheldInfo UserWithheld { get; private set; }
-
-        [DataMember(IsRequired = false, Name = "disconnect")]
-        public DisconnectionInfo disconnection { get; private set; }
-
-        [DataMember(IsRequired = false, Name = "warning")]
-        public WarningInfo warning { get; private set; }
-
-        [DataMember(IsRequired = false, Name = "events")]
-        public string EventName { get; private set; }
+        private void ProcessResponce(IAsyncResult ar)
+        {
+            try
+            {
+                using (HttpWebResponse res = (HttpWebResponse)request.EndGetResponse(ar))
+                using (StreamReader reader = new StreamReader(res.GetResponseStream()))
+                {
+                    string read;
+                    while ((read = reader.ReadLine()) != null)
+                    {
+                        readLine(read);
+                    }
+                }
+            }
+            catch (WebException wex)
+            {
+                throw new TwitterException(wex);
+            }
+        }
     }
 }
