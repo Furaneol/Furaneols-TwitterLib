@@ -50,6 +50,22 @@ namespace TwitterLib
             }
         }
         /// <summary>
+        /// フィルターストリームの読み込みを開始します。
+        /// </summary>
+        /// <param name="option"></param>
+        public void StartFilterStream(StreamingStartArguments option)
+        {
+            lock (this)
+            {
+                SortedDictionary<string, string> args = option.CreateArgument();
+                HttpWebRequest req = OAuth.CreateOAuthRequest("POST", "https://stream.twitter.com/1.1/statuses/filter.json", ConsumerKey, ConsumerSecret, AccessToken, AccessTokenSecret, args, UrlEncode);
+                if (streamingRequest != null)
+                    streamingRequest.Abort();
+                streamingRequest = req;
+                req.BeginGetResponse(StreamingReceiveCallback, req);
+            }
+        }
+        /// <summary>
         /// ストリーミングを終了します。
         /// </summary>
         public void AbortStream()

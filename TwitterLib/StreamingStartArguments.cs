@@ -45,19 +45,9 @@ namespace TwitterLib
             }
         }
         /// <summary>
-        /// 取得対象とする範囲を示す値を取得または設定します。有効な値はuserまたはfollowingsのみです。
+        /// 取得対象とする範囲を示す値を取得または設定します。
         /// </summary>
-        public string With
-        {
-            get { return with; }
-            set
-            {
-                value = value.ToLower();
-                if (value != "user" && value != "followings")
-                    throw new ArgumentException("Withプロパティに指定できる文字列は\"user\"および\"followings\"のみです。", "value");
-                with = value;
-            }
-        }
+        public With? With { get; set; }
         /// <summary>
         /// リプライの宛先または送信元のうちいずれかのみをフォローしている場合に取得するかどうかを示す値を取得または設定します。
         /// </summary>
@@ -79,8 +69,8 @@ namespace TwitterLib
                 args["follow"] = string.Join(",", Follows);
             if (location != null && location.Length > 0)
                 args["location"] = string.Join(",", location);
-            if (!string.IsNullOrEmpty(With))
-                args["with"] = With;
+            if (With.HasValue)
+                args["with"] = With.ToString().ToLower();
             if (CollectAllReplies)
                 args["replies"] = "all";
             return args;
@@ -107,5 +97,19 @@ namespace TwitterLib
         /// filter_levelをhighに設定します。
         /// </summary>
         High
+    }
+    /// <summary>
+    /// Twitter Streaming APIにおける、ツイートの取得範囲を指定する値です。
+    /// </summary>
+    public enum With
+    {
+        /// <summary>
+        /// ユーザー単体のツイートを取得します。この値はSite Streamの既定値です。
+        /// </summary>
+        User,
+        /// <summary>
+        /// ユーザーおよびフォロワーのツイートを取得します。この値はUser Streamの既定値です。
+        /// </summary>
+        Followers
     }
 }
