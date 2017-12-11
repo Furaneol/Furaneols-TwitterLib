@@ -15,6 +15,7 @@ namespace TwitterLib
         static readonly DataContractJsonSerializer streamingListTargetEvent = new DataContractJsonSerializer(typeof(ListEventInfo));
         static readonly DataContractJsonSerializer streamingTweet = new DataContractJsonSerializer(typeof(Tweet));
         StreamingApiEventHandler streamingCallback;
+        Action streamingEndCallback;
         HttpWebRequest streamingRequest;
         /// <summary>
         /// ストリーミングデータを受信した際に発生するイベントです。
@@ -25,17 +26,39 @@ namespace TwitterLib
             remove { streamingCallback -= value; }
         }
         /// <summary>
+        /// ストリーミング通信の終了処理が完了した際に発生するイベントです。
+        /// </summary>
+        public event Action StreamingDisconnected
+        {
+            add { streamingEndCallback += value; }
+            remove { streamingEndCallback -= value; }
+        }
+        /// <summary>
         /// ユーザーストリームの読み込みを開始します。
         /// </summary>
         /// <param name="option">開始オプション</param>
         public void StartUserStream(StreamingStartArguments option)
         {
-            SortedDictionary<string, string> args = option.CreateArgument();
-            HttpWebRequest req = OAuth.CreateOAuthRequest("GET", "https://userstream.twitter.com/1.1/user.json", ConsumerKey, ConsumerSecret, AccessToken, AccessTokenSecret, args, UrlEncode);
-            if (streamingRequest != null)
-                streamingRequest.Abort();
-            streamingRequest = req;
-            req.BeginGetResponse(StreamingReceiveCallback, req);
+            lock (this)
+            {
+                SortedDictionary<string, string> args = option.CreateArgument();
+                HttpWebRequest req = OAuth.CreateOAuthRequest("GET", "https://userstream.twitter.com/1.1/user.json", ConsumerKey, ConsumerSecret, AccessToken, AccessTokenSecret, args, UrlEncode);
+                if (streamingRequest != null)
+                    streamingRequest.Abort();
+                streamingRequest = req;
+                req.BeginGetResponse(StreamingReceiveCallback, req);
+            }
+        }
+        /// <summary>
+        /// ストリーミングを終了します。
+        /// </summary>
+        public void AbortStream()
+        {
+            lock (this)
+            {
+                if (streamingRequest != null)
+                    streamingRequest.Abort();
+            }
         }
 
         private void StreamingReceiveCallback(IAsyncResult ar)
@@ -163,6 +186,10 @@ namespace TwitterLib
                 if (wex.Status == WebExceptionStatus.RequestCanceled)
                     return;
                 throw new TwitterException(wex);
+            }
+            finally
+            {
+                streamingEndCallback();
             }
         }
     }
