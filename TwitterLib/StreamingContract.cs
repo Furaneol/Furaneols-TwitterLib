@@ -27,13 +27,31 @@ namespace TwitterLib
         public UserWithheldInfo UserWithheld { get; private set; }
 
         [DataMember(IsRequired = false, Name = "disconnect")]
-        public DisconnectionInfo disconnection { get; private set; }
+        public DisconnectionInfo Disconnection { get; private set; }
 
         [DataMember(IsRequired = false, Name = "warning")]
-        public WarningInfo warning { get; private set; }
+        public WarningInfo Warning { get; private set; }
 
         [DataMember(IsRequired = false, Name = "events")]
         public string EventName { get; private set; }
+
+        public void SetParent(Twitter parent)
+        {
+            if (Delete != null)
+                Delete.Parent = parent;
+            if (ScrubGeo != null)
+                ScrubGeo.Parent = parent;
+            if (Limit != null)
+                Limit.Parent = parent;
+            if (StatusWithheld != null)
+                StatusWithheld.Parent = parent;
+            if (UserWithheld != null)
+                UserWithheld.Parent = parent;
+            if (Disconnection != null)
+                Disconnection.Parent = parent;
+            if (Warning != null)
+                Warning.Parent = parent;
+        }
     }
     /// <summary>
     /// Twitter Streaming APIの応答イベントハンドラです。

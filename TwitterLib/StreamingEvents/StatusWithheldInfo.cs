@@ -6,7 +6,7 @@ namespace TwitterLib.StreamingEvents
     /// ツイートの閲覧が制限されたことを示す情報オブジェクトです。
     /// </summary>
     [DataContract]
-    public class StatusWithheldInfo
+    public class StatusWithheldInfo:StreamingMessage
     {
         /// <summary>
         /// 制限されたツイートのIDを取得します。
@@ -23,5 +23,9 @@ namespace TwitterLib.StreamingEvents
         /// </summary>
         [DataMember(Name = "withheld_in_countries")]
         public string[] Countries { get; private set; }
+
+        public override StreamingMessageType MessageType => StreamingMessageType.WithheldStatus;
+
+        public override Twitter Parent { get; internal set; }
     }
 }

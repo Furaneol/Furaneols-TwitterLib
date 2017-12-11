@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using TwitterLib.Entities;
+using TwitterLib.StreamingEvents;
 
 namespace TwitterLib
 {
