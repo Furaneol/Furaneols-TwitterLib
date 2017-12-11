@@ -27,7 +27,7 @@ namespace TwitterLib
         /// <summary>
         /// ユーザーストリームの読み込みを開始します。
         /// </summary>
-        /// <param name="option"></param>
+        /// <param name="option">開始オプション</param>
         public void StartUserStream(StreamingStartArguments option)
         {
             SortedDictionary<string, string> args = option.CreateArgument();
