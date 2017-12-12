@@ -23,9 +23,13 @@ namespace TwitterLib.StreamingEvents
         /// </summary>
         [DataMember(Name = "withheld_in_countries")]
         public string[] Countries { get; private set; }
-
+        /// <summary>
+        /// このプロパティは常に列挙子：StreamingMessageType.WithheldStatusを返します。
+        /// </summary>
         public override StreamingMessageType MessageType => StreamingMessageType.WithheldStatus;
-
+        /// <summary>
+        /// このインスタンスを作成したTwitterオブジェクトを取得します。
+        /// </summary>
         public override Twitter Parent { get; internal set; }
     }
 }

@@ -53,7 +53,9 @@ namespace TwitterLib
         /// </summary>
         [DataMember(Name = "bounding_box")]
         public BoundingBox BoundingBox { get; internal set; }
-
+        /// <summary>
+        /// このインスタンスを作成したTwitterオブジェクトを取得します。
+        /// </summary>
         public override Twitter Parent { get; internal set; }
     }
     /// <summary>
@@ -72,7 +74,9 @@ namespace TwitterLib
         /// </summary>
         [DataMember(Name = "type")]
         public string Type { get; internal set; }
-
+        /// <summary>
+        /// このインスタンスを作成したTwitterオブジェクトを取得します。
+        /// </summary>
         public override Twitter Parent { get; internal set; }
     }
 }

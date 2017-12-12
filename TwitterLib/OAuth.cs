@@ -163,6 +163,8 @@ namespace TwitterLib
         /// <param name="httpMethod">HTTPメソッド(GET/POST)</param>
         /// <param name="url">リクエストURL</param>
         /// <param name="bearerToken">提供されたBearer Token</param>
+        /// <param name="args">パラメーター</param>
+        /// <param name="urlEncode">URLエンコードメソッド</param>
         /// <returns></returns>
         internal static HttpWebRequest CreateBearerRequest(string httpMethod, string url, string bearerToken, SortedDictionary<string, string> args, StringEncodeHandler urlEncode)
         {

@@ -11,7 +11,13 @@ namespace TwitterLib.StreamingEvents
     /// </summary>
     public class KeepAlive : StreamingMessage
     {
+        /// <summary>
+        /// このプロパティは常に列挙子：StreamingMessageType.KeepAliveを返します。
+        /// </summary>
         public override StreamingMessageType MessageType => StreamingMessageType.KeepAlive;
+        /// <summary>
+        /// このインスタンスを作成したTwitterオブジェクトを取得します。
+        /// </summary>
         public override Twitter Parent { get; internal set; }
     }
 }

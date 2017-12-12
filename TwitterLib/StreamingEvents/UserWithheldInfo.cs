@@ -8,7 +8,13 @@ namespace TwitterLib.StreamingEvents
     [DataContract]
     public class UserWithheldInfo : StreamingMessage
     {
+        /// <summary>
+        /// このプロパティは常に列挙子：StreamingMessageType.WithheldUserを返します。
+        /// </summary>
         public override StreamingMessageType MessageType => StreamingMessageType.WithheldUser;
+        /// <summary>
+        /// このインスタンスを作成したTwitterオブジェクトを取得します。
+        /// </summary>
         public override Twitter Parent { get; internal set; }
         /// <summary>
         /// 閲覧制限を受けたユーザーのIDを取得します。

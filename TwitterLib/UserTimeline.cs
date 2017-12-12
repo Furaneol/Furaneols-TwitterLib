@@ -36,7 +36,7 @@ namespace TwitterLib
         /// <summary>
         /// 指定されたユーザーIDを持つユーザーのツイート一覧を取得します。
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="screenName"></param>
         /// <param name="count"></param>
         /// <param name="sinceId"></param>
         /// <param name="maxId"></param>

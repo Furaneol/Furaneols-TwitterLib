@@ -11,7 +11,13 @@ namespace TwitterLib.StreamingEvents
     /// </summary>
     public class FriendsInfo : StreamingMessage
     {
+        /// <summary>
+        /// このプロパティは常に列挙子：StreamingMessageType.FriendsListを返します。
+        /// </summary>
         public override StreamingMessageType MessageType => StreamingMessageType.FriendsList;
+        /// <summary>
+        /// このインスタンスを作成したTwitterオブジェクトを取得します。
+        /// </summary>
         public override Twitter Parent { get; internal set; }
 
         internal FriendsInfo(Twitter parent, ulong[] list)

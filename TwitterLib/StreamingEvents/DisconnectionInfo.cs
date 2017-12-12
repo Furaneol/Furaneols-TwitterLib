@@ -8,7 +8,13 @@ namespace TwitterLib.StreamingEvents
     [DataContract]
     public class DisconnectionInfo : StreamingMessage
     {
+        /// <summary>
+        /// このプロパティは常に列挙子：StreamingMessageType.Disconnectを返します。
+        /// </summary>
         public override StreamingMessageType MessageType => StreamingMessageType.Disconnect;
+        /// <summary>
+        /// このインスタンスを作成したTwitterオブジェクトを取得します。
+        /// </summary>
         public override Twitter Parent { get; internal set; }
         /// <summary>
         /// ステータスコードを取得します。

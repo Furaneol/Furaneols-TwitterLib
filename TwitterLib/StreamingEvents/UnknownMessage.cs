@@ -11,7 +11,13 @@ namespace TwitterLib.StreamingEvents
     /// </summary>
     public class UnknownMessage : StreamingMessage
     {
+        /// <summary>
+        /// このプロパティは常に列挙子：StreamingMessageType.Unknownを返します。
+        /// </summary>
         public override StreamingMessageType MessageType => StreamingMessageType.Unknown;
+        /// <summary>
+        /// このインスタンスを作成したTwitterオブジェクトを取得します。
+        /// </summary>
         public override Twitter Parent { get; internal set; }
 
         internal UnknownMessage(Twitter parent, string content)

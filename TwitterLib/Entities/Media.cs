@@ -127,7 +127,10 @@ namespace TwitterLib.Entities
         /// </summary>
         [DataMember(Name = "resize")]
         public string Resize { get; internal set; }
-
+        /// <summary>
+        /// System.Drawing.Sizeへの変換を行います。
+        /// </summary>
+        /// <param name="size"></param>
         public static implicit operator System.Drawing.Size(Size size)
         {
             return new System.Drawing.Size(size.Width, size.Height);

@@ -13,7 +13,13 @@ namespace TwitterLib.StreamingEvents
     [DataContract]
     public class ScrubGeoInfo : StreamingMessage
     {
+        /// <summary>
+        /// このプロパティは常に列挙子：StreamingMessageType.ScrubGeoを返します。
+        /// </summary>
         public override StreamingMessageType MessageType => StreamingMessageType.ScrubGeo;
+        /// <summary>
+        /// このインスタンスを作成したTwitterオブジェクトを取得します。
+        /// </summary>
         public override Twitter Parent { get; internal set; }
         /// <summary>
         /// 位置情報を削除したユーザーIDを取得します。
