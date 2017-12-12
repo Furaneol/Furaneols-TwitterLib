@@ -31,6 +31,14 @@ namespace TwitterLib.StreamingEvents
         /// </summary>
         [DataMember(Name = "source")]
         public User SourceUser { get; private set; }
+        /// <summary>
+        /// ツイートを対象としたイベントであるかどうかを示す値を取得します。
+        /// </summary>
+        public virtual bool HasTargetTweet => false;
+        /// <summary>
+        /// リストを対象としたイベントであるかどうかを示す値を取得します。
+        /// </summary>
+        public virtual bool HasTargetList => false;
     }
     /// <summary>
     /// ツイートを対象としたイベントの情報オブジェクトです。
@@ -43,6 +51,10 @@ namespace TwitterLib.StreamingEvents
         /// </summary>
         [DataMember(Name = "target_object")]
         public Tweet TargetedTweet { get; private set; }
+        /// <summary>
+        /// ツイートを対象としたイベントであるかどうかを示す値を取得します。
+        /// </summary>
+        public override bool HasTargetTweet => true;
     }
     /// <summary>
     /// リストを対象としたイベント情報のオブジェクトです。
@@ -55,5 +67,9 @@ namespace TwitterLib.StreamingEvents
         /// </summary>
         [DataMember(Name ="target_object")]
         public TwitterList TargetList { get; private set; }
+        /// <summary>
+        /// リストを対象としたイベントであるかどうかを示す値を取得します。
+        /// </summary>
+        public override bool HasTargetList => true;
     }
 }
