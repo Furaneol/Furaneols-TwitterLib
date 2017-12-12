@@ -8,7 +8,13 @@ namespace TwitterLib.StreamingEvents
     [DataContract]
     public class WarningInfo : StreamingMessage
     {
+        /// <summary>
+        /// このプロパティは常に列挙子：StreamingMessageType.Warningsを返します。
+        /// </summary>
         public override StreamingMessageType MessageType => StreamingMessageType.Warnings;
+        /// <summary>
+        /// このインスタンスを作成したTwitterオブジェクトを取得します。
+        /// </summary>
         public override Twitter Parent { get; internal set; }
         /// <summary>
         /// 状態を示すコード文字列を取得します。

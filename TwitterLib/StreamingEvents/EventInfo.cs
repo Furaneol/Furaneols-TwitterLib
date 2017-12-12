@@ -9,7 +9,13 @@ namespace TwitterLib.StreamingEvents
     [DataContract]
     public class EventInfo : StreamingMessage
     {
+        /// <summary>
+        /// このプロパティは常に列挙子：StreamingMessageType.Eventsを返します。
+        /// </summary>
         public override StreamingMessageType MessageType => StreamingMessageType.Events;
+        /// <summary>
+        /// このインスタンスを作成したTwitterオブジェクトを取得します。
+        /// </summary>
         public override Twitter Parent { get; internal set; }
         /// <summary>
         /// イベントの名前を取得します。

@@ -153,6 +153,9 @@ namespace TwitterLib
         public string[] WithheldCountry { get; private set; }
 
         Twitter parent;
+        /// <summary>
+        /// このインスタンスを作成したTwitterオブジェクトを取得します。
+        /// </summary>
         public override Twitter Parent
         {
             get { return parent; }
@@ -161,9 +164,17 @@ namespace TwitterLib
                 parent = value;
                 if (User != null)
                     User.Parent = value;
+                if (Place != null)
+                    Place.Parent = value;
+                if (Coordinate != null)
+                    Coordinate.Parent = value;
+                if (QuotedStatus != null)
+                    QuotedStatus.Parent = value;
             }
         }
-
+        /// <summary>
+        /// このプロパティは常に列挙子：StreamingMessageType.TweetContentを返します。
+        /// </summary>
         public override StreamingMessageType MessageType => StreamingMessageType.TweetContent;
     }
 }

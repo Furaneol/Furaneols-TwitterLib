@@ -8,7 +8,13 @@ namespace TwitterLib.StreamingEvents
     [DataContract]
     public class TweetDeleteInfo : StreamingMessage
     {
+        /// <summary>
+        /// このプロパティは常に列挙子：StreamingMessageType.TweetDeletedを返します。
+        /// </summary>
         public override StreamingMessageType MessageType => StreamingMessageType.TweetDeleted;
+        /// <summary>
+        /// このインスタンスを作成したTwitterオブジェクトを取得します。
+        /// </summary>
         public override Twitter Parent { get; internal set; }
         #region private class
         [DataContract]

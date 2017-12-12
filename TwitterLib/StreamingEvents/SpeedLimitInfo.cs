@@ -8,7 +8,13 @@ namespace TwitterLib.StreamingEvents
     [DataContract]
     public class SpeedLimitInfo : StreamingMessage
     {
+        /// <summary>
+        /// このプロパティは常に列挙子：StreamingMessageType.Limitを返します。
+        /// </summary>
         public override StreamingMessageType MessageType => StreamingMessageType.Limit;
+        /// <summary>
+        /// このインスタンスを作成したTwitterオブジェクトを取得します。
+        /// </summary>
         public override Twitter Parent { get; internal set; }
         /// <summary>
         /// 接続開始から現在までに配信されなかったツイートの数を取得します。

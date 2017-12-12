@@ -236,7 +236,9 @@ namespace TwitterLib
         /// </summary>
         [DataMember(IsRequired = false, Name = "entities")]
         public Entity Entities { get; private set; }
-
+        /// <summary>
+        /// このインスタンスを作成したTwitterオブジェクトを取得します。
+        /// </summary>
         public override Twitter Parent { get; internal set; }
     }
 }

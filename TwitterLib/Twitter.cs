@@ -61,7 +61,9 @@ namespace TwitterLib
             return Color.FromArgb(c);
         }
 
-
+        /// <summary>
+        /// Twitterインスタンスを作成します。
+        /// </summary>
         public Twitter()
         {
             AuthenticationMode = TwitterAuthenticationMode.None;
@@ -169,9 +171,10 @@ namespace TwitterLib
         /// <summary>
         /// 応答ストリームを取得します。
         /// </summary>
-        /// <param name="method"></param>
-        /// <param name="url"></param>
-        /// <param name="args"></param>
+        /// <param name="method">HTTPメソッド</param>
+        /// <param name="url">URL</param>
+        /// <param name="args">リクエストパラメーター</param>
+        /// <param name="type">取得するオブジェクトの型</param>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="InvalidOperationException"></exception>
         /// <exception cref="TwitterException"></exception>

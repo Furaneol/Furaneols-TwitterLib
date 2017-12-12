@@ -9,6 +9,9 @@ namespace TwitterLib.StreamingEvents
     [DataContract]
     public abstract class StreamingMessage : ApiResponce
     {
+        /// <summary>
+        /// ストリーミングAPIからの応答を識別する値を取得します。
+        /// </summary>
         public abstract StreamingMessageType MessageType { get; }
         /// <summary>
         /// 応答があった時刻を取得します。
