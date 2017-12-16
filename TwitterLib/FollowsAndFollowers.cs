@@ -53,6 +53,21 @@ namespace TwitterLib
         {
             return Parent.GetFollowList(UserID, count, skipStatus, includeUserEntities, cursor);
         }
+        /// <summary>
+        /// 現在のユーザーをフォローします。
+        /// </summary>
+        /// <param name="notify"></param>
+        public void Follow(bool? notify)
+        {
+            (Parent ?? throw new InvalidOperationException("Parentプロパティがnullのため、User.Followメソッドを使用する事はできません。")).Follow(UserID);
+        }
+        /// <summary>
+        /// 現在のユーザーへのフォローを解除します。
+        /// </summary>
+        public void Unfollow()
+        {
+            (Parent ?? throw new InvalidOperationException("Parentプロパティがnullのため、User.Unfollowメソッドを使用する事はできません。")).Unfollow(UserID);
+        }
     }
 
     public partial class Twitter
@@ -393,6 +408,56 @@ namespace TwitterLib
             if (includeEntities.HasValue)
                 args["include_entities"] = includeEntities.ToString().ToLower();
             return (User)GetOAuthResponce("GET", "https://api.twitter.com/1.1/users/show.json", args, typeof(User));
+        }
+        #endregion
+
+        #region Follow
+        /// <summary>
+        /// 指定されたスクリーン名を持つユーザーをフォローします。
+        /// </summary>
+        /// <param name="screenName">対象のスクリーン名</param>
+        /// <param name="notifyToTargetUser">対象に通知を送るかどうか</param>
+        /// <returns></returns>
+        public User Follow(string screenName, bool? notifyToTargetUser = null)
+        {
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["screen_name"] = screenName };
+            if (notifyToTargetUser.HasValue)
+                args["follow"] = notifyToTargetUser.ToString().ToLower();
+            return (User)GetOAuthResponce("POST", "https://api.twitter.com/1.1/friendships/create.json", args, typeof(User));
+        }
+        /// <summary>
+        /// 指定されたIDを持つユーザーをフォローします。
+        /// </summary>
+        /// <param name="id">対象のユーザーID</param>
+        /// <param name="notifyToTargetUser">対象に通知を送るかどうか</param>
+        /// <returns></returns>
+        public User Follow(ulong id,bool? notifyToTargetUser = null)
+        {
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = id.ToString() };
+            if (notifyToTargetUser.HasValue)
+                args["follow"] = notifyToTargetUser.ToString().ToLower();
+            return (User)GetOAuthResponce("POST", "https://api.twitter.com/1.1/friendships/create.json", args, typeof(User));
+        }
+        #endregion
+
+        #region Unfollow
+        /// <summary>
+        /// 指定されたスクリーン名を持つユーザーへのフォローを解除します。
+        /// </summary>
+        /// <param name="screenName"></param>
+        /// <returns></returns>
+        public User Unfollow(string screenName)
+        {
+            return (User)GetOAuthResponce("POST", "https://api.twitter.com/1.1/friendships/destroy.json", new SortedDictionary<string, string>() { ["screen_name"] = screenName }, typeof(User));
+        }
+        /// <summary>
+        /// 指定されたIDを持つユーザーへのフォローを解除します。
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public User Unfollow(ulong userId)
+        {
+            return (User)GetOAuthResponce("POST", "https://api.twitter.com/1.1/friendships/destroy.json", new SortedDictionary<string, string>() { ["user_id"] = userId.ToString() }, typeof(User));
         }
         #endregion
     }
