@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="ApiResponce.cs" />
     <Compile Include="BearerResponce.cs" />
+    <Compile Include="Block.cs" />
     <Compile Include="CursorNavigator.cs" />
     <Compile Include="Coordinate.cs" />
     <Compile Include="Entities\Entity.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Entities\Symbol.cs" />
     <Compile Include="Entities\Url.cs" />
     <Compile Include="FollowsAndFollowers.cs" />
+    <Compile Include="Mute.cs" />
     <Compile Include="RateLimitStatus.cs" />
     <Compile Include="RateLimitStatuses\ApplicationRateLimit.cs" />
     <Compile Include="RateLimitStatuses\AuthRateLimit.cs" />
