@@ -72,7 +72,7 @@ namespace TwitterLib.StreamingEvents
         /// 対象となったリストの情報を取得します。
         /// </summary>
         [DataMember(Name ="target_object")]
-        public TwitterList TargetList { get; private set; }
+        public List TargetList { get; private set; }
         /// <summary>
         /// リストを対象としたイベントであるかどうかを示す値を取得します。
         /// </summary>

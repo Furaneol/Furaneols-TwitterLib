@@ -94,7 +94,7 @@
     <Compile Include="StreamingEvents\UserWithheldInfo.cs" />
     <Compile Include="StreamingEvents\WarningInfo.cs" />
     <Compile Include="StreamingStartArguments.cs" />
-    <Compile Include="TwitterList.cs" />
+    <Compile Include="List.cs" />
     <Compile Include="UserFriendship.cs" />
     <Compile Include="HomeTimeline.cs" />
     <Compile Include="IdContainer.cs" />
