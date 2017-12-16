@@ -9,6 +9,9 @@ using System.Drawing;
 
 namespace TwitterLib
 {
+    /// <summary>
+    /// Twitter APIの認証情報を格納し、リクエストの構築や応答の受信・解析をサポートするクラスです。
+    /// </summary>
     public partial class Twitter
     {
         const string acceptString = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~";
