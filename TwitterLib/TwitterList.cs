@@ -7,7 +7,7 @@ namespace TwitterLib
     /// Twitterにおけるリストの情報を格納するオブジェクトです。
     /// </summary>
     [DataContract]
-    public class TwitterList
+    public partial class TwitterList
     {
         /// <summary>
         /// リストの識別番号を取得します。
