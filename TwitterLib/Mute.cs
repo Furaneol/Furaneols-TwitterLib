@@ -64,7 +64,7 @@ namespace TwitterLib
         /// <returns></returns>
         public User Mute(ulong id)
         {
-            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = id.ToString()]};
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = id.ToString() };
             return (User)GetOAuthResponce("POST", "https://api.twitter.com/1.1/mutes/users/create.json", args, typeof(User));
         }
         /// <summary>
