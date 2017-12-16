@@ -109,6 +109,23 @@ namespace TwitterLib
 
     public partial class User
     {
-
+        /// <summary>
+        /// ユーザーをブロックします。
+        /// </summary>
+        public void Block()
+        {
+            if (Parent == null)
+                throw new InvalidOperationException("ParentプロパティがnullであるためUser.Blockメソッドを使用する事はできません。");
+            Parent.Block(UserID);
+        }
+        /// <summary>
+        /// ユーザーのブロックを解除します。
+        /// </summary>
+        public void Unblock()
+        {
+            if (Parent == null)
+                throw new InvalidOperationException("ParentプロパティがnullであるためUser.Blockメソッドを使用する事はできません。");
+            Parent.Unblock(UserID);
+        }
     }
 }
