@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
+using System.Net;
 
 namespace TwitterLib
 {
@@ -24,6 +25,7 @@ namespace TwitterLib
 
     public partial class Twitter
     {
+        #region GetMembersOfList
         /// <summary>
         /// 指定されたリストに登録されているユーザーの一覧を取得します。
         /// </summary>
@@ -107,5 +109,50 @@ namespace TwitterLib
                     yield return user;
             } while (cursor != 0);
         }
+        #endregion
+
+        #region GetRegesteredList
+        /// <summary>
+        /// 指定されたIDを持つユーザーがメンバーとして登録されているリストの一覧を取得します。
+        /// </summary>
+        /// <param name="userId">ユーザーのID</param>
+        /// <param name="count">1ページ毎の件数</param>
+        /// <param name="cursor">開始カーソル</param>
+        /// <returns></returns>
+        public IEnumerable<List> GetRegesteredList(ulong userId, int? count = null, ulong? cursor = null)
+        {
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = userId.ToString() };
+            if (count.HasValue)
+                args["count"] = count.ToString();
+            return GetRegesteredList(args, cursor);
+        }
+        /// <summary>
+        /// 指定されたスクリーン名を持つユーザーがメンバーとして登録されているリストの一覧を取得します。
+        /// </summary>
+        /// <param name="screenName">スクリーン名</param>
+        /// <param name="count">1ページ毎の件数</param>
+        /// <param name="cursor">開始カーソル</param>
+        /// <returns></returns>
+        public IEnumerable<List> GetRegesteredList(string screenName,int? count=null,ulong? cursor = null)
+        {
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["screen_name"] = screenName };
+            if (count.HasValue)
+                args["count"] = count.ToString();
+            return GetRegesteredList(args, cursor);
+        }
+
+        private IEnumerable<List> GetRegesteredList(SortedDictionary<string, string> args, ulong? cursor)
+        {
+            do
+            {
+                if (cursor.HasValue)
+                    args["cursor"] = cursor.ToString();
+                ListContainer container = (ListContainer)GetOAuthResponce("GET", "https://api.twitter.com/1.1/lists/memberships.json", args, typeof(ListContainer));
+                cursor = container.NextCursor;
+                foreach (List list in container.Lists)
+                    yield return list;
+            } while (cursor != 0);
+        }
+        #endregion
     }
 }
