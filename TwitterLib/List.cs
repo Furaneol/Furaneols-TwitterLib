@@ -7,7 +7,7 @@ namespace TwitterLib
     /// Twitterにおけるリストの情報を格納するオブジェクトです。
     /// </summary>
     [DataContract]
-    public partial class List
+    public partial class List : ApiResponce
     {
         /// <summary>
         /// リストの識別番号を取得します。
@@ -27,12 +27,12 @@ namespace TwitterLib
         /// <summary>
         /// リストを保存しているユーザーの数を取得します。
         /// </summary>
-        [DataMember(Name ="subscriber_count")]
+        [DataMember(Name = "subscriber_count")]
         public int SubscriberCount { get; private set; }
         /// <summary>
         /// リストに登録しているユーザーの数を取得します。
         /// </summary>
-        [DataMember(Name ="member_count")]
+        [DataMember(Name = "member_count")]
         public int MemberCount { get; private set; }
         /// <summary>
         /// 公開状態を示す文字列を取得します。
@@ -47,7 +47,7 @@ namespace TwitterLib
         /// <summary>
         /// リストのスラッグを取得します。
         /// </summary>
-        [DataMember(Name ="slug")]
+        [DataMember(Name = "slug")]
         public string Slug { get; private set; }
         /// <summary>
         /// リストの完全名を取得します。
@@ -64,12 +64,16 @@ namespace TwitterLib
         /// <summary>
         /// リストをフォローしているかどうかを示す値を取得します。
         /// </summary>
-        [DataMember(Name="following")]
+        [DataMember(Name = "following")]
         public bool Following { get; private set; }
         /// <summary>
         /// リストを作成したユーザーの情報を取得します。
         /// </summary>
         [DataMember(Name = "user")]
         public User CreateUser { get; private set; }
+        /// <summary>
+        /// このインスタンスを生成したTwitterクラスインスタンスを取得します。
+        /// </summary>
+        public override Twitter Parent { get; internal set; }
     }
 }
