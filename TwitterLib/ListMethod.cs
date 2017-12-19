@@ -12,7 +12,7 @@ namespace TwitterLib
         /// <param name="skipStatus">statusノードを省略するかどうか</param>
         /// <param name="cursor">カーソル</param>
         /// <returns></returns>
-        public IEnumerable<User> GetMemberList(int? count = null, bool? includeEntities = null, bool? skipStatus = null, ulong? cursor = null)
+        public IEnumerable<User> GetMembers(int? count = null, bool? includeEntities = null, bool? skipStatus = null, ulong? cursor = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["list_id"] = ID.ToString() };
             if (count.HasValue)
@@ -33,5 +33,10 @@ namespace TwitterLib
         }
 
         
+    }
+
+    public partial class Twitter
+    {
+
     }
 }
