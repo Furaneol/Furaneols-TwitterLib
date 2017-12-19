@@ -19,8 +19,32 @@ namespace TwitterLib
         {
             return (Parent ?? throw new InvalidOperationException("Parentプロパティがnullであるため、List.GetMembersメソッドを使用できません。")).GetMembersOfList(ID, count, includeEntities, skipStatus, cursor);
         }
-
-        
+        /// <summary>
+        /// リストに登録されているユーザーのツイート一覧を取得します。
+        /// </summary>
+        /// <param name="sinceId"></param>
+        /// <param name="maxId"></param>
+        /// <param name="count"></param>
+        /// <param name="includeEntities"></param>
+        /// <param name="includeRetweets"></param>
+        /// <returns></returns>
+        public Tweet[] GetTweets(ulong? sinceId = null, ulong? maxId = null, int? count = null, bool? includeEntities = null, bool? includeRetweets = null)
+        {
+            if (Parent == null)
+                throw new InvalidOperationException("Parentプロパティがnullであるため、List.GetTweetsメソッドを使用出来ません。");
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["list_id"] = ID.ToString() };
+            if (sinceId.HasValue)
+                args["since_id"] = sinceId.ToString();
+            if (maxId.HasValue)
+                args["max_id"] = maxId.ToString();
+            if (count.HasValue)
+                args["count"] = count.ToString();
+            if (includeEntities.HasValue)
+                args["include_entities"] = includeEntities.ToString().ToLower();
+            if (includeRetweets.HasValue)
+                args["include_rts"] = includeRetweets.ToString().ToLower();
+            return (Tweet[])Parent.GetOAuthResponce("GET", "https://api.twitter.com/1.1/lists/statuses.json", args, typeof(Tweet[]));
+        }
     }
 
     public partial class Twitter
