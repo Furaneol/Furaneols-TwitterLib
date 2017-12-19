@@ -57,6 +57,7 @@
     <Compile Include="Entities\Symbol.cs" />
     <Compile Include="Entities\Url.cs" />
     <Compile Include="FollowsAndFollowers.cs" />
+    <Compile Include="ListMethod.cs" />
     <Compile Include="Mute.cs" />
     <Compile Include="RateLimitStatus.cs" />
     <Compile Include="RateLimitStatuses\ApplicationRateLimit.cs" />
