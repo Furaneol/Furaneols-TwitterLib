@@ -8,6 +8,7 @@ namespace TwitterLib
         /// <summary>
         /// リストに登録されているユーザーの一覧を取得します。
         /// </summary>
+        /// <seealso cref="Twitter.GetMembersOfList(ulong, int?, bool?, bool?, ulong?)"/>
         /// <param name="count">1ページあたりのユーザー数</param>
         /// <param name="includeEntities">Entitiesノードを含むかどうか</param>
         /// <param name="skipStatus">statusノードを省略するかどうか</param>
