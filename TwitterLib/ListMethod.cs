@@ -7,15 +7,14 @@ namespace TwitterLib
         /// <summary>
         /// リストに登録されているユーザーの一覧を取得します。
         /// </summary>
-        /// <param name="id">リストのID</param>
         /// <param name="count">1ページあたりのユーザー数</param>
         /// <param name="includeEntities">Entitiesノードを含むかどうか</param>
         /// <param name="skipStatus">statusノードを省略するかどうか</param>
         /// <param name="cursor">カーソル</param>
         /// <returns></returns>
-        public IEnumerable<User> GetMemberList(ulong id, int? count = null, bool? includeEntities = null, bool? skipStatus = null, ulong? cursor = null)
+        public IEnumerable<User> GetMemberList(int? count = null, bool? includeEntities = null, bool? skipStatus = null, ulong? cursor = null)
         {
-            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["list_id"] = id.ToString() };
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["list_id"] = ID.ToString() };
             if (count.HasValue)
                 args["count"] = count.ToString();
             if (includeEntities.HasValue)
@@ -33,6 +32,6 @@ namespace TwitterLib
             } while (cursor != 0);
         }
 
-
+        
     }
 }
