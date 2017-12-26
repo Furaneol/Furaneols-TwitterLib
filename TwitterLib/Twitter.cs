@@ -239,5 +239,13 @@ namespace TwitterLib
                 throw new TwitterException(wex);
             }
         }
+        /// <summary>
+        /// 認証ユーザーの情報を取得します。
+        /// </summary>
+        /// <returns></returns>
+        public User VerifyCredential()
+        {
+            return (User)GetOAuthResponce("GET", "https://api.twitter.com/1.1/account/verify_credentials.json", new SortedDictionary<string, string>(), typeof(User));
+        }
     }
 }
