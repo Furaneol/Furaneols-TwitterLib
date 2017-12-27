@@ -70,6 +70,8 @@ namespace TwitterLib
         public Twitter()
         {
             AuthenticationMode = TwitterAuthenticationMode.None;
+            streamingCallback = new StreamingApiEventHandler((StreamingEvents.StreamingMessage message) => { });
+            streamingEndCallback = new Action(() => { });
         }
         #region 認証情報
         /// <summary>

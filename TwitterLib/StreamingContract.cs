@@ -35,6 +35,12 @@ namespace TwitterLib
         [DataMember(IsRequired = false, Name = "events")]
         public string EventName { get; private set; }
 
+        [DataMember(IsRequired = false, Name = "friends")]
+        public ulong[] Friends { get; private set; }
+
+        [DataMember(IsRequired = false, Name = "text")]
+        public string Text { get; private set; }
+
         public void SetParent(Twitter parent)
         {
             if (Delete != null)

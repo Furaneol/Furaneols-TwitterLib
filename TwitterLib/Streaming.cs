@@ -4,6 +4,7 @@ using System.IO;
 using System.Collections.Generic;
 using TwitterLib.StreamingEvents;
 using System.Runtime.Serialization.Json;
+using System.Text;
 
 namespace TwitterLib
 {
@@ -105,11 +106,8 @@ namespace TwitterLib
                             streamingCallback(new KeepAlive() { Parent = this });
                             continue;
                         }
-                        using (MemoryStream ms = new MemoryStream())
-                        using (StreamWriter writer = new StreamWriter(ms))
+                        using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(read)))
                         {
-                            writer.Write(read);
-                            ms.Seek(0, SeekOrigin.Begin);
                             #region Messages
                             StreamingContract contract = (StreamingContract)streamingPrimary.ReadObject(ms);
                             contract.SetParent(this);
@@ -148,7 +146,6 @@ namespace TwitterLib
                                 streamingCallback(contract.Warning);
                                 continue;
                             }
-                            #endregion
                             #region Events
                             if (contract.EventName != null)
                             {
@@ -192,10 +189,16 @@ namespace TwitterLib
                                 continue;
                             }
                             #endregion
+                            #endregion
                             #region Tweet
-                            Tweet tweet = (Tweet)streamingTweet.ReadObject(ms);
-                            tweet.Parent = this;
-                            streamingCallback(tweet);
+                            if (contract.Text != null)
+                            {
+                                ms.Seek(0, SeekOrigin.Begin);
+                                Tweet tweet = (Tweet)streamingTweet.ReadObject(ms);
+                                tweet.Parent = this;
+                                streamingCallback(tweet);
+                                continue;
+                            }
                             #endregion
                             #region Unknown
                             streamingCallback(new UnknownMessage(this, read));
