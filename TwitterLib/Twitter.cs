@@ -247,5 +247,18 @@ namespace TwitterLib
         {
             return (User)GetOAuthResponce("GET", "https://api.twitter.com/1.1/account/verify_credentials.json", new SortedDictionary<string, string>(), typeof(User));
         }
+        /// <summary>
+        /// ツイートを投稿します。
+        /// </summary>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public Tweet UpdateStatus(string status)
+        {
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>()
+            {
+                ["status"] = status
+            };
+            return (Tweet)GetOAuthResponce("POST", "https://api.twitter.com/1.1/statuses/update.json", args, typeof(Tweet));
+        }
     }
 }
