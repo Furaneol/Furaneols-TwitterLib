@@ -73,9 +73,16 @@ namespace TwitterLib
             lock (this)
             {
                 if (streamingRequest != null)
+                {
                     streamingRequest.Abort();
+                    streamingRequest = null;
+                }
             }
         }
+        /// <summary>
+        /// ストリーミングAPIが実行中であるかどうかを示す値を取得します。
+        /// </summary>
+        public bool IsReceivingStream => streamingRequest != null;
 
         private void StreamingReceiveCallback(IAsyncResult ar)
         {
@@ -205,6 +212,7 @@ namespace TwitterLib
             }
             finally
             {
+                streamingRequest = null;
                 streamingEndCallback();
             }
         }
