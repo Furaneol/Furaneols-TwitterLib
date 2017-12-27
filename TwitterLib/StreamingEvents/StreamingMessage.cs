@@ -18,7 +18,7 @@ namespace TwitterLib.StreamingEvents
         /// </summary>
         public DateTime TimeStamp { get; private set; }
 
-        [DataMember(Name = "timestamp_ms")]
+        [DataMember(IsRequired = false, Name = "timestamp_ms")]
         private string timeStamp
         {
             get { return (TimeStamp - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds.ToString(); }
