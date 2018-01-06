@@ -146,6 +146,10 @@ namespace TwitterLib
                                 streamingCallback(contract.Warning);
                                 continue;
                             }
+                            if (contract.Friends != null)
+                            {
+                                streamingCallback(new FriendsInfo(this, contract.Friends));
+                            }
                             #region Events
                             if (contract.EventName != null)
                             {
