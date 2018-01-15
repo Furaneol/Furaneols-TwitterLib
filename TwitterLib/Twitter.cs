@@ -271,7 +271,5 @@ namespace TwitterLib
         {
             return (Tweet)GetOAuthResponce("POST", "https://api.twitter.com/1.1/statuses/destroy/" + id + ".json", new SortedDictionary<string, string>(), typeof(Tweet));
         }
-
-        
     }
 }
