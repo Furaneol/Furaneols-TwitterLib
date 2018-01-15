@@ -57,6 +57,7 @@
     <Compile Include="Entities\Mention.cs" />
     <Compile Include="Entities\Symbol.cs" />
     <Compile Include="Entities\Url.cs" />
+    <Compile Include="Favorite.cs" />
     <Compile Include="FollowsAndFollowers.cs" />
     <Compile Include="ListContainer.cs" />
     <Compile Include="ListMethod.cs" />
