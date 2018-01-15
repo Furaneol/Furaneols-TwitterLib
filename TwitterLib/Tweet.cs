@@ -9,7 +9,7 @@ namespace TwitterLib
     /// ツイートオブジェクトのデシリアライズ用中間クラスです。
     /// </summary>
     [DataContract]
-    public class Tweet : StreamingMessage
+    public partial class Tweet : StreamingMessage
     {
         [DataMember(Name = "created_at")]
         internal string CreatedAt_raw
