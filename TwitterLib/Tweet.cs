@@ -176,5 +176,12 @@ namespace TwitterLib
         /// このプロパティは常に列挙子：StreamingMessageType.TweetContentを返します。
         /// </summary>
         public override StreamingMessageType MessageType => StreamingMessageType.TweetContent;
+        /// <summary>
+        /// 認証ユーザーによって投稿されたツイートを削除します。
+        /// </summary>
+        public void Delete()
+        {
+            Parent?.DeleteStatus(ID);
+        }
     }
 }
