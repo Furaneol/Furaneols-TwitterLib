@@ -262,5 +262,16 @@ namespace TwitterLib
             };
             return (Tweet)GetOAuthResponce("POST", "https://api.twitter.com/1.1/statuses/update.json", args, typeof(Tweet));
         }
+        /// <summary>
+        /// 投稿したツイートを削除します。
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Tweet DeleteStatus(ulong id)
+        {
+            return (Tweet)GetOAuthResponce("POST", "https://api.twitter.com/1.1/statuses/destroy/" + id + ".json", new SortedDictionary<string, string>(), typeof(Tweet));
+        }
+
+        
     }
 }
