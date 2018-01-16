@@ -17,6 +17,7 @@ namespace TwitterLib
         static readonly DataContractJsonSerializer streamingTweet = new DataContractJsonSerializer(typeof(Tweet));
         StreamingApiEventHandler streamingCallback;
         Action streamingEndCallback;
+        Action<Exception> streamingExceptionThrown;
         HttpWebRequest streamingRequest;
         /// <summary>
         /// ストリーミングデータを受信した際に発生するイベントです。
@@ -33,6 +34,14 @@ namespace TwitterLib
         {
             add { streamingEndCallback += value; }
             remove { streamingEndCallback -= value; }
+        }
+        /// <summary>
+        /// ストリーミング通信が、例外のスローにより中断された時に発生するイベントです。
+        /// </summary>
+        public event Action<Exception> ExceptionThrown
+        {
+            add { streamingExceptionThrown += value; }
+            remove { streamingExceptionThrown -= value; }
         }
         /// <summary>
         /// ユーザーストリームの読み込みを開始します。
@@ -215,7 +224,11 @@ namespace TwitterLib
             {
                 if (wex.Status == WebExceptionStatus.RequestCanceled)
                     return;
-                throw new TwitterException(wex);
+                streamingExceptionThrown(new TwitterException(wex));
+            }
+            catch (Exception ex)
+            {
+                streamingExceptionThrown(ex);
             }
             finally
             {
