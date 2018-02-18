@@ -47,6 +47,7 @@ namespace TwitterLib
         /// ユーザーストリームの読み込みを開始します。
         /// </summary>
         /// <param name="option">開始オプション</param>
+        [Obsolete("廃止予定が発表されているメソッドです。")]
         public void StartUserStream(StreamingStartArguments option)
         {
             lock (this)
