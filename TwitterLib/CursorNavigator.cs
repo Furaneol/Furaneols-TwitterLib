@@ -12,11 +12,11 @@ namespace TwitterLib
         /// 前のページIDを取得または設定します。
         /// </summary>
         [DataMember(Name = "previous_cursor")]
-        public ulong PreviousCursor { get; internal set; }
+        public long PreviousCursor { get; internal set; }
         /// <summary>
         /// 次のページIDを取得または設定します。この値が0の場合、次のページは存在しません。
         /// </summary>
         [DataMember(Name = "next_cursor")]
-        public ulong NextCursor { get; internal set; }
+        public long NextCursor { get; internal set; }
     }
 }
