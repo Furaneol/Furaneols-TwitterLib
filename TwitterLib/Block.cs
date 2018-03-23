@@ -10,7 +10,7 @@ namespace TwitterLib
         /// </summary>
         /// <param name="cursor"></param>
         /// <returns></returns>
-        public IEnumerable<ulong> GetBlockIds(ulong? cursor = null)
+        public IEnumerable<ulong> GetBlockIds(long? cursor = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>();
             do
@@ -28,7 +28,7 @@ namespace TwitterLib
         /// </summary>
         /// <param name="cursor"></param>
         /// <returns></returns>
-        public IEnumerator<User> GetBlockUsers(ulong? cursor = null)
+        public IEnumerator<User> GetBlockUsers(long? cursor = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>();
             do

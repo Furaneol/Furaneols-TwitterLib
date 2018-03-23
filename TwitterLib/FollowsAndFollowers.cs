@@ -27,7 +27,7 @@ namespace TwitterLib
         /// <param name="skipStatus">ステータス情報を省略するかどうか</param>
         /// <param name="includeUserEntities"></param>
         /// <returns></returns>
-        public IEnumerable<User> GetFollowerList(int? count = null, bool? skipStatus = null, bool? includeUserEntities = null, ulong? cursor = null)
+        public IEnumerable<User> GetFollowerList(int? count = null, bool? skipStatus = null, bool? includeUserEntities = null, long? cursor = null)
         {
             return Parent.GetFollowerList(UserID, count, skipStatus, includeUserEntities, cursor);
         }
@@ -37,7 +37,7 @@ namespace TwitterLib
         /// <param name="cursor">読み込み開始ページの番号(null=最初のページ)</param>
         /// <param name="count">1ページあたりのID数</param>
         /// <returns></returns>
-        public IEnumerable<ulong> GetFollowIdList(int? count = null, ulong? cursor = null)
+        public IEnumerable<ulong> GetFollowIdList(int? count = null, long? cursor = null)
         {
             return Parent.GetFollowIdList(UserID, count, cursor);
         }
@@ -49,7 +49,7 @@ namespace TwitterLib
         /// <param name="includeUserEntities"></param>
         /// <param name="cursor"></param>
         /// <returns></returns>
-        public IEnumerable<User> GetFollowList(int? count = null, bool? skipStatus = null, bool? includeUserEntities = null, ulong? cursor = null)
+        public IEnumerable<User> GetFollowList(int? count = null, bool? skipStatus = null, bool? includeUserEntities = null, long? cursor = null)
         {
             return Parent.GetFollowList(UserID, count, skipStatus, includeUserEntities, cursor);
         }
@@ -123,7 +123,7 @@ namespace TwitterLib
         /// <param name="skipStatus"></param>
         /// <param name="includeUserEntities"></param>
         /// <returns></returns>
-        public IEnumerable<User> GetFollowerList(ulong id, int? count = null, bool? skipStatus = null, bool? includeUserEntities = null, ulong? cursor = null)
+        public IEnumerable<User> GetFollowerList(ulong id, int? count = null, bool? skipStatus = null, bool? includeUserEntities = null, long? cursor = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = id.ToString() };
             return getFollowerList(args, count, skipStatus, includeUserEntities, cursor);
@@ -137,13 +137,13 @@ namespace TwitterLib
         /// <param name="skipStatus"></param>
         /// <param name="includeUserEntities"></param>
         /// <returns></returns>
-        public IEnumerable<User> GetFollowerList(string screenName, int? count = null, bool? skipStatus = null, bool? includeUserEntities = null, ulong? cursor = null)
+        public IEnumerable<User> GetFollowerList(string screenName, int? count = null, bool? skipStatus = null, bool? includeUserEntities = null, long? cursor = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["screen_name"] = screenName };
             return getFollowerList(args, count, skipStatus, includeUserEntities, cursor);
         }
 
-        private IEnumerable<User> getFollowerList(SortedDictionary<string, string> args, int? count, bool? skipStatus, bool? includeUserEntities, ulong? cursor)
+        private IEnumerable<User> getFollowerList(SortedDictionary<string, string> args, int? count, bool? skipStatus, bool? includeUserEntities, long? cursor)
         {
             if (count.HasValue)
                 args["count"] = count.ToString();
@@ -171,7 +171,7 @@ namespace TwitterLib
         /// <param name="count"></param>
         /// <param name="cursor"></param>
         /// <returns></returns>
-        public IEnumerable<ulong> GetFollowIdList(ulong id, int? count = null, ulong? cursor = null)
+        public IEnumerable<ulong> GetFollowIdList(ulong id, int? count = null, long? cursor = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = id.ToString() };
             return getFollowIdList(args, count, cursor);
@@ -183,13 +183,13 @@ namespace TwitterLib
         /// <param name="count"></param>
         /// <param name="cursor"></param>
         /// <returns></returns>
-        public IEnumerable<ulong> GetFollowIdList(string screenName, int? count = null, ulong? cursor = null)
+        public IEnumerable<ulong> GetFollowIdList(string screenName, int? count = null, long? cursor = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["screen_name"] = screenName };
             return getFollowIdList(args, count, cursor);
         }
 
-        private IEnumerable<ulong> getFollowIdList(SortedDictionary<string, string> args, int? count, ulong? cursor)
+        private IEnumerable<ulong> getFollowIdList(SortedDictionary<string, string> args, int? count, long? cursor)
         {
             if (count.HasValue)
                 args["count"] = count.ToString();
@@ -215,7 +215,7 @@ namespace TwitterLib
         /// <param name="includeUserEntities"></param>
         /// <param name="cursor"></param>
         /// <returns></returns>
-        public IEnumerable<User> GetFollowList(ulong id, int? count = null, bool? skipStatus = null, bool? includeUserEntities = null, ulong? cursor = null)
+        public IEnumerable<User> GetFollowList(ulong id, int? count = null, bool? skipStatus = null, bool? includeUserEntities = null, long? cursor = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = id.ToString() };
             return getFollowList(args, count, skipStatus, includeUserEntities, cursor);
@@ -229,13 +229,13 @@ namespace TwitterLib
         /// <param name="includeUserEntities"></param>
         /// <param name="cursor"></param>
         /// <returns></returns>
-        public IEnumerable<User> GetFollowList(string screenName, int? count = null, bool? skipStatus = null, bool? includeUserEntities = null, ulong? cursor = null)
+        public IEnumerable<User> GetFollowList(string screenName, int? count = null, bool? skipStatus = null, bool? includeUserEntities = null, long? cursor = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["screen_name"] = screenName };
             return getFollowList(args, count, skipStatus, includeUserEntities, cursor);
         }
 
-        private IEnumerable<User> getFollowList(SortedDictionary<string, string> args, int? count, bool? skipStatus, bool? includeUserEntities, ulong? cursor)
+        private IEnumerable<User> getFollowList(SortedDictionary<string, string> args, int? count, bool? skipStatus, bool? includeUserEntities, long? cursor)
         {
             if (count.HasValue)
                 args["count"] = count.ToString();
@@ -262,7 +262,7 @@ namespace TwitterLib
         /// </summary>
         /// <param name="cursor"></param>
         /// <returns></returns>
-        public IEnumerable<ulong> GetIncomingFriendship(ulong? cursor = null)
+        public IEnumerable<ulong> GetIncomingFriendship(long? cursor = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>();
             do
@@ -280,7 +280,7 @@ namespace TwitterLib
         /// </summary>
         /// <param name="cursor"></param>
         /// <returns></returns>
-        public IEnumerable<ulong> GetOutgoingFriendship(ulong? cursor = null)
+        public IEnumerable<ulong> GetOutgoingFriendship(long? cursor = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>();
             do
