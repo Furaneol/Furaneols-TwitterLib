@@ -13,7 +13,7 @@ namespace TwitterLib
         /// </summary>
         /// <param name="cursor"></param>
         /// <returns></returns>
-        public IEnumerable<ulong> GetMuteIds(ulong? cursor = null)
+        public IEnumerable<ulong> GetMuteIds(long? cursor = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>();
             do
@@ -32,7 +32,7 @@ namespace TwitterLib
         /// <param name="includeEntities"></param>
         /// <param name="cursor"></param>
         /// <returns></returns>
-        public IEnumerable<User> GetMuteUsers(bool? includeEntities = null, ulong? cursor = null)
+        public IEnumerable<User> GetMuteUsers(bool? includeEntities = null, long? cursor = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>();
             if (includeEntities.HasValue)

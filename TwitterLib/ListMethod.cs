@@ -9,13 +9,13 @@ namespace TwitterLib
         /// <summary>
         /// リストに登録されているユーザーの一覧を取得します。
         /// </summary>
-        /// <seealso cref="Twitter.GetMembersOfList(ulong, int?, bool?, bool?, ulong?)"/>
+        /// <seealso cref="Twitter.GetMembersOfList(ulong, int?, bool?, bool?, long?)"/>
         /// <param name="count">1ページあたりのユーザー数</param>
         /// <param name="includeEntities">Entitiesノードを含むかどうか</param>
         /// <param name="skipStatus">statusノードを省略するかどうか</param>
         /// <param name="cursor">カーソル</param>
         /// <returns></returns>
-        public IEnumerable<User> GetMembers(int? count = null, bool? includeEntities = null, bool? skipStatus = null, ulong? cursor = null)
+        public IEnumerable<User> GetMembers(int? count = null, bool? includeEntities = null, bool? skipStatus = null, long? cursor = null)
         {
             return (Parent ?? throw new InvalidOperationException("Parentプロパティがnullであるため、List.GetMembersメソッドを使用できません。")).GetMembersOfList(ID, count, includeEntities, skipStatus, cursor);
         }
@@ -59,7 +59,7 @@ namespace TwitterLib
         /// <param name="skipStatus">statusノードを省略するかどうか</param>
         /// <param name="cursor">カーソル</param>
         /// <returns></returns>
-        public IEnumerable<User> GetMembersOfList(ulong listId, int? count = null, bool? includeEntities = null, bool? skipStatus = null, ulong? cursor = null)
+        public IEnumerable<User> GetMembersOfList(ulong listId, int? count = null, bool? includeEntities = null, bool? skipStatus = null, long? cursor = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["list_id"] = listId.ToString() };
             if (count.HasValue)
@@ -80,7 +80,7 @@ namespace TwitterLib
         /// <param name="skipStatus">statusノードを省略するかどうか</param>
         /// <param name="cursor">カーソル</param>
         /// <returns></returns>
-        public IEnumerable<User> GetMembersOfList(string ownerScreenName, string slug, int? count = null, bool? includeEntities = null, bool? skipStatus = null, ulong? cursor = null)
+        public IEnumerable<User> GetMembersOfList(string ownerScreenName, string slug, int? count = null, bool? includeEntities = null, bool? skipStatus = null, long? cursor = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>()
             {
@@ -105,7 +105,7 @@ namespace TwitterLib
         /// <param name="skipStatus">statusノードを省略するかどうか</param>
         /// <param name="cursor">カーソル</param>
         /// <returns></returns>
-        public IEnumerable<User> GetMembersOfList(ulong ownerId, string slug, int? count = null, bool? includeEntities = null, bool? skipStatus = null, ulong? cursor = null)
+        public IEnumerable<User> GetMembersOfList(ulong ownerId, string slug, int? count = null, bool? includeEntities = null, bool? skipStatus = null, long? cursor = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>()
             {
@@ -121,7 +121,7 @@ namespace TwitterLib
             return GetMembersOfList(args, cursor);
         }
 
-        private IEnumerable<User> GetMembersOfList(SortedDictionary<string,string> args,ulong? cursor)
+        private IEnumerable<User> GetMembersOfList(SortedDictionary<string,string> args,long? cursor)
         {
             do
             {
@@ -143,7 +143,7 @@ namespace TwitterLib
         /// <param name="count">1ページ毎の件数</param>
         /// <param name="cursor">開始カーソル</param>
         /// <returns></returns>
-        public IEnumerable<List> GetRegesteredList(ulong userId, int? count = null, ulong? cursor = null)
+        public IEnumerable<List> GetRegesteredList(ulong userId, int? count = null, long? cursor = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = userId.ToString() };
             if (count.HasValue)
@@ -157,7 +157,7 @@ namespace TwitterLib
         /// <param name="count">1ページ毎の件数</param>
         /// <param name="cursor">開始カーソル</param>
         /// <returns></returns>
-        public IEnumerable<List> GetRegesteredList(string screenName,int? count=null,ulong? cursor = null)
+        public IEnumerable<List> GetRegesteredList(string screenName, int? count = null, long? cursor = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["screen_name"] = screenName };
             if (count.HasValue)
@@ -165,7 +165,7 @@ namespace TwitterLib
             return GetRegesteredList(args, cursor);
         }
 
-        private IEnumerable<List> GetRegesteredList(SortedDictionary<string, string> args, ulong? cursor)
+        private IEnumerable<List> GetRegesteredList(SortedDictionary<string, string> args, long? cursor)
         {
             do
             {
