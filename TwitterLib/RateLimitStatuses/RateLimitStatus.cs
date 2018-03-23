@@ -28,7 +28,7 @@ namespace TwitterLib.RateLimitStatuses
         private int ResetTimeSeconds
         {
             get { return (int)(ResetTime - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds; }
-            set { ResetTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(value); }
+            set { ResetTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(value).ToLocalTime(); }
         }
         /// <summary>
         /// 残り使用回数のリセット時刻を取得します。
