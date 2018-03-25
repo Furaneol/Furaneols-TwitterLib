@@ -71,6 +71,7 @@
     <Compile Include="RateLimitStatuses\CustomProfileRateLimit.cs" />
     <Compile Include="RateLimitStatuses\FollowersRateLimit.cs" />
     <Compile Include="RateLimitStatuses\FriendshipRateLimit.cs" />
+    <Compile Include="RateLimitStatuses\FriendsRateLimit.cs" />
     <Compile Include="RateLimitStatuses\GeoRateLimit.cs" />
     <Compile Include="RateLimitStatuses\GuideRateLimit.cs" />
     <Compile Include="RateLimitStatuses\ListRateLimit.cs" />

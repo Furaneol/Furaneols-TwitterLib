@@ -125,6 +125,10 @@ namespace TwitterLib.RateLimitStatuses
         /// StatusesカテゴリのREST APIの使用回数制限を取得します。
         /// </summary>
         public StatusRateLimit Statuses { get => resources.Statuses; }
+        /// <summary>
+        /// FriendsカテゴリのREST APIの使用回数制限を取得します。
+        /// </summary>
+        public FriendsRateLimit Friends { get => resources.Friends; }
         [DataContract]
         class Resources
         {
@@ -181,6 +185,9 @@ namespace TwitterLib.RateLimitStatuses
 
             [DataMember(Name = "statuses")]
             public StatusRateLimit Statuses { get; private set; }
+
+            [DataMember(Name = "friends")]
+            public FriendsRateLimit Friends { get; private set; }
         }
     }
 }
