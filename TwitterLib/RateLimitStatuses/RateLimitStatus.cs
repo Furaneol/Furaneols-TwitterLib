@@ -51,7 +51,7 @@ namespace TwitterLib.RateLimitStatuses
         public override Twitter Parent { get; internal set; }
 
         [DataMember(Name = "resources")]
-        private Resources resources;
+        private Resources resources { get; set; }
 
         /// <summary>
         /// ListカテゴリのREST APIの使用回数制限を取得します。

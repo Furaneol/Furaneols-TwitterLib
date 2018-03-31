@@ -16,7 +16,7 @@ namespace TwitterLib
         public Tweet Favorite(ulong id)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["id"] = id.ToString() };
-            return (Tweet)GetOAuthResponce("POST", "https://api.twitter.com/1.1/favorites/create.json", args, typeof(Tweet));
+            return (Tweet)GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "POST", "https://api.twitter.com/1.1/favorites/create.json", args, typeof(Tweet));
         }
         /// <summary>
         /// 指定されたツイートのいいねを解除します。
@@ -26,7 +26,7 @@ namespace TwitterLib
         public Tweet Unfavorite(ulong id)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["id"] = id.ToString() };
-            return (Tweet)GetOAuthResponce("POST", "https://api.twitter.com/1.1/favorites/destroy.json", args, typeof(Tweet));
+            return (Tweet)GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "POST", "https://api.twitter.com/1.1/favorites/destroy.json", args, typeof(Tweet));
         }
     }
 

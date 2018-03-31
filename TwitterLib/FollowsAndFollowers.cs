@@ -106,7 +106,7 @@ namespace TwitterLib
             {
                 if (cursor.HasValue)
                     args["cursor"] = cursor.ToString();
-                IdContainer container = (IdContainer)GetOAuthResponce("GET", "https://api.twitter.com/1.1/followers/ids.json", args, typeof(IdContainer));
+                IdContainer container = (IdContainer)GetOAuthResponce(AuthenticationMode, "GET", "https://api.twitter.com/1.1/followers/ids.json", args, typeof(IdContainer));
                 foreach (ulong id in container.IDList)
                     yield return id;
             } while (cursor != 0);
@@ -155,7 +155,7 @@ namespace TwitterLib
             {
                 if (cursor.HasValue)
                     args["cursor"] = cursor.ToString();
-                UserContainer container = (UserContainer)GetOAuthResponce("GET", "https://api.twitter.com/1.1/followers/list.json", args, typeof(UserContainer));
+                UserContainer container = (UserContainer)GetOAuthResponce(AuthenticationMode, "GET", "https://api.twitter.com/1.1/followers/list.json", args, typeof(UserContainer));
                 cursor = container.NextCursor;
                 foreach (User user in container.Users)
                     yield return user;
@@ -197,7 +197,7 @@ namespace TwitterLib
             {
                 if (cursor.HasValue)
                     args["cursor"] = cursor.ToString();
-                IdContainer container = (IdContainer)GetOAuthResponce("GET", "https://api.twitter.com/1.1/friends/ids.json", args, typeof(IdContainer));
+                IdContainer container = (IdContainer)GetOAuthResponce(AuthenticationMode, "GET", "https://api.twitter.com/1.1/friends/ids.json", args, typeof(IdContainer));
                 cursor = container.NextCursor;
                 foreach (ulong id in container.IDList)
                     yield return id;
@@ -247,7 +247,7 @@ namespace TwitterLib
             {
                 if (cursor.HasValue)
                     args["cursor"] = cursor.ToString();
-                UserContainer container = (UserContainer)GetOAuthResponce("GET", "https://api.twitter.com/1.1/friends/list.json", args, typeof(UserContainer));
+                UserContainer container = (UserContainer)GetOAuthResponce(AuthenticationMode, "GET", "https://api.twitter.com/1.1/friends/list.json", args, typeof(UserContainer));
                 cursor = container.NextCursor;
                 foreach (User user in container.Users)
                     yield return user;
@@ -269,7 +269,7 @@ namespace TwitterLib
             {
                 if (cursor.HasValue)
                     args["cursor"] = cursor.ToString();
-                IdContainer container = (IdContainer)GetOAuthResponce("GET", "https://api.twitter.com/1.1/friendships/incoming.json", args, typeof(IdContainer));
+                IdContainer container = (IdContainer)GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "GET", "https://api.twitter.com/1.1/friendships/incoming.json", args, typeof(IdContainer));
                 cursor = container.NextCursor;
                 foreach (ulong id in container.IDList)
                     yield return id;
@@ -287,7 +287,7 @@ namespace TwitterLib
             {
                 if (cursor.HasValue)
                     args["cursor"] = cursor.ToString();
-                IdContainer container = (IdContainer)GetOAuthResponce("GET", "https://api.twitter.com/1.1/friendships/outgoing.json", args, typeof(IdContainer));
+                IdContainer container = (IdContainer)GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "GET", "https://api.twitter.com/1.1/friendships/outgoing.json", args, typeof(IdContainer));
                 cursor = container.NextCursor;
                 foreach (ulong id in container.IDList)
                     yield return id;
@@ -305,7 +305,7 @@ namespace TwitterLib
             if (screenNames.Length > 100)
                 throw new ArgumentException("100個以上のスクリーン名を指定することはできません。");
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["screen_name"] = string.Join(",", screenNames) };
-            return (UserFriendship[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/friendships/lookup.json", args, typeof(UserFriendship[]));
+            return (UserFriendship[])GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "GET", "https://api.twitter.com/1.1/friendships/lookup.json", args, typeof(UserFriendship[]));
         }
         /// <summary>
         /// 1つ以上のIDを指定して現在のユーザーとの関係性を取得します。
@@ -319,7 +319,7 @@ namespace TwitterLib
             if (ids.Length > 100)
                 throw new ArgumentException("100個以上のIDを指定することはできません。");
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = string.Join(",", ids) };
-            return (UserFriendship[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/friendships/lookup.json", args, typeof(UserFriendship[]));
+            return (UserFriendship[])GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "GET", "https://api.twitter.com/1.1/friendships/lookup.json", args, typeof(UserFriendship[]));
         }
         /// <summary>
         /// 現在のユーザーがリツイートの表示を止めているユーザーのID一覧を取得します。
@@ -327,7 +327,7 @@ namespace TwitterLib
         /// <returns></returns>
         public ulong[] GetNoRetweetUsers()
         {
-            return (ulong[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/friendships/no_retweets/ids.json", new SortedDictionary<string, string>(), typeof(ulong[]));
+            return (ulong[])GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "GET", "https://api.twitter.com/1.1/friendships/no_retweets/ids.json", new SortedDictionary<string, string>(), typeof(ulong[]));
         }
         #endregion
 
@@ -347,7 +347,7 @@ namespace TwitterLib
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["screen_name"] = string.Join(",", screenNames) };
             if (includeEntities.HasValue)
                 args["include_entities"] = includeEntities.ToString().ToLower();
-            return (User[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/users/lookup.json", args, typeof(User[]));
+            return (User[])GetOAuthResponce(AuthenticationMode, "GET", "https://api.twitter.com/1.1/users/lookup.json", args, typeof(User[]));
         }
         /// <summary>
         /// IDを指定してユーザー情報を取得します。
@@ -362,7 +362,7 @@ namespace TwitterLib
             if (ids.Length > 100)
                 throw new ArgumentException("100個以上のIDを指定することはできません。");
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = string.Join(",", ids) };
-            return (User[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/users/lookup.json", args, typeof(User[]));
+            return (User[])GetOAuthResponce(AuthenticationMode, "GET", "https://api.twitter.com/1.1/users/lookup.json", args, typeof(User[]));
         }
         /// <summary>
         /// ユーザー検索を実行します。
@@ -381,7 +381,7 @@ namespace TwitterLib
                 args["page"] = page.ToString();
             if (includeEntities.HasValue)
                 args["include_entities"] = includeEntities.ToString().ToLower();
-            return (User[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/users/search.json", args, typeof(User[]));
+            return (User[])GetOAuthResponce(AuthenticationMode, "GET", "https://api.twitter.com/1.1/users/search.json", args, typeof(User[]));
         }
         /// <summary>
         /// 指定されたIDを持つユーザーの情報を取得します。
@@ -394,7 +394,7 @@ namespace TwitterLib
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = id.ToString() };
             if (includeEntities.HasValue)
                 args["include_entities"] = includeEntities.ToString().ToLower();
-            return (User)GetOAuthResponce("GET", "https://api.twitter.com/1.1/users/show.json", args, typeof(User));
+            return (User)GetOAuthResponce(AuthenticationMode, "GET", "https://api.twitter.com/1.1/users/show.json", args, typeof(User));
         }
         /// <summary>
         /// 指定されたスクリーン名を持つユーザーの情報を取得します。
@@ -407,7 +407,7 @@ namespace TwitterLib
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["screen_name"] = screenName };
             if (includeEntities.HasValue)
                 args["include_entities"] = includeEntities.ToString().ToLower();
-            return (User)GetOAuthResponce("GET", "https://api.twitter.com/1.1/users/show.json", args, typeof(User));
+            return (User)GetOAuthResponce(AuthenticationMode, "GET", "https://api.twitter.com/1.1/users/show.json", args, typeof(User));
         }
         #endregion
 
@@ -423,7 +423,7 @@ namespace TwitterLib
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["screen_name"] = screenName };
             if (notifyToTargetUser.HasValue)
                 args["follow"] = notifyToTargetUser.ToString().ToLower();
-            return (User)GetOAuthResponce("POST", "https://api.twitter.com/1.1/friendships/create.json", args, typeof(User));
+            return (User)GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "POST", "https://api.twitter.com/1.1/friendships/create.json", args, typeof(User));
         }
         /// <summary>
         /// 指定されたIDを持つユーザーをフォローします。
@@ -436,7 +436,7 @@ namespace TwitterLib
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = id.ToString() };
             if (notifyToTargetUser.HasValue)
                 args["follow"] = notifyToTargetUser.ToString().ToLower();
-            return (User)GetOAuthResponce("POST", "https://api.twitter.com/1.1/friendships/create.json", args, typeof(User));
+            return (User)GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "POST", "https://api.twitter.com/1.1/friendships/create.json", args, typeof(User));
         }
         #endregion
 
@@ -448,7 +448,7 @@ namespace TwitterLib
         /// <returns></returns>
         public User Unfollow(string screenName)
         {
-            return (User)GetOAuthResponce("POST", "https://api.twitter.com/1.1/friendships/destroy.json", new SortedDictionary<string, string>() { ["screen_name"] = screenName }, typeof(User));
+            return (User)GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "POST", "https://api.twitter.com/1.1/friendships/destroy.json", new SortedDictionary<string, string>() { ["screen_name"] = screenName }, typeof(User));
         }
         /// <summary>
         /// 指定されたIDを持つユーザーへのフォローを解除します。
@@ -457,7 +457,7 @@ namespace TwitterLib
         /// <returns></returns>
         public User Unfollow(ulong userId)
         {
-            return (User)GetOAuthResponce("POST", "https://api.twitter.com/1.1/friendships/destroy.json", new SortedDictionary<string, string>() { ["user_id"] = userId.ToString() }, typeof(User));
+            return (User)GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "POST", "https://api.twitter.com/1.1/friendships/destroy.json", new SortedDictionary<string, string>() { ["user_id"] = userId.ToString() }, typeof(User));
         }
         #endregion
     }

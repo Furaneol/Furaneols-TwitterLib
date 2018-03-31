@@ -31,7 +31,7 @@ namespace TwitterLib
                 args["exclude_replies"] = excludeReplies.ToString().ToLower();
             if (includeRetweets.HasValue)
                 args["include_rts"] = includeRetweets.ToString().ToLower();
-            return (Tweet[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/statuses/user_timeline.json", args, typeof(Tweet[]));
+            return (Tweet[])GetOAuthResponce(AuthenticationMode, "GET", "https://api.twitter.com/1.1/statuses/user_timeline.json", args, typeof(Tweet[]));
         }
         /// <summary>
         /// 指定されたユーザーIDを持つユーザーのツイート一覧を取得します。
@@ -59,7 +59,7 @@ namespace TwitterLib
                 args["exclude_replies"] = excludeReplies.ToString().ToLower();
             if (includeRetweets.HasValue)
                 args["include_rts"] = includeRetweets.ToString().ToLower();
-            return (Tweet[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/statuses/user_timeline.json", args, typeof(Tweet[]));
+            return (Tweet[])GetOAuthResponce(AuthenticationMode, "GET", "https://api.twitter.com/1.1/statuses/user_timeline.json", args, typeof(Tweet[]));
         }
 
     }

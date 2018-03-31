@@ -95,7 +95,7 @@ namespace TwitterLib
         /// </summary>
         public string BearerToken { get; set; }
         /// <summary>
-        /// 認証モードを取得または設定します。
+        /// 認証モードが選択可能な時に使用する認証モードを示す値を取得または設定します。
         /// </summary>
         public TwitterAuthenticationMode AuthenticationMode { get; set; }
         #endregion
@@ -176,6 +176,7 @@ namespace TwitterLib
         /// <summary>
         /// 応答ストリームを取得します。
         /// </summary>
+        /// <param name="mode">認証モード</param>
         /// <param name="method">HTTPメソッド</param>
         /// <param name="url">URL</param>
         /// <param name="args">リクエストパラメーター</param>
@@ -184,7 +185,7 @@ namespace TwitterLib
         /// <exception cref="InvalidOperationException"></exception>
         /// <exception cref="TwitterException"></exception>
         /// <returns></returns>
-        internal object GetOAuthResponce(string method, string url, SortedDictionary<string, string> args, Type type)
+        internal object GetOAuthResponce(TwitterAuthenticationMode mode, string method, string url, SortedDictionary<string, string> args, Type type)
         {
             #region 型検証
             if (type.BaseType != typeof(ApiResponce))
@@ -199,11 +200,11 @@ namespace TwitterLib
             }
             #endregion
             HttpWebRequest req;
-            if (AuthenticationMode.HasFlag(TwitterAuthenticationMode.UserAuthentication) && AvailableUserAuthenticationOnlyAPI)
+            if (mode.HasFlag(TwitterAuthenticationMode.UserAuthentication) && AvailableUserAuthenticationOnlyAPI)
             {
                 req = OAuth.CreateOAuthRequest(method, url, ConsumerKey, ConsumerSecret, AccessToken, AccessTokenSecret, args, UrlEncode);
             }
-            else if (AuthenticationMode.HasFlag(TwitterAuthenticationMode.ApplicationOnlyAuthentication) && AvailableApplicationAuthenticationTokenRequest)
+            else if (mode.HasFlag(TwitterAuthenticationMode.ApplicationOnlyAuthentication) && AvailableApplicationAuthenticationTokenRequest)
             {
                 req = OAuth.CreateBearerRequest(method, url, BearerToken, args, UrlEncode);
             }
@@ -223,7 +224,7 @@ namespace TwitterLib
                 if (type.IsArray)
                 {
                     ApiResponce[] array = (ApiResponce[])raw;
-                    foreach(ApiResponce item in array)
+                    foreach (ApiResponce item in array)
                     {
                         item.Parent = this;
                     }
@@ -247,7 +248,7 @@ namespace TwitterLib
         /// <returns></returns>
         public User VerifyCredential()
         {
-            return (User)GetOAuthResponce("GET", "https://api.twitter.com/1.1/account/verify_credentials.json", new SortedDictionary<string, string>(), typeof(User));
+            return (User)GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "GET", "https://api.twitter.com/1.1/account/verify_credentials.json", new SortedDictionary<string, string>(), typeof(User));
         }
         /// <summary>
         /// ツイートを投稿します。
@@ -260,7 +261,7 @@ namespace TwitterLib
             {
                 ["status"] = status
             };
-            return (Tweet)GetOAuthResponce("POST", "https://api.twitter.com/1.1/statuses/update.json", args, typeof(Tweet));
+            return (Tweet)GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "POST", "https://api.twitter.com/1.1/statuses/update.json", args, typeof(Tweet));
         }
         /// <summary>
         /// 投稿したツイートを削除します。
@@ -269,7 +270,7 @@ namespace TwitterLib
         /// <returns></returns>
         public Tweet DeleteStatus(ulong id)
         {
-            return (Tweet)GetOAuthResponce("POST", "https://api.twitter.com/1.1/statuses/destroy/" + id + ".json", new SortedDictionary<string, string>(), typeof(Tweet));
+            return (Tweet)GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "POST", "https://api.twitter.com/1.1/statuses/destroy/" + id + ".json", new SortedDictionary<string, string>(), typeof(Tweet));
         }
     }
 }
