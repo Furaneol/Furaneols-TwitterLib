@@ -15,7 +15,7 @@ namespace TwitterLib
         /// <param name="cursor">読み込み開始ページの番号(null=最初のページ)</param>
         /// <param name="count">1ページあたりのID数</param>
         /// <returns></returns>
-        public IEnumerable<ulong> GetFollowerIdList(int? count = null, ulong? cursor = null)
+        public IEnumerable<ulong> GetFollowerIdList(int? count = null, long? cursor = null)
         {
             return Parent.GetFollowerIdList(UserID, count, cursor);
         }
@@ -80,7 +80,7 @@ namespace TwitterLib
         /// <param name="cursor">読み込み始めるページ(null:先頭のページ)</param>
         /// <param name="count">1ページあたりのID数</param>
         /// <returns></returns>
-        public IEnumerable<ulong> GetFollowerIdList(ulong id, int? count = null, ulong? cursor = null)
+        public IEnumerable<ulong> GetFollowerIdList(ulong id, int? count = null, long? cursor = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = id.ToString() };
             return getFollowerIdList(args, count, cursor);
@@ -92,13 +92,13 @@ namespace TwitterLib
         /// <param name="cursor">読み込み始めるページ(null:先頭のページ)</param>
         /// <param name="count">1ページあたりのID数</param>
         /// <returns></returns>
-        public IEnumerable<ulong> GetFollowerIdList(string screenName, int? count = null, ulong? cursor = null)
+        public IEnumerable<ulong> GetFollowerIdList(string screenName, int? count = null, long? cursor = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["screen_name"] = screenName };
             return getFollowerIdList(args, count, cursor);
         }
 
-        private IEnumerable<ulong> getFollowerIdList(SortedDictionary<string, string> args, int? count, ulong? cursor)
+        private IEnumerable<ulong> getFollowerIdList(SortedDictionary<string, string> args, int? count, long? cursor)
         {
             if (count.HasValue)
                 args["count"] = count.ToString();
@@ -107,6 +107,7 @@ namespace TwitterLib
                 if (cursor.HasValue)
                     args["cursor"] = cursor.ToString();
                 IdContainer container = (IdContainer)GetOAuthResponce(AuthenticationMode, "GET", "https://api.twitter.com/1.1/followers/ids.json", args, typeof(IdContainer));
+                cursor = container.NextCursor;
                 foreach (ulong id in container.IDList)
                     yield return id;
             } while (cursor != 0);
@@ -431,7 +432,7 @@ namespace TwitterLib
         /// <param name="id">対象のユーザーID</param>
         /// <param name="notifyToTargetUser">対象に通知を送るかどうか</param>
         /// <returns></returns>
-        public User Follow(ulong id,bool? notifyToTargetUser = null)
+        public User Follow(ulong id, bool? notifyToTargetUser = null)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["user_id"] = id.ToString() };
             if (notifyToTargetUser.HasValue)
