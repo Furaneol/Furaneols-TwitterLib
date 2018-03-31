@@ -15,7 +15,7 @@ namespace TwitterLib
         /// <returns></returns>
         public Tweet Retweet(ulong id)
         {
-            return (Tweet)GetOAuthResponce("POST", "https://api.twitter.com/1.1/statuses/retweet/" + id + ".json", new SortedDictionary<string, string>() { ["id"] = id.ToString() }, typeof(Tweet));
+            return (Tweet)GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "POST", "https://api.twitter.com/1.1/statuses/retweet/" + id + ".json", new SortedDictionary<string, string>() { ["id"] = id.ToString() }, typeof(Tweet));
         }
         /// <summary>
         /// 指定されたIDのリツイートを解除します。
@@ -24,7 +24,7 @@ namespace TwitterLib
         /// <returns></returns>
         public Tweet Unretweet(ulong id)
         {
-            return (Tweet)GetOAuthResponce("POST", "https://api.twitter.com/1.1/statuses/unretweet/" + id + ".json", new SortedDictionary<string, string>() { ["id"] = id.ToString() }, typeof(Tweet));
+            return (Tweet)GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "POST", "https://api.twitter.com/1.1/statuses/unretweet/" + id + ".json", new SortedDictionary<string, string>() { ["id"] = id.ToString() }, typeof(Tweet));
         }
     }
 

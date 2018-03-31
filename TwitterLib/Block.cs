@@ -17,7 +17,7 @@ namespace TwitterLib
             {
                 if (cursor.HasValue)
                     args["cursor"] = cursor.ToString();
-                IdContainer container = (IdContainer)GetOAuthResponce("GET", "https://api.twitter.com/1.1/blocks/ids.json", args, typeof(IdContainer));
+                IdContainer container = (IdContainer)GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "GET", "https://api.twitter.com/1.1/blocks/ids.json", args, typeof(IdContainer));
                 cursor = container.NextCursor;
                 foreach (ulong id in container.IDList)
                     yield return id;
@@ -35,7 +35,7 @@ namespace TwitterLib
             {
                 if (cursor.HasValue)
                     args["cursor"] = cursor.ToString();
-                UserContainer container = (UserContainer)GetOAuthResponce("GET", "https://api.twitter.com/1.1/blocks/list.json", args, typeof(UserContainer));
+                UserContainer container = (UserContainer)GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "GET", "https://api.twitter.com/1.1/blocks/list.json", args, typeof(UserContainer));
                 cursor = container.NextCursor;
                 foreach (User user in container.Users)
                     yield return user;
@@ -55,7 +55,7 @@ namespace TwitterLib
                 args["include_entities"] = includeEntities.ToString().ToLower();
             if (skipStatus.HasValue)
                 args["skip_status"] = skipStatus.ToString().ToLower();
-            return (User)GetOAuthResponce("POST", "https://api.twitter.com/1.1/blocks/create.json", args, typeof(User));
+            return (User)GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "POST", "https://api.twitter.com/1.1/blocks/create.json", args, typeof(User));
         }
         /// <summary>
         /// 指定されたIDを持つユーザーをブロックします。
@@ -71,7 +71,7 @@ namespace TwitterLib
                 args["include_entities"] = includeEntities.ToString().ToLower();
             if (skipStatus.HasValue)
                 args["skip_status"] = skipStatus.ToString().ToLower();
-            return (User)GetOAuthResponce("POST", "https://api.twitter.com/1.1/blocks/create.json", args, typeof(User));
+            return (User)GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "POST", "https://api.twitter.com/1.1/blocks/create.json", args, typeof(User));
         }
         /// <summary>
         /// 指定されたスクリーン名を持つユーザーに対する現在のユーザーからのブロックを解除します。
@@ -87,7 +87,7 @@ namespace TwitterLib
                 args["include_entities"] = includeEntities.ToString().ToLower();
             if (skipStatus.HasValue)
                 args["skip_statu"] = skipStatus.ToString().ToLower();
-            return (User)GetOAuthResponce("POST", "https://api.twitter.com/1.1/blocks/destroy.json", args, typeof(User));
+            return (User)GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "POST", "https://api.twitter.com/1.1/blocks/destroy.json", args, typeof(User));
         }
         /// <summary>
         /// 指定されたIDを持つユーザーに対する現在のユーザーからのブロックを解除します。
@@ -103,7 +103,7 @@ namespace TwitterLib
                 args["include_entities"] = includeEntities.ToString().ToLower();
             if (skipStatus.HasValue)
                 args["skip_status"] = skipStatus.ToString().ToLower();
-            return (User)GetOAuthResponce("POST", "https://api.twitter.com/1.1/blocks/destroy.json", args, typeof(User));
+            return (User)GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "POST", "https://api.twitter.com/1.1/blocks/destroy.json", args, typeof(User));
         }
     }
 

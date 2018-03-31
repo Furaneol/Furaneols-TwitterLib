@@ -27,7 +27,7 @@ namespace TwitterLib
                 args["trim_user"] = trimUser.ToString().ToLower();
             if (includeEntities.HasValue)
                 args["include_entities"] = includeEntities.ToString().ToLower();
-            return (Tweet[])GetOAuthResponce("GET", "https://api.twitter.com/1.1/statuses/mentions_timeline.json", args, typeof(Tweet[]));
+            return (Tweet[])GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "GET", "https://api.twitter.com/1.1/statuses/mentions_timeline.json", args, typeof(Tweet[]));
         }
     }
 }

@@ -43,7 +43,7 @@ namespace TwitterLib
                 args["include_entities"] = includeEntities.ToString().ToLower();
             if (includeRetweets.HasValue)
                 args["include_rts"] = includeRetweets.ToString().ToLower();
-            return (Tweet[])Parent.GetOAuthResponce("GET", "https://api.twitter.com/1.1/lists/statuses.json", args, typeof(Tweet[]));
+            return (Tweet[])Parent.GetOAuthResponce(Parent.AuthenticationMode, "GET", "https://api.twitter.com/1.1/lists/statuses.json", args, typeof(Tweet[]));
         }
     }
 
@@ -127,7 +127,7 @@ namespace TwitterLib
             {
                 if (cursor.HasValue)
                     args["cursor"] = cursor.ToString();
-                UserContainer container = (UserContainer)GetOAuthResponce("GET", "https://api.twitter.com/1.1/lists/members.json", args, typeof(UserContainer));
+                UserContainer container = (UserContainer)GetOAuthResponce(AuthenticationMode,"GET", "https://api.twitter.com/1.1/lists/members.json", args, typeof(UserContainer));
                 cursor = container.NextCursor;
                 foreach (User user in container.Users)
                     yield return user;
@@ -171,7 +171,7 @@ namespace TwitterLib
             {
                 if (cursor.HasValue)
                     args["cursor"] = cursor.ToString();
-                ListContainer container = (ListContainer)GetOAuthResponce("GET", "https://api.twitter.com/1.1/lists/memberships.json", args, typeof(ListContainer));
+                ListContainer container = (ListContainer)GetOAuthResponce(AuthenticationMode, "GET", "https://api.twitter.com/1.1/lists/memberships.json", args, typeof(ListContainer));
                 cursor = container.NextCursor;
                 foreach (List list in container.Lists)
                     yield return list;
