@@ -34,7 +34,7 @@ namespace TwitterLib
         /// <summary>
         /// テキストを取得します。
         /// </summary>
-        [DataMember(Name = "text")]
+        [DataMember(IsRequired = false, Name = "text")]
         public string Text { get; private set; }
         /// <summary>
         /// ツイートを投稿したアプリケーションの情報を示す文字列を取得します。
@@ -151,6 +151,11 @@ namespace TwitterLib
         /// </summary>
         [DataMember(IsRequired = false, Name = "withheld_in_countries")]
         public string[] WithheldCountry { get; private set; }
+        /// <summary>
+        /// ツイートの内容を取得します。このプロパティの値はTwitter.ExtendedTweetModeプロパティがtrueの時のみ格納されます。
+        /// </summary>
+        [DataMember(IsRequired =false,Name ="full_text")]
+        public string FullText { get; private set; }
 
         Twitter parent;
         /// <summary>
