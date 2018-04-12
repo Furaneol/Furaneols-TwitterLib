@@ -199,6 +199,12 @@ namespace TwitterLib
                     throw new ArgumentException("typeパラメーターはApiResponceの派生型を指定する必要があります。", "type");
             }
             #endregion
+            #region TweetMode
+            if (ExtendedTweetMode && (type == typeof(Tweet) || (type.IsArray && type.BaseType == typeof(Tweet))))
+            {
+                args.Add("tweet_mode", "extended");
+            }
+            #endregion
             HttpWebRequest req;
             if (mode.HasFlag(TwitterAuthenticationMode.UserAuthentication) && AvailableUserAuthenticationOnlyAPI)
             {
@@ -272,5 +278,9 @@ namespace TwitterLib
         {
             return (Tweet)GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "POST", "https://api.twitter.com/1.1/statuses/destroy/" + id + ".json", new SortedDictionary<string, string>(), typeof(Tweet));
         }
+        /// <summary>
+        /// ツイートの短縮を無効化するかどうかを示す値を取得または設定します。
+        /// </summary>
+        public bool ExtendedTweetMode { get; set; }
     }
 }
