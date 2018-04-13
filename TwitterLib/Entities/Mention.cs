@@ -17,26 +17,26 @@ namespace TwitterLib.Entities
         /// 言及先のユーザーIDを取得します。
         /// </summary>
         [DataMember(Name = "id")]
-        public ulong ID { get; internal set; }
+        public ulong ID { get; protected set; }
         /// <summary>
         /// 言及先のユーザーIDを文字列として取得します。
         /// </summary>
         [DataMember(Name = "id_str")]
-        public string StringID { get; internal set; }
+        public string StringID { get; protected set; }
         /// <summary>
         /// 言及先ユーザー名の範囲を取得します。
         /// </summary>
         [DataMember(Name = "indices")]
-        public int[] Indices { get; internal set; }
+        public int[] Indices { get; protected set; }
         /// <summary>
         /// 言及先の表示名を取得します。
         /// </summary>
         [DataMember(Name = "name")]
-        public string Name { get; internal set; }
+        public string Name { get; protected set; }
         /// <summary>
         /// 言及先のスクリーン名を取得します。
         /// </summary>
         [DataMember(Name = "screen_name")]
-        public string ScreenName { get; internal set; }
+        public string ScreenName { get; protected set; }
     }
 }
