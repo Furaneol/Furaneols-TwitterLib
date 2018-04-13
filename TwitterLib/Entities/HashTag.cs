@@ -17,11 +17,11 @@ namespace TwitterLib.Entities
         /// ハッシュタグの範囲を取得します。
         /// </summary>
         [DataMember(Name = "indices")]
-        public int[] Indices { get; internal set; }
+        public int[] Indices { get; protected set; }
         /// <summary>
         /// ハッシュタグ文字列を取得します。
         /// </summary>
         [DataMember(Name = "text")]
-        public string Text { get; internal set; }
+        public string Text { get; protected set; }
     }
 }
