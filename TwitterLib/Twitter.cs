@@ -200,7 +200,7 @@ namespace TwitterLib
             }
             #endregion
             #region TweetMode
-            if (ExtendedTweetMode && (type == typeof(Tweet) || (type.IsArray && type.BaseType == typeof(Tweet))))
+            if (ExtendedTweetMode && (type == typeof(Tweet) || (type.IsArray && type.GetElementType() == typeof(Tweet))))
             {
                 args.Add("tweet_mode", "extended");
             }
