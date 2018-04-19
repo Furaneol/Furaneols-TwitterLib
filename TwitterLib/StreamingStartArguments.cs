@@ -53,6 +53,10 @@ namespace TwitterLib
         /// </summary>
         public bool CollectAllReplies { get; set; }
         /// <summary>
+        /// 取得対象とするキーワードの一覧を取得します。
+        /// </summary>
+        public string[] Track { get; set; }
+        /// <summary>
         /// 設定された値を元にリクエストパラメーターを構築します。
         /// </summary>
         /// <returns></returns>
@@ -73,6 +77,8 @@ namespace TwitterLib
                 args["with"] = With.ToString().ToLower();
             if (CollectAllReplies)
                 args["replies"] = "all";
+            if (Track != null && Track.Length > 0)
+                args["track"] = string.Join(",", Track);
             return args;
         }
     }
