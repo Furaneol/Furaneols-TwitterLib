@@ -282,5 +282,49 @@ namespace TwitterLib
         /// ツイートの短縮を無効化するかどうかを示す値を取得または設定します。
         /// </summary>
         public bool ExtendedTweetMode { get; set; }
+        /// <summary>
+        /// 指定されたIDを持つツイートを取得します。
+        /// </summary>
+        /// <param name="id">ツイートID</param>
+        /// <param name="includeEntities">entitiesノードを取得するかどうか</param>
+        /// <param name="trimUser">userノードを取得するかどうか</param>
+        /// <returns></returns>
+        public Tweet GetTweet(ulong id, bool? includeEntities = null, bool? trimUser = null)
+        {
+            try
+            {
+                SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["id"] = id.ToString() };
+                if (includeEntities.HasValue)
+                    args["include_entities"] = includeEntities.ToString().ToLower();
+                if (trimUser.HasValue)
+                    args["trim_user"] = trimUser.ToString().ToLower();
+                return (Tweet)GetOAuthResponce(TwitterAuthenticationMode.Automatic, "GET", "https://api.twitter.com/1.1/statuses/show.json", args, typeof(Tweet));
+            }
+            catch (WebException ex)
+            {
+                throw new TwitterException(ex);
+            }
+        }
+        /// <summary>
+        /// 指定されたIDを持つツイートの一覧を取得します。
+        /// </summary>
+        /// <param name="ids">取得するツイートのIDリスト(100件まで)</param>
+        /// <returns>ツイート情報のリスト</returns>
+        public Tweet[] GetTweets(params ulong[] ids)
+        {
+            if (ids.Length > 100)
+                throw new ArgumentException("IDリストの長さは100以下である必要があります。", "ids");
+            if (ids.Length < 1)
+                return new Tweet[] { };
+            try
+            {
+                SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["id"] = string.Join(",", ids) };
+                return (Tweet[])GetOAuthResponce(TwitterAuthenticationMode.Automatic, "GET", "https://api.twitter.com/1.1/statuses/lookup.json", args, typeof(Tweet[]));
+            }
+            catch (WebException ex)
+            {
+                throw new TwitterException(ex);
+            }
+        }
     }
 }
