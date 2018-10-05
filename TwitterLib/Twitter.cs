@@ -259,14 +259,14 @@ namespace TwitterLib
         /// <summary>
         /// ツイートを投稿します。
         /// </summary>
-        /// <param name="status"></param>
+        /// <param name="status">ツイートの内容</param>
+        /// <param name="replyToStatusId">リプライ先のツイートID</param>
         /// <returns></returns>
-        public Tweet UpdateStatus(string status)
+        public Tweet UpdateStatus(string status, ulong? replyToStatusId = null)
         {
-            SortedDictionary<string, string> args = new SortedDictionary<string, string>()
-            {
-                ["status"] = status
-            };
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["status"] = status };
+            if (replyToStatusId.HasValue)
+                args.Add("in_reply_to_status_id", replyToStatusId.ToString());
             return (Tweet)GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "POST", "https://api.twitter.com/1.1/statuses/update.json", args, typeof(Tweet));
         }
         /// <summary>
