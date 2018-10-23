@@ -61,6 +61,7 @@
     <Compile Include="FollowsAndFollowers.cs" />
     <Compile Include="ListContainer.cs" />
     <Compile Include="ListMethod.cs" />
+    <Compile Include="MediaUpload.cs" />
     <Compile Include="Mute.cs" />
     <Compile Include="RateLimitStatus.cs" />
     <Compile Include="RateLimitStatuses\ApplicationRateLimit.cs" />
