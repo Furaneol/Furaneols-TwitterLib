@@ -187,65 +187,68 @@ namespace TwitterLib
         /// <returns></returns>
         internal object GetOAuthResponce(TwitterAuthenticationMode mode, string method, string url, SortedDictionary<string, string> args, Type type)
         {
-            #region 型検証
-            if (type.BaseType != typeof(ApiResponce))
+            lock (this)
             {
-                Type c = type;
-                if (c.IsArray)
-                    c = c.GetElementType();
-                while (c != typeof(ApiResponce) && c != typeof(object))
-                    c = c.BaseType;
-                if (c == typeof(object))
-                    throw new ArgumentException("typeパラメーターはApiResponceの派生型を指定する必要があります。", "type");
-            }
-            #endregion
-            #region TweetMode
-            if (ExtendedTweetMode && (type == typeof(Tweet) || (type.IsArray && type.GetElementType() == typeof(Tweet))))
-            {
-                args.Add("tweet_mode", "extended");
-            }
-            #endregion
-            HttpWebRequest req;
-            if (mode.HasFlag(TwitterAuthenticationMode.UserAuthentication) && AvailableUserAuthenticationOnlyAPI)
-            {
-                req = OAuth.CreateOAuthRequest(method, url, ConsumerKey, ConsumerSecret, AccessToken, AccessTokenSecret, args, UrlEncode);
-            }
-            else if (mode.HasFlag(TwitterAuthenticationMode.ApplicationOnlyAuthentication) && AvailableApplicationAuthenticationTokenRequest)
-            {
-                req = OAuth.CreateBearerRequest(method, url, BearerToken, args, UrlEncode);
-            }
-            else
-            {
-                throw new InvalidOperationException("認証情報が設定されていないか、AuthenticationModeプロパティの値が不適切です。");
-            }
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(type);
-            try
-            {
-                object raw;
-                using (HttpWebResponse res = (HttpWebResponse)req.GetResponse())
-                using (Stream stream = res.GetResponseStream())
+                #region 型検証
+                if (type.BaseType != typeof(ApiResponce))
                 {
-                    raw = serializer.ReadObject(stream);
+                    Type c = type;
+                    if (c.IsArray)
+                        c = c.GetElementType();
+                    while (c != typeof(ApiResponce) && c != typeof(object))
+                        c = c.BaseType;
+                    if (c == typeof(object))
+                        throw new ArgumentException("typeパラメーターはApiResponceの派生型を指定する必要があります。", "type");
                 }
-                if (type.IsArray)
+                #endregion
+                #region TweetMode
+                if (ExtendedTweetMode && (type == typeof(Tweet) || (type.IsArray && type.GetElementType() == typeof(Tweet))))
                 {
-                    ApiResponce[] array = (ApiResponce[])raw;
-                    foreach (ApiResponce item in array)
-                    {
-                        item.Parent = this;
-                    }
-                    return array;
+                    args.Add("tweet_mode", "extended");
+                }
+                #endregion
+                HttpWebRequest req;
+                if (mode.HasFlag(TwitterAuthenticationMode.UserAuthentication) && AvailableUserAuthenticationOnlyAPI)
+                {
+                    req = OAuth.CreateOAuthRequest(method, url, ConsumerKey, ConsumerSecret, AccessToken, AccessTokenSecret, args, UrlEncode);
+                }
+                else if (mode.HasFlag(TwitterAuthenticationMode.ApplicationOnlyAuthentication) && AvailableApplicationAuthenticationTokenRequest)
+                {
+                    req = OAuth.CreateBearerRequest(method, url, BearerToken, args, UrlEncode);
                 }
                 else
                 {
-                    ApiResponce result = (ApiResponce)raw;
-                    result.Parent = this;
-                    return result;
+                    throw new InvalidOperationException("認証情報が設定されていないか、AuthenticationModeプロパティの値が不適切です。");
                 }
-            }
-            catch (WebException wex)
-            {
-                throw new TwitterException(wex);
+                DataContractJsonSerializer serializer = new DataContractJsonSerializer(type);
+                try
+                {
+                    object raw;
+                    using (HttpWebResponse res = (HttpWebResponse)req.GetResponse())
+                    using (Stream stream = res.GetResponseStream())
+                    {
+                        raw = serializer.ReadObject(stream);
+                    }
+                    if (type.IsArray)
+                    {
+                        ApiResponce[] array = (ApiResponce[])raw;
+                        foreach (ApiResponce item in array)
+                        {
+                            item.Parent = this;
+                        }
+                        return array;
+                    }
+                    else
+                    {
+                        ApiResponce result = (ApiResponce)raw;
+                        result.Parent = this;
+                        return result;
+                    }
+                }
+                catch (WebException wex)
+                {
+                    throw new TwitterException(wex);
+                }
             }
         }
         /// <summary>
