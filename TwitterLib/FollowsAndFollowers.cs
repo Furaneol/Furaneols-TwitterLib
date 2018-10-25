@@ -110,7 +110,22 @@ namespace TwitterLib
                 cursor = container.NextCursor;
                 foreach (ulong id in container.IDList)
                     yield return id;
+                if (cursor != 0)
+                {
+                    PageTransitionEventArgs e = new PageTransitionEventArgs();
+                    trans_FollowerIdList?.Invoke(this, e);
+                    if (e.Cancel) break;
+                }
             } while (cursor != 0);
+        }
+        PageTransitionEventHandler trans_FollowerIdList;
+        /// <summary>
+        /// フォロワーIDリスト取得中、ページ遷移が必要になったときに発生するイベントです。
+        /// </summary>
+        public event PageTransitionEventHandler FollowerIdListPageTransition
+        {
+            add { trans_FollowerIdList += value; }
+            remove { trans_FollowerIdList -= value; }
         }
         #endregion
 
@@ -160,7 +175,22 @@ namespace TwitterLib
                 cursor = container.NextCursor;
                 foreach (User user in container.Users)
                     yield return user;
+                if (cursor != 0)
+                {
+                    PageTransitionEventArgs e = new PageTransitionEventArgs();
+                    trans_FollowerList?.Invoke(this, e);
+                    if (e.Cancel) break;
+                }
             } while (cursor != 0);
+        }
+        PageTransitionEventHandler trans_FollowerList;
+        /// <summary>
+        /// フォロワーリスト取得中、ページ遷移が必要になったときに発生するイベントです。
+        /// </summary>
+        public event PageTransitionEventHandler FollowerListPageTransition
+        {
+            add { trans_FollowerList += value; }
+            remove { trans_FollowerList -= value; }
         }
         #endregion
 
@@ -202,7 +232,23 @@ namespace TwitterLib
                 cursor = container.NextCursor;
                 foreach (ulong id in container.IDList)
                     yield return id;
+                if (cursor != 0)
+                {
+                    PageTransitionEventArgs e = new PageTransitionEventArgs();
+                    followIdList?.Invoke(this, e);
+                    if (e.Cancel) break;
+                }
             } while (cursor != 0);
+        }
+
+        PageTransitionEventHandler followIdList;
+        /// <summary>
+        /// フォローIDリスト取得中、ページ遷移が必要になったときに発生するイベントです。
+        /// </summary>
+        public event PageTransitionEventHandler FollowIdListPageTransition
+        {
+            add { followIdList += value; }
+            remove { followIdList -= value; }
         }
         #endregion
 
@@ -252,8 +298,22 @@ namespace TwitterLib
                 cursor = container.NextCursor;
                 foreach (User user in container.Users)
                     yield return user;
-
+                if (cursor != 0)
+                {
+                    PageTransitionEventArgs e = new PageTransitionEventArgs();
+                    followList?.Invoke(this, e);
+                    if (e.Cancel) break;
+                }
             } while (cursor != 0);
+        }
+        PageTransitionEventHandler followList;
+        /// <summary>
+        /// フォローリスト取得中、ページ遷移が必要になったときに発生するイベントです。
+        /// </summary>
+        public event PageTransitionEventHandler FollowListPageTransition
+        {
+            add { followList += value; }
+            remove { followList -= value; }
         }
         #endregion
 
