@@ -82,6 +82,7 @@
     <Compile Include="RateLimitStatuses\MuteRateLimit.cs" />
     <Compile Include="RateLimitStatuses\RateLimitStatus.cs" />
     <Compile Include="RateLimitStatuses\StatusRateLimit.cs" />
+    <Compile Include="RateLimitStatuses\TrendRateLimit.cs" />
     <Compile Include="RateLimitStatuses\TweetPromptRateLimit.cs" />
     <Compile Include="RateLimitStatuses\UserRateLimit.cs" />
     <Compile Include="RateLimitStatuses\WebhookRateLimit.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="StreamingEvents\WarningInfo.cs" />
     <Compile Include="StreamingStartArguments.cs" />
     <Compile Include="List.cs" />
+    <Compile Include="Trend.cs" />
     <Compile Include="UserFriendship.cs" />
     <Compile Include="HomeTimeline.cs" />
     <Compile Include="IdContainer.cs" />
