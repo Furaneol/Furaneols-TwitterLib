@@ -105,6 +105,7 @@
     <Compile Include="StreamingStartArguments.cs" />
     <Compile Include="List.cs" />
     <Compile Include="Trend.cs" />
+    <Compile Include="Trends\TrendInfo.cs" />
     <Compile Include="Trends\TrendPlaceInfo.cs" />
     <Compile Include="UserFriendship.cs" />
     <Compile Include="HomeTimeline.cs" />
