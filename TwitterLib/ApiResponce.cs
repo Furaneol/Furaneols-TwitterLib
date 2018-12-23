@@ -9,7 +9,7 @@ namespace TwitterLib
     public abstract class ApiResponce
     {
         /// <summary>
-        /// 現在の応答オブジェクトを取得したTwitterクラスインスタンスを取得します。
+        /// 現在の応答オブジェクトを作成したTwitterクラスインスタンスを取得します。
         /// </summary>
         public abstract Twitter Parent { get; internal set; }
     }
