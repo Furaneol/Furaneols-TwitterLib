@@ -11,7 +11,7 @@ namespace TwitterLib.Trends
     /// トレンド情報を格納するオブジェクトです。
     /// </summary>
     [DataContract]
-    public class TrendInfo : ApiResponce
+    public class TrendInfo
     {
         /// <summary>
         /// トレンドの表示名を取得します。
@@ -33,9 +33,5 @@ namespace TwitterLib.Trends
         /// </summary>
         [DataMember(Name = "tweet_volume", IsRequired = false)]
         public int? TweetVolume { get; private set; }
-        /// <summary>
-        /// 作成したTwitterクラスインスタンスを取得します。
-        /// </summary>
-        public override Twitter Parent { get; internal set; }
     }
 }

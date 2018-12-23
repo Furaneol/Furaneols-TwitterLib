@@ -20,7 +20,9 @@ namespace TwitterLib
         public TrendInfo[] GetTrendInfo(TrendPlaceInfo place)
         {
             SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["id"] = place.WOEID.ToString() };
-            return (TrendInfo[])GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "GET", "https://api.twitter.com/1.1/trends/place.json", args, typeof(TrendInfo[]));
+            TrendContainer[] containers = (TrendContainer[])GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "GET", "https://api.twitter.com/1.1/trends/place.json", args, typeof(TrendContainer[]));
+            if ((containers?.Length ?? 0) < 1) return new TrendInfo[] { };
+            return containers[0].Trends;
         }
     }
 }
