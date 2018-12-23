@@ -11,7 +11,7 @@ namespace TwitterLib.Trends
     /// トレンド取得時に指定できる位置情報を示すデータを格納するオブジェクトです。
     /// </summary>
     [DataContract]
-    public class TrendPlaceInfo
+    public class TrendPlaceInfo : ApiResponce
     {
         /// <summary>
         /// 位置情報の名前を取得します。
@@ -48,6 +48,10 @@ namespace TwitterLib.Trends
         /// </summary>
         [DataMember(Name = "countryCode")]
         public string CountryCode { get; private set; }
+        /// <summary>
+        /// 作成したTwitterオブジェクトを取得します。
+        /// </summary>
+        public override Twitter Parent { get; internal set; }
     }
     /// <summary>
     /// 位置情報の種類を示すデータを格納するオブジェクトです。
