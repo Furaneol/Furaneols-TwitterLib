@@ -33,5 +33,13 @@ namespace TwitterLib.Trends
         /// </summary>
         [DataMember(Name = "tweet_volume", IsRequired = false)]
         public int? TweetVolume { get; private set; }
+        /// <summary>
+        /// トレンドの表示名を返します。
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
