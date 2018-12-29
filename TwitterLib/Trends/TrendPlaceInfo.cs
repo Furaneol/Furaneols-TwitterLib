@@ -52,6 +52,11 @@ namespace TwitterLib.Trends
         /// 作成したTwitterオブジェクトを取得します。
         /// </summary>
         public override Twitter Parent { get; internal set; }
+
+        public override string ToString()
+        {
+            return Name + "(" + Country + ")";
+        }
     }
     /// <summary>
     /// 位置情報の種類を示すデータを格納するオブジェクトです。
