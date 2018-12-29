@@ -24,5 +24,17 @@ namespace TwitterLib
             if ((containers?.Length ?? 0) < 1) return new TrendInfo[] { };
             return containers[0].Trends;
         }
+        /// <summary>
+        /// トレンド情報を追加します。
+        /// </summary>
+        /// <param name="woeid"></param>
+        /// <returns></returns>
+        public TrendInfo[] GetTrendInfo(int woeid)
+        {
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["id"] = woeid.ToString() };
+            TrendContainer[] containers = (TrendContainer[])GetOAuthResponce(TwitterAuthenticationMode.UserAuthentication, "GET", "https://api.twitter.com/1.1/trends/place.json", args, typeof(TrendContainer[]));
+            if ((containers?.Length ?? 0) < 1) return new TrendInfo[] { };
+            return containers[0].Trends;
+        }
     }
 }
