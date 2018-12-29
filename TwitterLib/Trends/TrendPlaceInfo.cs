@@ -52,7 +52,10 @@ namespace TwitterLib.Trends
         /// 作成したTwitterオブジェクトを取得します。
         /// </summary>
         public override Twitter Parent { get; internal set; }
-
+        /// <summary>
+        /// 名前と所属国名を結合した文字列を返します。
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return Name + "(" + Country + ")";
