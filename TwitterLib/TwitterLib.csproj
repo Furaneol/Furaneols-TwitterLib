@@ -53,6 +53,8 @@
     <Compile Include="CursorNavigator.cs" />
     <Compile Include="Coordinate.cs" />
     <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\ExtendedEntities\ExtendedEntity.cs" />
+    <Compile Include="Entities\ExtendedEntities\ExtendedMedia.cs" />
     <Compile Include="Entities\HashTag.cs" />
     <Compile Include="Entities\Media.cs" />
     <Compile Include="Entities\Mention.cs" />
