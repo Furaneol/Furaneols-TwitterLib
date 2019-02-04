@@ -17,6 +17,6 @@ namespace TwitterLib.Entities.ExtendedEntities
         /// 格納されているメディア情報を取得します。
         /// </summary>
         [DataMember(Name = "media", IsRequired = false)]
-        public ExtendedMedia[] MediaList { get; }
+        public ExtendedMedia[] MediaList { get; private set; }
     }
 }
