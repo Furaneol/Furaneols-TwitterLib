@@ -2,6 +2,7 @@
 using System.Runtime.Serialization;
 using TwitterLib.Entities;
 using TwitterLib.StreamingEvents;
+using TwitterLib.Entities.ExtendedEntities;
 
 namespace TwitterLib
 {
@@ -121,6 +122,11 @@ namespace TwitterLib
         /// </summary>
         [DataMember(IsRequired = false, Name = "entities")]
         public Entity Entities { get; private set; }
+        /// <summary>
+        /// 拡張エンティティを取得します。
+        /// </summary>
+        [DataMember(IsRequired = false, Name = "extended_entities")]
+        public ExtendedEntity ExtendedEntities { get; private set; }
         /// <summary>
         /// 現在のユーザーがこのツイートをいいねしているかどうかを取得します。
         /// </summary>
