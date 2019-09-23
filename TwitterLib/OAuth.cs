@@ -64,9 +64,11 @@ namespace TwitterLib
             baseString += urlEncode(paramString);
             byte[] baseByte = Encoding.ASCII.GetBytes(baseString);
             string hashKey = consumerSecret + "&" + accessTokenSecret;
-            HMACSHA1 sha1 = new HMACSHA1(Encoding.ASCII.GetBytes(hashKey));
-            byte[] hash = sha1.ComputeHash(baseByte);
-            return urlEncode(Convert.ToBase64String(hash));
+            using (HMACSHA1 sha1 = new HMACSHA1(Encoding.ASCII.GetBytes(hashKey)))
+            {
+                byte[] hash = sha1.ComputeHash(baseByte);
+                return urlEncode(Convert.ToBase64String(hash));
+            }
         }
         /// <summary>
         /// OAuth署名付きのリクエストを生成します。
