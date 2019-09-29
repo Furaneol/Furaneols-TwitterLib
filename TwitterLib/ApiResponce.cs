@@ -1,5 +1,4 @@
 ﻿using System.Runtime.Serialization;
-using System.Xml;
 
 namespace TwitterLib
 {
@@ -13,10 +12,5 @@ namespace TwitterLib
         /// 現在の応答オブジェクトを作成したTwitterクラスインスタンスを取得します。
         /// </summary>
         public abstract Twitter Parent { get; internal set; }
-        /// <summary>
-        /// 応答内容をXmlNodeに出力します。
-        /// </summary>
-        /// <param name="node"></param>
-        public abstract void WriteTo(XmlNode node);
     }
 }
