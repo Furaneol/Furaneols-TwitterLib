@@ -81,12 +81,14 @@ namespace TwitterLib
         /// </summary>
         [DataMember(Name = "statuses_count")]
         public int StatusesCount { get; private set; }
+#pragma warning disable IDE0051
         [DataMember(Name = "created_at")]
         private string created_at
         {
             get { return CreatedAt.ToString(); }
             set { CreatedAt = Twitter.ParseDateTime(value); }
         }
+#pragma warning restore IDE0051
         /// <summary>
         /// アカウントの作成日を取得します。
         /// </summary>
@@ -117,12 +119,14 @@ namespace TwitterLib
         [DataMember(Name = "contributors_enabled")]
         public bool ContributorsEnabled { get; private set; }
 
+#pragma warning disable IDE0051
         [DataMember(Name = "profile_background_color")]
         private string profileBackgroundColor
         {
             get { return ProfileBackgroundColor.R.ToString("x2") + ProfileBackgroundColor.G.ToString("x2") + ProfileBackgroundColor.B.ToString("x2"); }
             set { ProfileBackgroundColor = Twitter.ParseColor(value); }
         }
+#pragma warning restore IDE0051
         /// <summary>
         /// プロフィールの背景色を取得します。
         /// </summary>
@@ -158,6 +162,7 @@ namespace TwitterLib
         [DataMember(Name = "profile_image_url_https")]
         public string IconImageUrlHttps { get; private set; }
 
+#pragma warning disable IDE0051
         [DataMember(Name = "profile_link_color")]
         private string profileLinkColor
         {
@@ -197,6 +202,7 @@ namespace TwitterLib
             get { return string.Format("{0:x2}{1:x2}{2:x2}", ProfileTextColor.R, ProfileTextColor.G, ProfileTextColor.B); }
             set { ProfileTextColor = Twitter.ParseColor(value); }
         }
+#pragma warning restore IDE0051
         /// <summary>
         /// プロフィールのテキスト色を取得します。
         /// </summary>
