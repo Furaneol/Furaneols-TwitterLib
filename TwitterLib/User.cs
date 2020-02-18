@@ -94,59 +94,6 @@ namespace TwitterLib
         /// </summary>
         public DateTime CreatedAt { get; private set; }
         /// <summary>
-        /// 協定世界時との時差を秒単位で取得します。
-        /// </summary>
-        [DataMember(Name = "utc_offset")]
-        public int? UtcOffset { get; private set; }
-        /// <summary>
-        /// タイムゾーンの名前を取得します。
-        /// </summary>
-        [DataMember(Name = "time_zone")]
-        public string TimeZone { get; private set; }
-        /// <summary>
-        /// 位置情報を有効にしているかどうかを示す値を取得します。
-        /// </summary>
-        [DataMember(Name = "geo_enabled")]
-        public bool GeoEnabled { get; private set; }
-        /// <summary>
-        /// 使用している言語を示すBCP 47定義コードの値を取得します。
-        /// </summary>
-        [DataMember(Name = "lang")]
-        public string LanguageCode { get; private set; }
-        /// <summary>
-        /// ライター機能を使用しているかどうかを示す値を取得します。
-        /// </summary>
-        [DataMember(Name = "contributors_enabled")]
-        public bool ContributorsEnabled { get; private set; }
-
-#pragma warning disable IDE0051
-        [DataMember(Name = "profile_background_color")]
-        private string profileBackgroundColor
-        {
-            get { return ProfileBackgroundColor.R.ToString("x2") + ProfileBackgroundColor.G.ToString("x2") + ProfileBackgroundColor.B.ToString("x2"); }
-            set { ProfileBackgroundColor = Twitter.ParseColor(value); }
-        }
-#pragma warning restore IDE0051
-        /// <summary>
-        /// プロフィールの背景色を取得します。
-        /// </summary>
-        public Color ProfileBackgroundColor { get; private set; }
-        /// <summary>
-        /// プロフィールの背景画像が格納されているURLを取得します。
-        /// </summary>
-        [DataMember(Name = "profile_background_image_url")]
-        public string ProfileBackgroundImageUrl { get; private set; }
-        /// <summary>
-        /// プロフィールの背景画像が格納されているURLを取得します。
-        /// </summary>
-        [DataMember(Name = "profile_background_image_url_https")]
-        public string ProfileBackgroundImageUrlHttps { get; private set; }
-        /// <summary>
-        /// プロフィールの背景画像をタイル状に敷き詰めて表示するかどうかを示す値を取得します。
-        /// </summary>
-        [DataMember(Name = "profile_background_tile")]
-        public bool ProfileBackgroundTile { get; private set; }
-        /// <summary>
         /// プロフィールのヘッダー画像が格納されているURLを取得します。
         /// </summary>
         [DataMember(Name = "profile_banner_url")]
@@ -154,64 +101,8 @@ namespace TwitterLib
         /// <summary>
         /// アイコン画像が格納されているURLを取得します。
         /// </summary>
-        [DataMember(Name = "profile_image_url")]
-        public string IconImageUrl { get; private set; }
-        /// <summary>
-        /// アイコン画像が格納されているURLを取得します。
-        /// </summary>
         [DataMember(Name = "profile_image_url_https")]
-        public string IconImageUrlHttps { get; private set; }
-
-#pragma warning disable IDE0051
-        [DataMember(Name = "profile_link_color")]
-        private string profileLinkColor
-        {
-            get { return ProfileLinkColor.R.ToString("x2") + ProfileLinkColor.G.ToString("x2") + ProfileLinkColor.B.ToString("x2"); }
-            set { ProfileLinkColor = Twitter.ParseColor(value); }
-        }
-        /// <summary>
-        /// プロフィール上のリンクの色を取得します。
-        /// </summary>
-        public Color ProfileLinkColor { get; private set; }
-
-        [DataMember(Name = "profile_sidebar_border_color")]
-        private string profileSidebarBorderColor
-        {
-            get { return ProfileSidebarBorderColor.R.ToString("x2") + ProfileSidebarBorderColor.G.ToString("x2") + ProfileSidebarBorderColor.B.ToString("x2"); }
-            set { ProfileSidebarBorderColor = Twitter.ParseColor(value); }
-        }
-        /// <summary>
-        /// プロフィールのサイドバーにおける境界線の色を取得します。
-        /// </summary>
-        public Color ProfileSidebarBorderColor { get; private set; }
-
-        [DataMember(Name = "profile_sidebar_fill_color")]
-        private string profileSidebarFillColor
-        {
-            get { return string.Format("{0:x2}{1:x2}{2:x2}", ProfileSidebarFillColor.R, ProfileSidebarFillColor.G, ProfileSidebarFillColor.B); }
-            set { ProfileSidebarFillColor = Twitter.ParseColor(value); }
-        }
-        /// <summary>
-        /// プロフィールのサイドバーにおける塗りつぶし色を取得します。
-        /// </summary>
-        public Color ProfileSidebarFillColor { get; private set; }
-
-        [DataMember(Name = "profile_text_color")]
-        private string profileTextColor
-        {
-            get { return string.Format("{0:x2}{1:x2}{2:x2}", ProfileTextColor.R, ProfileTextColor.G, ProfileTextColor.B); }
-            set { ProfileTextColor = Twitter.ParseColor(value); }
-        }
-#pragma warning restore IDE0051
-        /// <summary>
-        /// プロフィールのテキスト色を取得します。
-        /// </summary>
-        public Color ProfileTextColor { get; private set; }
-        /// <summary>
-        /// プロフィールで背景画像を使用しているかどうかを示す値を取得します。
-        /// </summary>
-        [DataMember(Name = "profile_use_background_image")]
-        public bool ProfileUseBackgroundImage { get; private set; }
+        public string IconImageUrl { get; private set; }
         /// <summary>
         /// プロフィールが未変更であるかどうかを示す値を取得します。
         /// </summary>
@@ -235,7 +126,7 @@ namespace TwitterLib
         /// <summary>
         /// 最後に投稿したツイートを取得します。このフィールドはリクエスト時の指定によって取得されない事があります。
         /// </summary>
-        [DataMember(IsRequired =false,Name ="status")]
+        [DataMember(Name ="status")]
         public Tweet Status { get; private set; }
         /// <summary>
         /// プロフィールに含まれるメタ情報を取得します。このフィールドはリクエスト時の指定によって取得されない事があります。
