@@ -49,7 +49,7 @@ namespace TwitterLib.Entities
         /// <summary>
         /// ツイートに含まれている言及先の一覧を取得します。
         /// </summary>
-        [DataMember(Name = "mentions")]
+        [DataMember(Name = "user_mentions")]
         public Mention[] Mentions
         {
             get => mentions ?? new Mention[] { };
