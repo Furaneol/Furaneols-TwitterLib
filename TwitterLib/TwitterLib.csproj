@@ -89,6 +89,7 @@
     <Compile Include="RateLimitStatuses\UserRateLimit.cs" />
     <Compile Include="RateLimitStatuses\WebhookRateLimit.cs" />
     <Compile Include="Retweet.cs" />
+    <Compile Include="Search.cs" />
     <Compile Include="Streaming.cs" />
     <Compile Include="StreamingEvents\DisconnectionInfo.cs" />
     <Compile Include="StreamingEvents\EventInfo.cs" />
