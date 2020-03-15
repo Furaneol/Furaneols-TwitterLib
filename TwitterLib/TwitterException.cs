@@ -23,16 +23,24 @@ namespace TwitterLib
             {
                 using (HttpWebResponse res = (HttpWebResponse)wex.Response)
                 {
-                    ErrorMessageContainer msg = (ErrorMessageContainer)emSerializer.ReadObject(res.GetResponseStream());
-                    ErrorMessage first = msg.Errors[0];
-                    ErrorCode = first.Code;
-                    Message = first.Message;
-                    List<KeyValuePair<int, string>> list = new List<KeyValuePair<int, string>>();
-                    foreach(ErrorMessage part in msg.Errors)
+                    try
                     {
-                        list.Add(new KeyValuePair<int, string>(part.Code, part.Message));
+                        ErrorMessageContainer msg = (ErrorMessageContainer)emSerializer.ReadObject(res.GetResponseStream());
+                        ErrorMessage first = msg.Errors[0];
+                        ErrorCode = first.Code;
+                        Message = first.Message;
+                        List<KeyValuePair<int, string>> list = new List<KeyValuePair<int, string>>();
+                        foreach (ErrorMessage part in msg.Errors)
+                        {
+                            list.Add(new KeyValuePair<int, string>(part.Code, part.Message));
+                        }
+                        ErrorMessages = list.ToArray();
                     }
-                    ErrorMessages = list.ToArray();
+                    catch
+                    {
+                        ErrorCode = (int)res.StatusCode;
+                        Message = res.StatusDescription ?? res.StatusCode.ToString();
+                    }
                 }
             }
             else
