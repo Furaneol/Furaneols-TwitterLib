@@ -28,22 +28,11 @@ namespace TwitterLib
         /// <param name="includeEntities"></param>
         /// <param name="includeRetweets"></param>
         /// <returns></returns>
-        public Tweet[] GetTweets(ulong? sinceId = null, ulong? maxId = null, int? count = null, bool? includeEntities = null, bool? includeRetweets = null)
+        public IEnumerable<Tweet> GetTweets(ulong? sinceId = null, ulong? maxId = null, int? count = null, bool? includeEntities = null, bool? includeRetweets = null)
         {
             if (Parent == null)
                 throw new InvalidOperationException("Parentプロパティがnullであるため、List.GetTweetsメソッドを使用出来ません。");
-            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["list_id"] = ID.ToString() };
-            if (sinceId.HasValue)
-                args["since_id"] = sinceId.ToString();
-            if (maxId.HasValue)
-                args["max_id"] = maxId.ToString();
-            if (count.HasValue)
-                args["count"] = count.ToString();
-            if (includeEntities.HasValue)
-                args["include_entities"] = includeEntities.ToString().ToLower();
-            if (includeRetweets.HasValue)
-                args["include_rts"] = includeRetweets.ToString().ToLower();
-            return (Tweet[])Parent.GetOAuthResponce(Parent.AuthenticationMode, "GET", "https://api.twitter.com/1.1/lists/statuses.json", args, typeof(Tweet[]));
+            return Parent.GetListTweets(this.ID, sinceId, maxId, count, includeEntities, includeRetweets);
         }
     }
 
@@ -176,6 +165,34 @@ namespace TwitterLib
                 foreach (List list in container.Lists)
                     yield return list;
             } while (cursor != 0);
+        }
+        #endregion
+
+        #region GetListTweets
+        /// <summary>
+        /// 指定されたリストに登録されているユーザーのツイート一覧を取得します。
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="sinceId"></param>
+        /// <param name="maxId"></param>
+        /// <param name="count"></param>
+        /// <param name="includeEntities"></param>
+        /// <param name="includeRetweets"></param>
+        /// <returns></returns>
+        public IEnumerable<Tweet> GetListTweets(ulong id, ulong? sinceId = null, ulong? maxId = null, int? count=null,bool? includeEntities = null, bool? includeRetweets = null)
+        {
+            SortedDictionary<string, string> args = new SortedDictionary<string, string>() { ["list_id"] = id.ToString() };
+            if (sinceId.HasValue)
+                args["since_id"] = sinceId.ToString();
+            if (maxId.HasValue)
+                args["max_id"] = maxId.ToString();
+            if (count.HasValue)
+                args["count"] = count.ToString();
+            if (includeEntities.HasValue)
+                args["include_entities"] = includeEntities.ToString().ToLower();
+            if (includeRetweets.HasValue)
+                args["include_rts"] = includeRetweets.ToString().ToLower();
+            return (Tweet[])GetOAuthResponce(AuthenticationMode, "GET", "https://api.twitter.com/1.1/lists/statuses.json", args, typeof(Tweet[]));
         }
         #endregion
     }
